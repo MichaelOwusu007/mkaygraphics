@@ -1,0 +1,58 @@
+.shop-banner{
+    height: 250px;
+    width: 100vw;
+    position: relative;
+    z-index: -1;
+}
+
+.shop-banner .shop-title{
+    
+    transform: translate(-50%,-50%);
+
+}
+
+
+/*.designproject{
+  will-change: transform;
+  transform: translateY(-9.68193px);
+}*/
+
+
+
+
+
+@media (min-width: 380px) {
+    .shop-banner {
+      height: 300px;
+    }
+  }
+  
+  @media (min-width: 500px) {
+    .shop-banner {
+      height: 350px;
+    }
+  }
+  
+  @media (min-width: 670px) {
+    .shop-banner{
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 860px) {
+    .shop-banner{
+      height: 500px;
+    }
+  }
+  
+  @media (min-width: 1300px) {
+    .shop-banner{
+      height: 600px;
+    }
+  }
+  
+  @media (min-width: 1500px) {
+    .shop-banner{
+      height: 650px;
+    }
+  }

@@ -21,10 +21,11 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-white text-gray-900">
       {/* Hero Section */}
+      
       <section className="relative h-[600px] bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center text-center px-4">
-        <div className="max-w-3xl space-y-6 text-white">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold">
-            Edit Your Photos & Frame Your Memories
+        <div className="max-w-4xl space-y-5 text-white">
+          <h1 className=" text-3xl md:text-5xl font-bold">
+            Edit Your Photos,Frame Your Memories & Design Your Ideas.
           </h1>
           <p className="text-lg md:text-xl text-gray-200">
             Premium handcrafted frames and professional custom framing services
@@ -58,8 +59,8 @@ export default function HomePage() {
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-0">
                 <div className="h-64 bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center">
-                  <h3 className="font-serif text-3xl font-bold text-white group-hover:scale-110 transition-transform">
-                    Ready-Made Frames
+                  <h3 className=" text-3xl font-bold text-white group-hover:scale-110 transition-transform">
+                    Order a frame
                   </h3>
                 </div>
               </CardContent>
@@ -70,8 +71,8 @@ export default function HomePage() {
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-0">
                 <div className="h-64 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                  <h3 className="font-serif text-3xl font-bold text-white group-hover:scale-110 transition-transform">
-                    Custom Framing
+                  <h3 className=" text-3xl font-bold text-white group-hover:scale-110 transition-transform">
+                    Custom Frames
                   </h3>
                 </div>
               </CardContent>
@@ -82,7 +83,7 @@ export default function HomePage() {
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-0">
                 <div className="h-64 bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center">
-                  <h3 className="font-serif text-3xl font-bold text-gray-800 group-hover:scale-110 transition-transform">
+                  <h3 className=" text-3xl font-bold text-gray-800 group-hover:scale-110 transition-transform">
                     View All
                   </h3>
                 </div>
@@ -95,7 +96,7 @@ export default function HomePage() {
       {/* Featured Products */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold">
+          <h2 className=" text-4xl md:text-5xl font-bold">
             Featured Collection
           </h2>
           <p className="text-gray-500 text-lg">
@@ -155,7 +156,7 @@ export default function HomePage() {
               Professional Photo Editing
             </span>
           </div>
-          <h2 className="font-serif text-4xl md:text-5xl font-bold">
+          <h2 className=" text-4xl md:text-5xl font-bold">
             Transform Your Photos
           </h2>
           <p className="text-gray-500 text-lg max-w-2xl mx-auto">

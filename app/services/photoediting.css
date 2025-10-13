@@ -1,0 +1,163 @@
+.shop-banner{
+    height: 250px;
+    width: 100vw;
+    position: relative;
+    z-index: -1;
+}
+
+.editing-container{
+  width: 100%;
+  padding: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.each-log img{
+  width: 100%;
+  height: 300px;
+  margin-top: 15px;
+}
+
+.each-log video {
+  width: 200px; 
+  height: 310px;
+}
+
+
+.shop-banner .shop-title{
+    transform: translate(-50%,-50%);
+}
+
+
+
+@media (min-width: 380px) {
+    .shop-banner {
+      height: 300px;
+    }
+}
+  
+  @media (min-width: 500px) {
+    .shop-banner {
+      height: 350px;
+    }
+  }
+  
+  @media (min-width: 670px) {
+    .shop-banner{
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 860px) {
+    .shop-banner{
+      height: 500px;
+    }
+  }
+  
+  @media (min-width: 1300px) {
+    .shop-banner{
+      height: 600px;
+    }
+  }
+  
+  @media (min-width: 1500px) {
+    .shop-banner{
+      height: 650px;
+    }
+  }
+
+  
+  @media (min-width: 475px) {
+    .log-container{
+      flex-wrap: wrap;
+      flex-direction:row;
+    }
+
+    .each-log{
+      margin-left: 10px;
+      margin-right: 10px;
+      margin: px;
+    }
+
+  }
+
+   
+  @media (min-width:640px) {
+
+    .editing-container{
+      max-width: 640px;
+      padding: 0 15px;
+      
+    }
+
+    .each-log{
+      margin-left: 20px;
+      margin-right: 20px;
+      margin: px;
+    }
+
+
+  }
+
+  @media (min-width:768px) {
+    .each-log{
+      padding: 0 40px;
+    }
+
+    .editing-container{
+      max-width: 768px;
+    }
+   
+  }
+
+  @media (min-width:800px) {
+
+    .editing-container{
+      max-width: 800px;
+    }
+    .log-container{
+      flex-wrap: nowrap;
+      flex-direction: row;
+      flex-shrink: 0;
+    }
+
+    .each-log{
+      padding:0;
+    }
+
+    .each-log{
+      margin-left: 0;
+      margin-right: 0;
+    }
+
+  }
+
+     
+  @media (min-width:1024px) {
+
+    .editing-container{
+      max-width: 1024px;
+      padding: 0 25px;
+    }
+
+  }
+
+      
+  @media (min-width:1280px) {
+
+    .editing-container{
+      max-width: 1280px;
+      padding: 0 35px;
+    }
+
+  }
+
+        
+  @media (min-width:1536px) {
+
+    .editing-container{
+      max-width: 1536px;
+      padding: 0 50px;
+    }
+
+  }

@@ -226,7 +226,7 @@ export const editingServices: EditingService[] = [
     image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800',
     category: 'advanced',
     popular: true,
-    turnaroundTime: '3-5 days',
+    turnaroundTime: '2-3 days',
     features: [
       'Everything in Basic Retouching',
       'Advanced skin smoothing & texture refinement',
@@ -240,7 +240,7 @@ export const editingServices: EditingService[] = [
     id: 'premium-editing',
     title: 'Premium Creative Editing',
     description: 'Complete artistic transformation for commercial and creative projects',
-    price: 120,
+    price: 85,
     image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800',
     category: 'premium',
     turnaroundTime: '5-7 days',

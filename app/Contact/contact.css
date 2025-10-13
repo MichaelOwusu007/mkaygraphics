@@ -1,0 +1,56 @@
+.shop-banner{
+    height: 200px;
+    width: 100vw;
+    position: relative;
+    z-index: -1;
+}
+
+iframe{
+  border: 0;
+}
+
+.map iframe{
+  allowfullscreen: "";
+  referrerpolicy: "no-referrer-when-downgrade";
+}
+
+
+.shop-banner .shop-title{
+    transform: translate(-50%,-50%);
+}
+
+@media (min-width: 380px) {
+    .shop-banner {
+      height: 200px;
+    }
+}
+  
+  @media (min-width: 500px) {
+    .shop-banner {
+      height: 200px;
+    }
+  }
+  
+  @media (min-width: 670px) {
+    .shop-banner{
+      height: 300px;
+    }
+  }
+  
+  @media (min-width: 860px) {
+    .shop-banner{
+      height: 400px;
+    }
+  }
+  
+  @media (min-width: 1300px) {
+    .shop-banner{
+      height: 500px;
+    }
+  }
+  
+  @media (min-width: 1500px) {
+    .shop-banner{
+      height: 550px;
+    }
+  }

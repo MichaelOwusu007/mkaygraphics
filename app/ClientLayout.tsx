@@ -1,0 +1,17 @@
+// app/ClientLayout.tsx
+"use client";
+
+import { Toaster } from "sonner";
+import { ReactNode } from "react";
+import { CartDrawer } from "@/components/cart/CartDrawer";
+import { Header } from "@/components/ui/layout/header";
+export default function ClientLayout({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <Header />
+      <CartDrawer />   {/* ✅ Mount it globally */}
+      <main className="min-h-screen">{children}</main>
+      <Toaster position="top-right" richColors />
+    </>
+  );
+}
