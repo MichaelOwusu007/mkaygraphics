@@ -227,7 +227,7 @@ export default function ShopPage() {
                           <span>({product.reviewCount})</span>
                         </div>
                         <p className="font-semibold text-lg">
-                          ${product.price.toFixed(2)}
+                          GH{product.price.toFixed(2)}
                         </p>
                       </div>
                     </CardContent>

@@ -28,7 +28,7 @@ export default function HomePage() {
             Edit Your Photos,Frame Your Memories & Design Your Ideas.
           </h1>
           <p className="text-lg md:text-xl text-gray-200">
-            Premium handcrafted frames and professional custom framing services
+            Premium handcrafted frames, professional custom framing services, photo editing and design services all in one place.We frame, edit and design it best for you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
             <Button
@@ -43,10 +43,10 @@ export default function HomePage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white/40 text-white hover:bg-white/20 backdrop-blur"
+              className="border-white/40 text-black hover:text-white hover:bg-black backdrop-blur"
               asChild
             >
-              <Link href="/shop?category=custom">Custom Framing</Link>
+              <Link href="/services">Photo Editing</Link>
             </Button>
           </div>
         </div>

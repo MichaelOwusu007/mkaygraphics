@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
   })
 
   const mailOptions: Mail.Options = {
-    from: `"GiftySolves" <${process.env.NODEMAILER_EMAIL}>`, // ✅ sender name added
-    to: process.env.NODEMAILER_RECEIVER || 'nanayawwiafe007@gmail.com',
+    from: `"GiftySolves" <${process.env.NODEMAILER_EMAIL}>`,
+    to: process.env.NODEMAILER_RECEIVER,
     subject: `📩 Service Inquiry - ${service}`,
     html: `
       <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
@@ -26,7 +26,7 @@ export async function POST(request: NextRequest) {
         <p><strong>Service:</strong> ${service}</p>
         <p><strong>Message:</strong></p>
         <div style="background-color: #f9f9f9; padding: 10px; border-left: 4px solid #4F46E5;">
-          ${message.replace(/\n/g, '<br>')}
+          ${message.replace(/\n/g, "<br>")}
         </div>
         <p style="margin-top: 30px;">Sent from the GiftySolves Website ✨</p>
       </div>
@@ -36,7 +36,8 @@ export async function POST(request: NextRequest) {
   try {
     await transport.sendMail(mailOptions)
     return NextResponse.json({ message: "Success!", status: 200 })
-  } catch (err) {
+  } catch (error) {
+    console.error("Email send failed:", error)
     return NextResponse.json({ message: "Failed!", status: 500 })
   }
 }

@@ -128,7 +128,7 @@ export default function ProductDetailPage() {
         {/* Details */}
         <div className="space-y-6">
           <div>
-            <h1 className="font-serif text-4xl font-bold mb-2">{product.title}</h1>
+            <h1 className="text-4xl font-bold mb-2">{product.title}</h1>
             <div className="flex items-center gap-2 text-gray-500 mb-4">
               <div className="flex items-center gap-1">
                 <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
@@ -192,7 +192,7 @@ export default function ProductDetailPage() {
               >
                 +
               </Button>
-              <span className="text-sm text-gray-500">{product.stock} in stock</span>
+              <span className="text-sm text-gray-500">available in stock</span>
             </div>
           </div>
 
@@ -210,11 +210,11 @@ export default function ProductDetailPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-green-500" />
-                <span className="text-sm">Free shipping on orders over $100</span>
+                <span className="text-sm">Free shipping on orders over GH500 in Capecoast and Accra Only</span>
               </div>
               <div className="flex items-center gap-2">
                 <Check className="h-5 w-5 text-green-500" />
-                <span className="text-sm">30-day return guarantee</span>
+                <span className="text-sm">7-days return guarantee</span>
               </div>
             </CardContent>
           </Card>
@@ -224,7 +224,7 @@ export default function ProductDetailPage() {
       {/* Related Products */}
       {relatedProducts.length > 0 && (
         <section className="py-12 border-t">
-          <h2 className="font-serif text-3xl font-bold mb-8">You May Also Like</h2>
+          <h2 className="text-3xl font-bold mb-8">You May Also Like</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {relatedProducts.map((relatedProduct) => (
               <Link key={relatedProduct.id} href={`/product/${relatedProduct.id}`}>

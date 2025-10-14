@@ -19,7 +19,7 @@ export interface Product {
 export interface ProductVariant {
   id: string;
   name: string;
-  type: 'size' | 'material' | 'color' | 'matting';
+  type: 'size' | 'material' | 'color' | 'edge style';
   options: VariantOption[];
 }
 

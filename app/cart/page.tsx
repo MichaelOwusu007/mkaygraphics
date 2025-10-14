@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -15,7 +16,6 @@ export default function CartPage() {
     serviceItems,
     updateQuantity,
     removeItem,
-    updateServiceQuantity,
     removeServiceItem,
     getTotalPrice,
   } = useCartStore();
@@ -31,7 +31,7 @@ export default function CartPage() {
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([_, value]) => value)
+      .map(([, value]) => value)
       .join('-');
   };
 
@@ -41,7 +41,7 @@ export default function CartPage() {
     }
   };
 
-  // Empty Cart UI
+  // ✅ Empty Cart UI
   if (items.length === 0 && serviceItems.length === 0) {
     return (
       <div className="container mx-auto px-4 py-20">
@@ -49,7 +49,7 @@ export default function CartPage() {
           <ShoppingBag className="h-24 w-24 mx-auto text-muted-foreground" />
           <h1 className="font-serif text-3xl font-bold">Your Cart is Empty</h1>
           <p className="text-muted-foreground">
-            Looks like you haven't added any items to your cart yet.
+            Looks like you haven&apos;t added any items to your cart yet.
           </p>
           <Button size="lg" asChild>
             <Link href="/shop">Start Shopping</Link>
@@ -73,9 +73,11 @@ export default function CartPage() {
                 <CardContent className="p-6">
                   <div className="flex gap-6">
                     <Link href={`/product/${item.productId}`} className="shrink-0">
-                      <img
+                      <Image
                         src={item.product.images[0]}
                         alt={item.product.title}
+                        width={128}
+                        height={128}
                         className="w-32 h-32 object-cover rounded-lg"
                       />
                     </Link>
@@ -142,8 +144,8 @@ export default function CartPage() {
           })}
 
           {/* Service Items */}
-          {serviceItems.map((item) => (
-            <Card key={item.serviceId}>
+          {serviceItems.map((serviceItem) => (
+            <Card key={serviceItem.serviceId}>
               <CardContent className="p-6">
                 <div className="flex gap-6">
                   <div className="shrink-0 w-32 h-32 bg-secondary/10 rounded-lg flex items-center justify-center">
@@ -153,9 +155,9 @@ export default function CartPage() {
                   <div className="flex-1 space-y-3">
                     <div className="flex justify-between">
                       <div>
-                        <Link href={`/services/${item.serviceId}`}>
+                        <Link href={`/services/${serviceItem.serviceId}`}>
                           <h3 className="font-semibold text-lg hover:text-secondary transition-colors">
-                            {item.service.title}
+                            {serviceItem.service.title}
                           </h3>
                         </Link>
                         <Badge variant="outline" className="mt-1">
@@ -163,15 +165,16 @@ export default function CartPage() {
                         </Badge>
                         <div className="text-sm text-muted-foreground mt-2">
                           <div>
-                            {item.photoCount} photo{item.photoCount > 1 ? 's' : ''}
+                            {serviceItem.photoCount} photo
+                            {serviceItem.photoCount > 1 ? 's' : ''}
                           </div>
-                          <div className="text-xs">${item.service.price} per photo</div>
+                          <div className="text-xs">${serviceItem.service.price} per photo</div>
                         </div>
                       </div>
                       <Button
                         variant="ghost"
                         size="icon"
-                        onClick={() => removeServiceItem(item.serviceId)}
+                        onClick={() => removeServiceItem(serviceItem.serviceId)}
                       >
                         <X className="h-5 w-5" />
                       </Button>
@@ -179,10 +182,10 @@ export default function CartPage() {
 
                     <div className="flex items-center justify-between">
                       <div className="text-sm text-muted-foreground">
-                        {item.uploadedFiles.length} file
-                        {item.uploadedFiles.length !== 1 ? 's' : ''} uploaded
+                        {serviceItem.uploadedFiles.length} file
+                        {serviceItem.uploadedFiles.length !== 1 ? 's' : ''} uploaded
                       </div>
-                      <p className="text-xl font-bold">${item.totalPrice.toFixed(2)}</p>
+                      <p className="text-xl font-bold">${serviceItem.totalPrice.toFixed(2)}</p>
                     </div>
                   </div>
                 </div>

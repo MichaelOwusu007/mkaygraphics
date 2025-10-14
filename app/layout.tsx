@@ -35,11 +35,11 @@ const poppins = Poppins({
 
 // ✅ SEO metadata
 export const metadata = {
-  title: "FrameStaion",
+  title: "MkayGraphix",
   description:
-    "Your number one stop shop for all kinds of frames, edit services and design services as well.",
+    "Your number one stop shop for all kinds of Premium handcrafted frames, professional custom framing services, photo editing and design services.We frame, edit and design it best for you.",
   alternates: {
-    canonical: "https://www.giftysolves.com/",
+    canonical: "https://www.mkaygraphix.com/",
   },
 };
 
@@ -67,28 +67,28 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* ✅ Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.giftysolves.com/" />
-        <meta property="og:title" content="FrameStation" />
+        <meta property="og:url" content="https://www.framestationgh.com/" />
+        <meta property="og:title" content="MkayGraphix" />
         <meta
           property="og:description"
-          content="Gifty Solves Consult is a trusted agency assisting students and individuals to achieve their dreams of studying and settling abroad. We offer support for educational placement, scholarships, and more."
+          content="Your number one stop shop for all kinds of Premium handcrafted frames, professional custom framing services, photo editing and design services.We frame, edit and design it best for you."
         />
         <meta
           property="og:image"
-          content="https://www.giftysolves.com/images/slider-image1.jpg"
+          content="https://www.mkaygraphix.com/images/slider-image1.jpg"
         />
 
         {/* ✅ Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.giftysolves.com/" />
-        <meta name="twitter:title" content="Gifty Solves Edu Consult" />
+        <meta name="twitter:url" content="https://www.mkaygraphix.com/" />
+        <meta name="twitter:title" content="FrameStation" />
         <meta
           name="twitter:description"
-          content="Gifty Solves Consult is a trusted agency assisting students and individuals to achieve their dreams of studying and settling abroad. We offer support for educational placement, scholarships, and more."
+          content="Your number one stop shop for all kinds of Premium handcrafted frames, professional custom framing services, photo editing and design services.We frame, edit and design it best for you."
         />
         <meta
           name="twitter:image"
-          content="https://www.giftysolves.com/images/slider-image1.jpg"
+          content="https://www.mkaygraphix.com/images/slider-image1.jpg"
         />
 
         {/* ✅ Structured Data (JSON-LD) for logo */}
@@ -98,9 +98,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "FrameStaion",
-              url: "https://www.giftysolves.com",
-              logo: "https://www.giftysolves.com/images/logo2.png",
+              name: "MkayGraphix",
+              url: "https://www.mkaygraphix.com",
+              logo: "https://www.mkaygraphix.com/images/logo2.png",
             }),
           }}
         />
