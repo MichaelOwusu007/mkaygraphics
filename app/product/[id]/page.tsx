@@ -16,6 +16,7 @@ import {
 import { Star, ChevronLeft, Check } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
+import Image from 'next/image'; // Added import
 
 export default function ProductDetailPage() {
   const { id } = useParams();
@@ -98,9 +99,11 @@ export default function ProductDetailPage() {
         {/* Images */}
         <div className="space-y-4">
           <div className="aspect-square rounded-lg overflow-hidden bg-gray-100">
-            <img
+            <Image
               src={product.images[selectedImage]}
               alt={product.title}
+              width={600}
+              height={600}
               className="w-full h-full object-cover"
             />
           </div>
@@ -114,9 +117,11 @@ export default function ProductDetailPage() {
                     selectedImage === index ? 'border-gray-900' : 'border-transparent'
                   }`}
                 >
-                  <img
+                  <Image
                     src={image}
                     alt={`${product.title} ${index + 1}`}
+                    width={150}
+                    height={150}
                     className="w-full h-full object-cover"
                   />
                 </button>
@@ -231,9 +236,11 @@ export default function ProductDetailPage() {
                 <Card className="group cursor-pointer hover:shadow-lg transition-all">
                   <CardContent className="p-0">
                     <div className="aspect-square overflow-hidden rounded-t-lg">
-                      <img
+                      <Image
                         src={relatedProduct.images[0]}
                         alt={relatedProduct.title}
+                        width={300}
+                        height={300}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                       />
                     </div>

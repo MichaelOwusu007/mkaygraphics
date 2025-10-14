@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -12,7 +13,7 @@ export default function Services() {
   return (
     <div className="min-h-screen overflow-hidden">
       {/* Hero */}
-        <header className='shop-banner'
+      <header className='shop-banner'
         style={{
           backgroundImage: "url(/images/banner.img3.jpg)",
           backgroundSize: "cover",
@@ -20,7 +21,6 @@ export default function Services() {
           backgroundPosition: "center center"
         }}>
         <h1 className='shop-title text-white font-extrabold text-4xl sm:text-6xl lg:text-7xl top-1/2 left-1/2 absolute text-center w-full'>PHOTO EDITING</h1>
-        
       </header>
 
       {/* Services Grid */}
@@ -41,9 +41,11 @@ export default function Services() {
               )}
               <CardContent className="p-0 flex flex-col flex-1">
                 <div className="aspect-video overflow-hidden">
-                  <img
+                  <Image
                     src={service.image}
                     alt={service.title}
+                    width={800}
+                    height={450}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
@@ -158,7 +160,7 @@ export default function Services() {
             Not sure which service to choose?
           </h2>
           <p className="text-muted-foreground text-lg">
-            Contact our team for a free consultation and we'll help you find the perfect editing solution
+            Contact our team for a free consultation and we&apos;ll help you find the perfect editing solution
           </p>
           <Button size="lg" variant="outline">
             Get Free Consultation

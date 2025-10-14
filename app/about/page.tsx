@@ -16,14 +16,14 @@ export default function About() {
             <h2 className="text-3xl font-serif font-bold">Our Story</h2>
             <p className="text-muted-foreground leading-relaxed">
               Founded with a passion for preserving memories and creating beautiful displays, 
-              we've been serving our community for over a decade. What started as a small 
+              we&apos;ve been serving our community for over a decade. What started as a small 
               frame shop has evolved into a comprehensive creative service offering custom 
               framing, professional photo editing, and graphic design solutions.
             </p>
             <p className="text-muted-foreground leading-relaxed">
               Our team of skilled craftsmen and digital artists work tirelessly to ensure 
-              every project exceeds expectations. Whether you're looking to frame a cherished 
-              photograph or need professional retouching services, we're here to bring your 
+              every project exceeds expectations. Whether you&apos;re looking to frame a cherished 
+              photograph or need professional retouching services, we&apos;re here to bring your 
               vision to life.
             </p>
           </div>

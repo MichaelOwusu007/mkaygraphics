@@ -3,6 +3,7 @@
 import { useState, ChangeEvent } from "react";
 import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -69,9 +70,11 @@ export default function ServiceDetailPage() {
           {/* Left Column - Service Info */}
           <div className="space-y-6 animate-fade-in">
             <div className="aspect-video rounded-lg overflow-hidden shadow-md">
-              <img
+              <Image
                 src={service.image}
                 alt={service.title}
+                width={800}
+                height={450}
                 className="w-full h-full object-cover"
               />
             </div>
@@ -101,7 +104,7 @@ export default function ServiceDetailPage() {
               </div>
 
               <div className="pt-6 border-t">
-                <h3 className="font-semibold text-lg mb-4">What's Included:</h3>
+                <h3 className="font-semibold text-lg mb-4">What&apos;s Included:</h3>
                 <ul className="space-y-3">
                   {service.features.map((feature, index) => (
                     <li key={index} className="flex items-start gap-3">
@@ -203,7 +206,7 @@ export default function ServiceDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Shield className="h-4 w-4 text-blue-600" />
-                    <span>Secure file handling & privacy</span>
+                    <span>Secure file handling &amp; privacy</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <Clock className="h-4 w-4 text-blue-600" />
@@ -223,9 +226,11 @@ export default function ServiceDetailPage() {
                     <Link key={s.id} href={`/services/${s.id}`}>
                       <Card className="hover:shadow-md transition-shadow cursor-pointer">
                         <CardContent className="p-4 flex items-center gap-4">
-                          <img
+                          <Image
                             src={s.image}
                             alt={s.title}
+                            width={64}
+                            height={64}
                             className="w-16 h-16 rounded object-cover"
                           />
                           <div className="flex-1">

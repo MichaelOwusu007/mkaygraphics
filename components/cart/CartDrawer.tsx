@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,17 +16,17 @@ export const CartDrawer = () => {
     toggleCart,
     updateQuantity,
     removeItem,
-    updateServiceQuantity,
     removeServiceItem,
     getTotalPrice,
   } = useCartStore();
 
   const totalPrice = getTotalPrice();
 
+  // ✅ Generate a unique key for selected variants
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([_, value]) => value)
+      .map(([key, value]) => value)
       .join('-');
   };
 
@@ -36,6 +37,7 @@ export const CartDrawer = () => {
           <SheetTitle className="font-serif text-xl">Shopping Cart</SheetTitle>
         </SheetHeader>
 
+        {/* ✅ Empty Cart State */}
         {items.length === 0 && serviceItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-[50vh] space-y-4">
             <p className="text-gray-500">Your cart is empty</p>
@@ -46,7 +48,7 @@ export const CartDrawer = () => {
         ) : (
           <div className="flex flex-col flex-1">
             <div className="flex-1 overflow-auto py-6 space-y-6">
-              {/* Product Items */}
+              {/* ✅ Product Items */}
               {items.map((item) => {
                 const variantKey = getVariantKey(item.selectedVariants);
                 return (
@@ -54,11 +56,15 @@ export const CartDrawer = () => {
                     key={`${item.productId}-${variantKey}`}
                     className="flex gap-4 border-b pb-4 last:border-b-0"
                   >
-                    <img
-                      src={item.product.images[0]}
-                      alt={item.product.title}
-                      className="w-20 h-20 object-cover rounded-md"
-                    />
+                    <div className="w-20 h-20 relative rounded-md overflow-hidden">
+                      <Image
+                        src={item.product.images[0]}
+                        alt={item.product.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+
                     <div className="flex-1 space-y-2">
                       <div className="flex justify-between">
                         <div>
@@ -117,7 +123,7 @@ export const CartDrawer = () => {
                 );
               })}
 
-              {/* Service Items */}
+              {/* ✅ Service Items */}
               {serviceItems.map((item) => (
                 <div key={item.serviceId} className="flex gap-4 border-b pb-4 last:border-b-0">
                   <div className="w-20 h-20 bg-gray-100 rounded-md flex items-center justify-center">
@@ -154,6 +160,7 @@ export const CartDrawer = () => {
               ))}
             </div>
 
+            {/* ✅ Cart Total & Buttons */}
             <div className="border-t pt-4 space-y-4">
               <div className="flex justify-between text-lg font-semibold">
                 <span>Subtotal</span>

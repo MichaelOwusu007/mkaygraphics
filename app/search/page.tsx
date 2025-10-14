@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { mockProducts } from '@/lib/mockData';
@@ -46,7 +47,7 @@ export default function SearchPage() {
       {query.trim() && (
         <div>
           <p className="text-gray-500 mb-6">
-            Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for "{query}"
+            Found {searchResults.length} result{searchResults.length !== 1 ? 's' : ''} for &quot;{query}&quot;
           </p>
 
           {searchResults.length === 0 ? (
@@ -65,9 +66,11 @@ export default function SearchPage() {
                   <Card className="group cursor-pointer hover:shadow-lg transition-all duration-300">
                     <CardContent className="p-0">
                       <div className="aspect-square overflow-hidden rounded-t-lg">
-                        <img
+                        <Image
                           src={product.images[0]}
                           alt={product.title}
+                          width={400}
+                          height={400}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>

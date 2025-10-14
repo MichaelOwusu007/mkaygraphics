@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import {
@@ -25,7 +26,7 @@ export default function HomePage() {
       <section className="relative h-[600px] bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center text-center px-4">
         <div className="max-w-4xl space-y-5 text-white">
           <h1 className=" text-3xl md:text-5xl font-bold">
-            Edit Your Photos,Frame Your Memories & Design Your Ideas.
+            Edit Your Photos,Frame Your Memories &amp; Design Your Ideas.
           </h1>
           <p className="text-lg md:text-xl text-gray-200">
             Premium handcrafted frames, professional custom framing services, photo editing and design services all in one place.We frame, edit and design it best for you.
@@ -113,9 +114,11 @@ export default function HomePage() {
               >
                 <CardContent className="p-0">
                   <div className="aspect-square overflow-hidden rounded-t-lg">
-                    <img
+                    <Image
                       src={product.images[0]}
                       alt={product.title}
+                      width={400}
+                      height={400}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                     />
                   </div>
@@ -185,9 +188,11 @@ export default function HomePage() {
               )}
               <CardContent className="p-0">
                 <div className="aspect-video overflow-hidden">
-                  <img
+                  <Image
                     src={service.image}
                     alt={service.title}
+                    width={400}
+                    height={225}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                 </div>
@@ -331,9 +336,11 @@ export default function HomePage() {
                 </p>
                 <div className="flex items-center gap-3 pt-4 border-t">
                   {testimonial.avatar && (
-                    <img
+                    <Image
                       src={testimonial.avatar}
                       alt={testimonial.author}
+                      width={48}
+                      height={48}
                       className="w-12 h-12 rounded-full object-cover"
                     />
                   )}

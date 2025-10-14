@@ -60,7 +60,7 @@ export const PayPalModal = ({ open, onClose, onConfirm, amount }: PayPalModalPro
             </div>
           </div>
           <div className="space-y-1">
-            <p className="text-sm opacity-90">You're paying</p>
+            <p className="text-sm opacity-90">You&apos;re paying</p>
             <p className="text-3xl font-bold">${amount.toFixed(2)}</p>
           </div>
         </div>
@@ -137,7 +137,7 @@ export const PayPalModal = ({ open, onClose, onConfirm, amount }: PayPalModalPro
             <Shield className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
             <div className="text-xs text-blue-900 dark:text-blue-100">
               <p className="font-semibold mb-1">Secure Payment</p>
-              <p>Your payment information is encrypted and secure with PayPal's protection.</p>
+              <p>Your payment information is encrypted and secure with PayPal&apos;s protection.</p>
             </div>
           </div>
 
@@ -150,7 +150,7 @@ export const PayPalModal = ({ open, onClose, onConfirm, amount }: PayPalModalPro
               Pay with Debit or Credit Card
             </button>
             <p className="text-xs text-muted-foreground">
-              Don't have a PayPal account?{' '}
+              Don&apos;t have a PayPal account?{' '}
               <button type="button" className="text-blue-600 hover:underline">
                 Sign Up
               </button>

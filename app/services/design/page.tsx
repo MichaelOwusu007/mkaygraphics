@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./graphicdesign.css";
+import Image from "next/image";
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -12,6 +13,31 @@ const Page: React.FC = () => {
       once: false,
     });
   }, []);
+
+  const sections = [
+    {
+      title: "Digital Advertisement",
+      text: `Elevate your brand presence with our digital advertisement services at MkayGraphix. Our team of experienced designers ensures attention-grabbing visuals that leave a lasting impression on your target audience. Take your marketing efforts to the next level with MkayGraphix.`,
+      img: "/images/portfolio1.jpg",
+    },
+    {
+      title: "Flyers & Posters",
+      text: `Transform your messaging into captivating visuals with our flyer and poster design services at MkayGraphix. We specialize in creating eye-catching promotional materials that effectively communicate your message. Our expert designers focus on delivering designs that stand out and leave a lasting impression.`,
+      img: "/images/design1.jpg",
+      reverse: true,
+    },
+    {
+      title: "Logo Designs",
+      text: `We design a stunning Logo that actually designs, brands, and builds your business. We&apos;ve got you covered for all your logo design works and indeed we are only a few clicks away. Trust MkayGraphix to give your brand a distinctive and impactful visual representation.`,
+      img: "/images/logo2.jpg",
+    },
+    {
+      title: "Brand Identity",
+      text: `Craft a cohesive and compelling brand identity with McKuleGraphix. Our brand identity services focus on creating a consistent and memorable visual language for your business. From logos to color palettes and typography, we ensure every element reflects your unique brand personality.`,
+      img: "/images/portfolio2.jpg",
+      reverse: true,
+    },
+  ];
 
   return (
     <div className="overflow-hidden">
@@ -38,13 +64,13 @@ const Page: React.FC = () => {
           <p>
             Embark on a visual journey with MkayGraphix, your go-to destination
             for professional graphic design that seamlessly blends quality and
-            cost-effectiveness. Since 2020, we've upheld reasonable and
+            cost-effectiveness. Since 2020, we&apos;ve upheld reasonable and
             steadfast pricing, ensuring you receive the best value for your
             creative needs. Do not forget to mention all instructions and your
             requirements. Yes feel free to make it all known to us. You are
             welcome to choose the most suitable tasks from the Graphic design
             packages listed below. You will pay for the services in your
-            country's currency.
+            country&apos;s currency.
           </p>
           <p>
             Visit our{" "}
@@ -62,40 +88,19 @@ const Page: React.FC = () => {
         </div>
 
         {/* Sections */}
-        {[
-          {
-            title: "Digital Advertisement",
-            text: `Elevate your brand presence with our digital advertisement services at MkayGraphix. Our team of experienced designers ensures attention-grabbing visuals that leave a lasting impression on your target audience. Take your marketing efforts to the next level with MkayGraphix.`,
-            img: "/images/portfolio1.jpg",
-          },
-          {
-            title: "Flyers & Posters",
-            text: `Transform your messaging into captivating visuals with our flyer and poster design services at MkayGraphix. We specialize in creating eye-catching promotional materials that effectively communicate your message. Our expert designers focus on delivering designs that stand out and leave a lasting impression.`,
-            img: "/images/design1.jpg",
-            reverse: true,
-          },
-          {
-            title: "Logo Designs",
-            text: `We design a stunning Logo that actually designs, brands, and builds your business. We've got you covered for all your logo design works and indeed we are only a few clicks away. Trust MkayGraphix to give your brand a distinctive and impactful visual representation.`,
-            img: "/images/logo2.jpg",
-          },
-          {
-            title: "Brand Identity",
-            text: `Craft a cohesive and compelling brand identity with McKuleGraphix. Our brand identity services focus on creating a consistent and memorable visual language for your business. From logos to color palettes and typography, we ensure every element reflects your unique brand personality.`,
-            img: "/images/portfolio2.jpg",
-            reverse: true,
-          },
-        ].map((section, idx) => (
+        {sections.map((section, idx) => (
           <section
             key={idx}
             className={`flex justify-center items-center flex-col-reverse lg:flex-row lg:py-20 ${
               section.reverse ? "flex-col-reverse lg:flex-row-reverse" : ""
             }`}
           >
-            <img
-              className="xl:w-[750px] xl:h-[650px] sm:w-[500px] sm:h-[500px]"
+            <Image
+              className="xl:w-[750px]  xl:h-[650px] sm:w-[500px] sm:h-[500px]"
               src={section.img}
               alt={section.title}
+              width={750}
+              height={650}
             />
             <div className="designproject">
               <div data-aos="fade-up" className="lg:p-20 p-6 py-20">
@@ -103,7 +108,7 @@ const Page: React.FC = () => {
                 <p className="mt-5 text-xl leading-8 font-medium">{section.text}</p>
                 <div className="lg:text-2xl my-10 mb-0 w-max">
                   <div className="border-b hover:border-b-blue-500 hover:text-blue-500 flex items-center p-2">
-                    <a href="/Contact">Lets's talk</a>
+                    <a href="/Contact">Let&apos;s talk</a>
                     <div className="m-1"></div>
                     <div>&rarr;</div>
                   </div>
