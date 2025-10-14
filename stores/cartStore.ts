@@ -21,7 +21,7 @@ interface CartState {
 const getVariantKey = (variants: Record<string, string>) => {
   return Object.entries(variants)
     .sort(([a], [b]) => a.localeCompare(b))
-    .map(([_, value]) => value)
+    .map(([, value]) => value) // removed unused variable _
     .join('-');
 };
 

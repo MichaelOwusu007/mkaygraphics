@@ -287,8 +287,8 @@ export default function HomePage() {
                   'Receive high-resolution files ready for print or digital use',
                 step: '04',
               },
-            ].map((item, index) => (
-              <div key={index} className="relative group text-center space-y-4">
+            ].map((item, i) => (
+              <div key={i} className="relative group text-center space-y-4">
                 <div className="relative inline-flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-yellow-500 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
                     <item.icon className="h-10 w-10 text-white" />
@@ -317,7 +317,7 @@ export default function HomePage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
               className="group hover:shadow-lg transition-all duration-300"

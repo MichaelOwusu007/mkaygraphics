@@ -36,7 +36,8 @@ export default function ProductDetailPage() {
       });
       setSelectedVariants(defaults);
     }
-  }, [product]);
+    
+  }, [product, selectedVariants]);
 
   if (!product) {
     return (

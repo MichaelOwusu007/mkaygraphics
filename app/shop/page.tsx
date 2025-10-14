@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,7 +18,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { mockProducts, categories } from "@/lib/mockData";
 import { Star, SlidersHorizontal } from "lucide-react";
-
 
 export default function ShopPage() {
   const searchParams = useSearchParams();
@@ -211,9 +211,11 @@ export default function ShopPage() {
                   <Card className="cursor-pointer hover:shadow-lg transition-all duration-300">
                     <CardContent className="p-0">
                       <div className="aspect-square overflow-hidden rounded-t-lg">
-                        <img
+                        <Image
                           src={product.images[0]}
                           alt={product.title}
+                          width={400}
+                          height={400}
                           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                         />
                       </div>

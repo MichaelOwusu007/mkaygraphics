@@ -26,7 +26,7 @@ export const CartDrawer = () => {
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, value]) => value)
+      .map(([ value]) => value)
       .join('-');
   };
 
