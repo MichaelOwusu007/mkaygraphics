@@ -15,24 +15,36 @@ export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+  // ✅ Proper authentication setter
+  const authenticate = (redirectTo: string) => {
+    localStorage.setItem("isAuthenticated", "true");
 
-    setTimeout(() => {
-      localStorage.setItem("isAuthenticated", "true");
-      router.push("/"); // ✅ Next.js navigation
-    }, 1500);
+    // 👇 Dispatch a custom event your Header listens for (authChange)
+    window.dispatchEvent(new Event("authChange"));
+
+    router.push(redirectTo);
   };
 
-  const handleSignUp = async (e: React.FormEvent) => {
+  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
 
+    // ✅ Replace with your actual login API call
     setTimeout(() => {
-      localStorage.setItem("isAuthenticated", "true");
-      router.push("/"); // ✅ Next.js navigation
-    }, 1500);
+      authenticate("/account");
+      setIsLoading(false);
+    }, 1000);
+  };
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // ✅ Replace with your actual signup API call
+    setTimeout(() => {
+      authenticate("/account");
+      setIsLoading(false);
+    }, 1000);
   };
 
   return (
@@ -195,14 +207,21 @@ export default function AuthPage() {
                 </div>
 
                 <div className="flex items-start gap-2">
-                  <input type="checkbox" required className="mt-1 rounded border-border" />
+                  <input
+                    type="checkbox"
+                    required
+                    className="mt-1 rounded border-border"
+                  />
                   <span className="text-xs text-muted-foreground">
                     I agree to the{" "}
                     <Link href="/terms" className="text-primary hover:underline">
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy" className="text-primary hover:underline">
+                    <Link
+                      href="/privacy"
+                      className="text-primary hover:underline"
+                    >
                       Privacy Policy
                     </Link>
                   </span>
