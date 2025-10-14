@@ -19,7 +19,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/co
 import { mockProducts, categories } from "@/lib/mockData";
 import { Star, SlidersHorizontal } from "lucide-react";
 
-export default function ShopPage() {
+export default function ShopContent() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -142,7 +142,6 @@ export default function ShopPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       {/* Header */}
-        
       <div className="mb-8">
         <h1 className="font-serif text-4xl font-bold mb-2">Shop Frames</h1>
         <p className="text-gray-500">
