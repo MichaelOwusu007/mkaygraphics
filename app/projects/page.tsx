@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import "./projects.css";
+
 
 const ProjectPage: React.FC = () => {
   const images: string[] = [
