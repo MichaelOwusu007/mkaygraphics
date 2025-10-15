@@ -15,11 +15,11 @@ export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  // ✅ Proper authentication setter
+  // ✅ Local authentication handler
   const authenticate = (redirectTo: string) => {
     localStorage.setItem("isAuthenticated", "true");
 
-    // 👇 Dispatch a custom event your Header listens for (authChange)
+    // 👇 Notify all listeners (like Header components) that auth state changed
     window.dispatchEvent(new Event("authChange"));
 
     router.push(redirectTo);
@@ -29,7 +29,7 @@ export default function AuthPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // ✅ Replace with your actual login API call
+    // Simulate login
     setTimeout(() => {
       authenticate("/account");
       setIsLoading(false);
@@ -40,7 +40,7 @@ export default function AuthPage() {
     e.preventDefault();
     setIsLoading(true);
 
-    // ✅ Replace with your actual signup API call
+    // Simulate signup
     setTimeout(() => {
       authenticate("/account");
       setIsLoading(false);
@@ -218,10 +218,7 @@ export default function AuthPage() {
                       Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link
-                      href="/privacy"
-                      className="text-primary hover:underline"
-                    >
+                    <Link href="/privacy" className="text-primary hover:underline">
                       Privacy Policy
                     </Link>
                   </span>
