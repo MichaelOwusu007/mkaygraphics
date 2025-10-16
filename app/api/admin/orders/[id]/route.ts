@@ -7,10 +7,10 @@ interface UpdatePayload {
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } } // ✅ params is a plain object
+  context: { params: Promise<{ id: string }> } // ✅ Accept params as Promise
 ) {
   try {
-    const { id } = params;
+    const { id } = await context.params; // ✅ Await the params promise
     const body: UpdatePayload = await request.json();
 
     if (!id) {
