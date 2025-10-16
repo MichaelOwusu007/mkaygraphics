@@ -1,0 +1,4 @@
+project_id = "aishdfgggxityvfyecmx"
+
+[functions.cleanup-delivered-orders]
+verify_jwt = false

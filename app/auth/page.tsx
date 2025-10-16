@@ -1,61 +1,117 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Eye, EyeOff, Frame, Sparkles } from "lucide-react";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Eye, EyeOff, Frame, Sparkles } from 'lucide-react';
+
+// export const metadata = {
+//   title: 'Login / Register | FrameStation',
+//   description: 'Secure login and signup to access your creative workspace.',
+// };
 
 export default function AuthPage() {
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const router = useRouter();
 
-  // ✅ Local authentication handler
-  const authenticate = (redirectTo: string) => {
-    localStorage.setItem("isAuthenticated", "true");
+  const [signInData, setSignInData] = useState({ email: '', password: '' });
+  const [signUpData, setSignUpData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    password: '',
+  });
 
-    // 👇 Notify all listeners (like Header components) that auth state changed
-    window.dispatchEvent(new Event("authChange"));
+  // ✅ Session check on mount
+  useEffect(() => {
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        router.push('/account');
+      }
+    };
+    checkSession();
 
-    router.push(redirectTo);
-  };
+    const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'SIGNED_IN' && session) {
+        router.push('/account');
+      }
+    });
 
-  const handleSignIn = async (e: React.FormEvent<HTMLFormElement>) => {
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, [router]);
+
+  // ✅ Handle Sign In
+  const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login
-    setTimeout(() => {
-      authenticate("/account");
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: signInData.email,
+        password: signInData.password,
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success('Welcome back!');
+      }
+    } catch (err) {
+      toast.error('An error occurred during sign in');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
-  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+  // ✅ Handle Sign Up
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate signup
-    setTimeout(() => {
-      authenticate("/account");
+    try {
+      const { error } = await supabase.auth.signUp({
+        email: signUpData.email,
+        password: signUpData.password,
+        options: {
+          data: {
+            name: signUpData.name,
+            phone: signUpData.phone,
+          },
+          emailRedirectTo: `${window.location.origin}/`,
+        },
+      });
+
+      if (error) {
+        toast.error(error.message);
+      } else {
+        toast.success('Account created! Check your email to verify.');
+      }
+    } catch (err) {
+      toast.error('An error occurred during sign up');
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-background/95 to-accent/5 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="absolute inset-0 bg-grid-pattern opacity-5" />
+      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
 
       <Card className="w-full max-w-md relative overflow-hidden border-border/50 shadow-elegant animate-fade-in">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-primary opacity-10 blur-3xl" />
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-primary opacity-10 blur-3xl"></div>
 
         <div className="relative z-10 p-8">
-          {/* Header */}
           <div className="text-center mb-8">
             <div className="inline-flex items-center gap-2 mb-4">
               <Frame className="w-8 h-8 text-primary" />
@@ -69,24 +125,17 @@ export default function AuthPage() {
             </p>
           </div>
 
-          {/* Tabs */}
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2 mb-6">
-              <TabsTrigger
-                value="signin"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-              >
+              <TabsTrigger value="signin" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 Sign In
               </TabsTrigger>
-              <TabsTrigger
-                value="signup"
-                className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground"
-              >
+              <TabsTrigger value="signup" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                 Sign Up
               </TabsTrigger>
             </TabsList>
 
-            {/* Sign In Form */}
+            {/* Sign In */}
             <TabsContent value="signin" className="space-y-4 animate-fade-in">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
@@ -95,8 +144,11 @@ export default function AuthPage() {
                     id="signin-email"
                     type="email"
                     placeholder="you@example.com"
+                    value={signInData.email}
+                    onChange={(e) =>
+                      setSignInData({ ...signInData, email: e.target.value })
+                    }
                     required
-                    className="transition-all duration-300 focus:scale-[1.02]"
                   />
                 </div>
 
@@ -105,21 +157,21 @@ export default function AuthPage() {
                   <div className="relative">
                     <Input
                       id="signin-password"
-                      type={showPassword ? "text" : "password"}
+                      type={showPassword ? 'text' : 'password'}
                       placeholder="••••••••"
+                      value={signInData.password}
+                      onChange={(e) =>
+                        setSignInData({ ...signInData, password: e.target.value })
+                      }
                       required
-                      className="pr-10 transition-all duration-300 focus:scale-[1.02]"
+                      className="pr-10"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
@@ -129,122 +181,105 @@ export default function AuthPage() {
                     <input type="checkbox" className="rounded border-border" />
                     <span className="text-muted-foreground">Remember me</span>
                   </label>
-                  <Link
-                    href="/forgot-password"
-                    className="text-primary hover:underline"
-                  >
+                  <Link href="/forgot-password" className="text-primary hover:underline">
                     Forgot password?
                   </Link>
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-primary hover:opacity-90 transition-all duration-300 hover:scale-[1.02] shadow-glow"
+                  className="w-full bg-gradient-primary hover:opacity-90"
                   disabled={isLoading}
                 >
-                  {isLoading ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                      Signing in...
-                    </span>
-                  ) : (
-                    "Sign In"
-                  )}
+                  {isLoading ? 'Signing in...' : 'Sign In'}
                 </Button>
               </form>
             </TabsContent>
 
-            {/* Sign Up Form */}
+            {/* Sign Up */}
             <TabsContent value="signup" className="space-y-4 animate-fade-in">
               <form onSubmit={handleSignUp} className="space-y-4">
-                <div className="space-y-2">
+                <div>
                   <Label htmlFor="signup-name">Full Name</Label>
                   <Input
                     id="signup-name"
-                    type="text"
-                    placeholder="John Doe"
+                    value={signUpData.name}
+                    onChange={(e) =>
+                      setSignUpData({ ...signUpData, name: e.target.value })
+                    }
                     required
-                    className="transition-all duration-300 focus:scale-[1.02]"
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div>
                   <Label htmlFor="signup-email">Email</Label>
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="you@example.com"
+                    value={signUpData.email}
+                    onChange={(e) =>
+                      setSignUpData({ ...signUpData, email: e.target.value })
+                    }
                     required
-                    className="transition-all duration-300 focus:scale-[1.02]"
                   />
                 </div>
 
-                <div className="space-y-2">
+                <div>
+                  <Label htmlFor="signup-phone">Phone</Label>
+                  <Input
+                    id="signup-phone"
+                    type="tel"
+                    value={signUpData.phone}
+                    onChange={(e) =>
+                      setSignUpData({ ...signUpData, phone: e.target.value })
+                    }
+                  />
+                </div>
+
+                <div>
                   <Label htmlFor="signup-password">Password</Label>
                   <div className="relative">
                     <Input
                       id="signup-password"
-                      type={showPassword ? "text" : "password"}
-                      placeholder="••••••••"
+                      type={showPassword ? 'text' : 'password'}
+                      value={signUpData.password}
+                      onChange={(e) =>
+                        setSignUpData({ ...signUpData, password: e.target.value })
+                      }
+                      minLength={6}
                       required
-                      className="pr-10 transition-all duration-300 focus:scale-[1.02]"
+                      className="pr-10"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showPassword ? (
-                        <EyeOff className="w-4 h-4" />
-                      ) : (
-                        <Eye className="w-4 h-4" />
-                      )}
+                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                     </button>
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    Must be at least 8 characters long
-                  </p>
                 </div>
 
                 <div className="flex items-start gap-2">
-                  <input
-                    type="checkbox"
-                    required
-                    className="mt-1 rounded border-border"
-                  />
+                  <input type="checkbox" required className="mt-1 rounded border-border" />
                   <span className="text-xs text-muted-foreground">
-                    I agree to the{" "}
+                    I agree to the{' '}
                     <Link href="/terms" className="text-primary hover:underline">
                       Terms of Service
-                    </Link>{" "}
-                    and{" "}
+                    </Link>{' '}
+                    and{' '}
                     <Link href="/privacy" className="text-primary hover:underline">
                       Privacy Policy
                     </Link>
                   </span>
                 </div>
 
-                <Button
-                  type="submit"
-                  className="w-full bg-gradient-primary hover:opacity-90 transition-all duration-300 hover:scale-[1.02] shadow-glow"
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <span className="flex items-center gap-2">
-                      <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
-                      Creating account...
-                    </span>
-                  ) : (
-                    "Create Account"
-                  )}
+                <Button type="submit" className="w-full bg-gradient-primary hover:opacity-90">
+                  {isLoading ? 'Creating account...' : 'Create Account'}
                 </Button>
               </form>
             </TabsContent>
           </Tabs>
-
-          <p className="text-center text-sm text-muted-foreground mt-6">
-            By continuing, you agree to our Terms and Privacy Policy
-          </p>
         </div>
       </Card>
     </div>
