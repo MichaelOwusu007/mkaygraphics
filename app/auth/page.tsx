@@ -67,7 +67,7 @@ export default function AuthPage() {
       } else {
         toast.success('Welcome back!');
       }
-    } catch (err) {
+    } catch {
       toast.error('An error occurred during sign in');
     } finally {
       setIsLoading(false);
@@ -97,7 +97,7 @@ export default function AuthPage() {
       } else {
         toast.success('Account created! Check your email to verify.');
       }
-    } catch (err) {
+    } catch {
       toast.error('An error occurred during sign up');
     } finally {
       setIsLoading(false);

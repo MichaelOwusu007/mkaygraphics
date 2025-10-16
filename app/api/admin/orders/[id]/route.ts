@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabaseServer";
 
 interface UpdatePayload {
-  status?: string;
+  status: string;
 }
 
 export async function PATCH(
@@ -39,11 +39,10 @@ export async function PATCH(
 
     // ✅ Return updated order
     return NextResponse.json({ success: true, order: data });
-  } catch (err: any) {
+  } catch (err: unknown) {
+    const errorMessage =
+      err instanceof Error ? err.message : "Internal Server Error";
     console.error("PATCH error:", err);
-    return NextResponse.json(
-      { error: err?.message || "Internal Server Error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: errorMessage }, { status: 500 });
   }
 }

@@ -18,8 +18,27 @@ import {
   Building2,
   Image as ImageIcon,
 } from "lucide-react";
+import Image from "next/image";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+
+// Define types for user and address
+type SupabaseUser = {
+  id: string;
+  email: string;
+  user_metadata?: { name?: string };
+};
+
+type ShippingAddress = {
+  id: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  is_default?: boolean;
+};
 
 type PaymentMethod = "paypal" | "mobile-money" | "bank-transfer";
 
@@ -30,8 +49,8 @@ export default function CheckoutPage() {
   const [step, setStep] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>("paypal");
   const [showPayPalModal, setShowPayPalModal] = useState(false);
-  const [user, setUser] = useState<any>(null);
-  const [savedAddress, setSavedAddress] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [savedAddress, setSavedAddress] = useState<ShippingAddress | null>(null);
 
   const [shippingInfo, setShippingInfo] = useState({
     name: "",
@@ -56,7 +75,6 @@ export default function CheckoutPage() {
   const total = subtotal + shipping;
 
   useEffect(() => {
-    // on mount, check auth and load profile/address
     checkAuthAndLoadAddress();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -73,7 +91,7 @@ export default function CheckoutPage() {
         return;
       }
 
-      setUser(session.user);
+      setUser(session.user as SupabaseUser);
 
       // Fetch profile
       const { data: profile, error: profileError } = await supabase
@@ -99,7 +117,7 @@ export default function CheckoutPage() {
         .single();
 
       if (!addressError && address) {
-        setSavedAddress(address);
+        setSavedAddress(address as ShippingAddress);
         setShippingInfo({
           name: address.name || session.user.user_metadata?.name || "",
           email: session.user.email || "",
@@ -671,9 +689,11 @@ export default function CheckoutPage() {
                 {/* Product Items */}
                 {items.map((item, index) => (
                   <div key={index} className="flex gap-3">
-                    <img
+                    <Image
                       src={item.product.images[0]}
                       alt={item.product.title}
+                      width={64}
+                      height={64}
                       className="w-16 h-16 object-cover rounded"
                     />
                     <div className="flex-1 text-sm">

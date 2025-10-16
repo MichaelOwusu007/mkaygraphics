@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { supabase } from "@/integrations/supabase/client";
@@ -12,11 +12,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { User, Package, MapPin, Edit2, Save, X } from "lucide-react";
-
-// export const metadata = {
-//   title: "My Account | FrameStation",
-//   description: "Manage your profile, orders, and shipping information.",
-// };
 
 interface Profile {
   id: string;
@@ -34,19 +29,26 @@ interface ShippingAddress {
   country: string;
 }
 
+interface OrderItem {
+  product_name: string;
+  quantity: number;
+  price: number;
+}
+
 interface Order {
   id: string;
   created_at: string;
   status: string;
   total: number;
-  order_items: {
-    product_name: string;
-    quantity: number;
-    price: number;
-  }[];
+  order_items: OrderItem[];
 }
 
-const statusColors = {
+interface UserSession {
+  id: string;
+  email: string;
+}
+
+const statusColors: Record<string, string> = {
   delivered: "bg-green-500",
   shipped: "bg-blue-500",
   processing: "bg-yellow-500",
@@ -56,10 +58,8 @@ const statusColors = {
 
 export default function AccountPage() {
   const router = useRouter();
-// supabase is already imported from "@/integrations/supabase/client"
-// No need to call createClient, just use supabase directly.
 
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<UserSession | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [orders, setOrders] = useState<Order[]>([]);
   const [shippingAddress, setShippingAddress] = useState<ShippingAddress | null>(null);
@@ -69,47 +69,21 @@ export default function AccountPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
-  const checkAuth = async () => {
-    const { data } = await supabase.auth.getSession();
-
-    if (!data.session) {
-      router.push("/auth");
-      return;
-    }
-
-    setUser(data.session.user);
-    await Promise.all([
-      fetchProfile(data.session.user.id),
-      fetchOrders(data.session.user.id),
-      fetchShippingAddress(data.session.user.id),
-    ]);
-    setIsLoading(false);
-  };
-
-  const fetchProfile = async (userId: string) => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("id", userId)
-      .single();
-
+  const fetchProfile = useCallback(async (userId: string) => {
+    const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
     if (error) {
       toast.error("Error fetching profile");
       return;
     }
-
     setProfile(data);
     setEditedName(data.name);
-  };
+  }, []);
 
-  const fetchOrders = async (userId: string) => {
+  const fetchOrders = useCallback(async (userId: string) => {
     const { data, error } = await supabase
       .from("orders")
-      .select(`
+      .select(
+        `
         id,
         created_at,
         status,
@@ -119,7 +93,8 @@ export default function AccountPage() {
           quantity,
           price
         )
-      `)
+      `
+      )
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
@@ -129,9 +104,9 @@ export default function AccountPage() {
     }
 
     setOrders(data || []);
-  };
+  }, []);
 
-  const fetchShippingAddress = async (userId: string) => {
+  const fetchShippingAddress = useCallback(async (userId: string) => {
     const { data, error } = await supabase
       .from("shipping_addresses")
       .select("*")
@@ -142,18 +117,42 @@ export default function AccountPage() {
     if (!error && data) {
       setShippingAddress(data);
     }
-  };
+  }, []);
+
+  const checkAuth = useCallback(async () => {
+    const { data } = await supabase.auth.getSession();
+
+    if (!data.session) {
+      router.push("/auth");
+      return;
+    }
+
+    const currentUser = {
+      id: data.session.user.id,
+      email: data.session.user.email ?? "",
+    };
+
+    setUser(currentUser);
+
+    await Promise.all([
+      fetchProfile(currentUser.id),
+      fetchOrders(currentUser.id),
+      fetchShippingAddress(currentUser.id),
+    ]);
+
+    setIsLoading(false);
+  }, [fetchProfile, fetchOrders, fetchShippingAddress, router]);
+
+  useEffect(() => {
+    checkAuth();
+  }, [checkAuth]);
 
   const handleUpdateProfile = async () => {
     if (!profile) return;
     setIsLoading(true);
 
     if (editedName !== profile.name) {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ name: editedName })
-        .eq("id", profile.id);
-
+      const { error } = await supabase.from("profiles").update({ name: editedName }).eq("id", profile.id);
       if (error) {
         toast.error("Error updating profile");
         setIsLoading(false);
@@ -191,11 +190,6 @@ export default function AccountPage() {
     setConfirmPassword("");
     await fetchProfile(profile.id);
     setIsLoading(false);
-  };
-
-  const handleBuyAgain = (order: Order) => {
-    toast.success("Items added to cart!");
-    // Implement cart logic here if needed
   };
 
   const totalSpent = orders.reduce((sum, order) => sum + Number(order.total), 0);
@@ -349,7 +343,7 @@ export default function AccountPage() {
         <CardContent>
           {orders.length === 0 ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground mb-4">You haven't placed any orders yet</p>
+              <p className="text-muted-foreground mb-4">You haven&apos;t placed any orders yet</p>
               <Button asChild>
                 <Link href="/shop">Start Shopping</Link>
               </Button>
@@ -362,7 +356,7 @@ export default function AccountPage() {
                     <div>
                       <div className="flex items-center gap-3 mb-2">
                         <h3 className="font-semibold text-lg">Order #{order.id.slice(0, 8)}</h3>
-                        <Badge className={statusColors[order.status as keyof typeof statusColors]}>
+                        <Badge className={statusColors[order.status] || "bg-gray-500"}>
                           {order.status}
                         </Badge>
                       </div>
@@ -392,11 +386,6 @@ export default function AccountPage() {
                     <Button variant="outline" size="sm" asChild>
                       <Link href={`/order/${order.id}`}>View Details</Link>
                     </Button>
-                    {order.status === "delivered" && (
-                      <Button variant="outline" size="sm" onClick={() => handleBuyAgain(order)}>
-                        Buy Again
-                      </Button>
-                    )}
                   </div>
                 </div>
               ))}
