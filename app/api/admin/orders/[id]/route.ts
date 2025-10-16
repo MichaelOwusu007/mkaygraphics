@@ -1,13 +1,13 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { supabaseServer } from "@/lib/supabaseServer";
 
 interface UpdatePayload {
-  status: string;
+  status?: string;
 }
 
 export async function PATCH(
-  request: Request,
-  { params }: { params: { id: string } }
+  request: NextRequest,
+  { params }: { params: { id: string } } // ✅ params is a plain object
 ) {
   try {
     const { id } = params;
@@ -21,7 +21,6 @@ export async function PATCH(
       return NextResponse.json({ error: "Missing status" }, { status: 400 });
     }
 
-    // ✅ Update the order status
     const { data, error } = await supabaseServer
       .from("orders")
       .update({ status: body.status })
@@ -37,12 +36,12 @@ export async function PATCH(
       );
     }
 
-    // ✅ Return updated order
     return NextResponse.json({ success: true, order: data });
-  } catch (err: unknown) {
-    const errorMessage =
-      err instanceof Error ? err.message : "Internal Server Error";
+  } catch (err) {
     console.error("PATCH error:", err);
-    return NextResponse.json({ error: errorMessage }, { status: 500 });
+    return NextResponse.json(
+      { error: (err as Error).message || "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
