@@ -171,12 +171,12 @@ export default function AuthPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between text-sm">
+                {/* <div className="flex items-center justify-between text-sm">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input type="checkbox" className="rounded border-border" />
                     <span className="text-muted-foreground">Remember me</span>
@@ -184,11 +184,11 @@ export default function AuthPage() {
                   <Link href="/forgot-password" className="text-primary hover:underline">
                     Forgot password?
                   </Link>
-                </div>
+                </div> */}
 
                 <Button
                   type="submit"
-                  className="w-full bg-gradient-primary hover:opacity-90"
+                  className="w-full bg-black cursor-pointer hover:opacity-90"
                   disabled={isLoading}
                 >
                   {isLoading ? 'Signing in...' : 'Sign In'}
@@ -255,7 +255,7 @@ export default function AuthPage() {
                       onClick={() => setShowPassword(!showPassword)}
                       className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                     >
-                      {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                      {showPassword ? <Eye className="w-4 h-4" /> : <EyeOff className="w-4 h-4" />}
                     </button>
                   </div>
                 </div>
@@ -274,7 +274,7 @@ export default function AuthPage() {
                   </span>
                 </div>
 
-                <Button type="submit" className="w-full bg-gradient-primary hover:opacity-90">
+                <Button type="submit" className="w-full bg-black cursor-pointer hover:opacity-90">
                   {isLoading ? 'Creating account...' : 'Create Account'}
                 </Button>
               </form>
