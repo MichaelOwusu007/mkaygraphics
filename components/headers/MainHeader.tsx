@@ -174,7 +174,7 @@ export const Header = () => {
             <div className="flex items-center space-x-4">
               {!isAuthenticated ? (
                 <Link href="/auth">
-                  <Button className="bg-gradient-primary hover:opacity-90 hidden md:flex">
+                  <Button className="bg-black hover:opacity-70 hidden md:flex">
                     Sign Up
                   </Button>
                 </Link>
