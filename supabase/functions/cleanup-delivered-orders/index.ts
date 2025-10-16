@@ -1,30 +1,29 @@
-import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+// app/api/admin/cleanup-delivered-orders/route.ts
+import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@supabase/supabase-js";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-serve(async (req) => {
+export async function GET(req: NextRequest) {
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
+    return NextResponse.json(null, { headers: corsHeaders });
   }
 
   try {
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseServiceKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    
+    const supabaseUrl = process.env.SUPABASE_URL!;
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     console.log("Starting cleanup of delivered orders older than 24 hours...");
 
-    // Calculate the timestamp for 24 hours ago
+    // 24 hours ago timestamp
     const twentyFourHoursAgo = new Date();
     twentyFourHoursAgo.setHours(twentyFourHoursAgo.getHours() - 24);
 
-    // Delete delivered orders older than 24 hours
     const { data: deletedOrders, error } = await supabase
       .from("orders")
       .delete()
@@ -34,36 +33,21 @@ serve(async (req) => {
 
     if (error) {
       console.error("Error deleting old orders:", error);
-      return new Response(
-        JSON.stringify({ error: error.message }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+      return NextResponse.json({ error: error.message }, { status: 500, headers: corsHeaders });
     }
 
     console.log(`Successfully deleted ${deletedOrders?.length || 0} orders`);
 
-    return new Response(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         success: true,
         deletedCount: deletedOrders?.length || 0,
         message: `Deleted ${deletedOrders?.length || 0} delivered orders older than 24 hours`,
-      }),
-      {
-        status: 200,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      },
+      { status: 200, headers: corsHeaders }
     );
-  } catch (error: any) {
-    console.error("Error in cleanup function:", error);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
-    );
+  } catch (err: any) {
+    console.error("Error in cleanup function:", err);
+    return NextResponse.json({ error: err.message }, { status: 500, headers: corsHeaders });
   }
-});
+}
