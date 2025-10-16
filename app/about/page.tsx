@@ -5,7 +5,7 @@ export default function About() {
     <div className="min-h-screen py-20">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center mb-16 animate-fade-in">
-          <h1 className="text-5xl font-serif font-bold mb-6">About Us</h1>
+          <h1 className="text-5xl font-bold mb-6">About Us</h1>
           <p className="text-xl text-muted-foreground">
             Your premier destination for custom framing and professional photo editing services
           </p>
@@ -13,7 +13,7 @@ export default function About() {
 
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto mb-20">
           <div className="space-y-6 animate-fade-in">
-            <h2 className="text-3xl font-serif font-bold">Our Story</h2>
+            <h2 className="text-3xl  font-bold">Our Story</h2>
             <p className="text-muted-foreground leading-relaxed">
               Founded with a passion by <span className='font-bold'>MICHAEL NANA YAW OWUSU WIAFE</span> for preserving memories and creating beautiful displays, 
               we&apos;ve been serving our community for over 3 years. What started as a small 
