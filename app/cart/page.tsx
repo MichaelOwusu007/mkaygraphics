@@ -24,9 +24,10 @@ export default function CartPage() {
   const [promoApplied, setPromoApplied] = useState(false);
 
   const subtotal = getTotalPrice();
-  const shipping = subtotal > 100 ? 0 : 12.99;
-  const discount = promoApplied ? subtotal * 0.1 : 0;
-  const total = subtotal + shipping - discount;
+    const shipping = subtotal > 500 ? 0 : 50; // Example: free shipping over 500, else 50
+  const total = subtotal;
+  //const discount = promoApplied ? subtotal * 0.1 : 0;
+  //const total = subtotal + shipping - discount;
 
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
@@ -208,20 +209,20 @@ export default function CartPage() {
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
+                    {shipping === 0 ? "FREE" : "15 GHC+"}
                   </span>
                 </div>
                 {promoApplied && (
                   <div className="flex justify-between text-secondary">
                     <span>Promo Code</span>
-                    <span>-${discount.toFixed(2)}</span>
+                    {/* <span>-${discount.toFixed(2)}</span> */}
                   </div>
                 )}
-                {subtotal > 0 && subtotal < 100 && (
+                {/* {subtotal > 0 && subtotal < 100 && (
                   <p className="text-xs text-muted-foreground">
                     Add ${(100 - subtotal).toFixed(2)} more for free shipping
                   </p>
-                )}
+                )} */}
               </div>
 
               <div className="border-t pt-3">

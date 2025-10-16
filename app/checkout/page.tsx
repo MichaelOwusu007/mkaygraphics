@@ -71,8 +71,8 @@ export default function CheckoutPage() {
   });
 
   const subtotal = getTotalPrice();
-  const shipping = subtotal > 100 ? 0 : 12.99;
-  const total = subtotal + shipping;
+  const shipping = subtotal > 500 ? 0 : 50; // Example: free shipping over 500, else 50
+  const total = subtotal;
 
   useEffect(() => {
     checkAuthAndLoadAddress();
@@ -732,15 +732,16 @@ export default function CheckoutPage() {
                   <span className="font-semibold">${subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="text-muted-foreground">Delivery</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? "FREE" : `$${shipping.toFixed(2)}`}
+                    {shipping === 0 ? "FREE" : "15 GHC+"}
                   </span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
                   <span>Total</span>
                   <span>${total.toFixed(2)}</span>
                 </div>
+                <span className="text-[14px] text-gray-600">Pay your delivery fee upon arival-price base on location</span>
               </div>
             </CardContent>
           </Card>

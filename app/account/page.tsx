@@ -412,7 +412,7 @@ export default function AccountPage() {
                           {item.quantity}x {item.product_name}
                         </span>
                         <span className="font-semibold">
-                          GH₵{(Number(item.price) * item.quantity).toFixed(2)}
+                          GH₵{(Number(item.price) * item.quantity).toFixed(2)} single
                         </span>
                       </div>
                     ))}
@@ -420,19 +420,20 @@ export default function AccountPage() {
 
                   <div className="flex gap-3 pt-3">
                     <Button
+                    className="cursor-pointer hover:bg-yellow-500"
                       variant="outline"
                       size="sm"
                       onClick={() => handleViewDetails(order)}
                     >
                       View Details
                     </Button>
-                    <Button
+                    {/* <Button
                       variant="outline"
                       size="sm"
                       onClick={() => handleBuyAgain(order)}
                     >
                       Order Again
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               ))}
@@ -492,7 +493,7 @@ export default function AccountPage() {
                           </p>
                         </div>
                         <p className="font-bold">
-                          GH₵{(Number(item.price) * item.quantity).toFixed(2)}
+                          GH₵{(Number(item.price) * item.quantity).toFixed(2)} single
                         </p>
                       </div>
                     </div>
@@ -501,7 +502,7 @@ export default function AccountPage() {
               </div>
               {/* Action Buttons */}
               <div className="flex gap-3 pt-4 border-t">
-                <Button
+                {/* <Button
                   className="flex-1"
                   onClick={() => {
                     handleBuyAgain(selectedOrder);
@@ -509,10 +510,10 @@ export default function AccountPage() {
                   }}
                 >
                   Order Again
-                </Button>
+                </Button> */}
                 <Button
                   variant="outline"
-                  className="flex-1"
+                  className="flex-1 hover:bg-red-600 cursor-pointer"
                   onClick={() => setIsOrderDialogOpen(false)}
                 >
                   Close
