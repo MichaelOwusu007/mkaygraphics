@@ -12,6 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { User, Package, MapPin, Edit2, Save, X } from "lucide-react";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
+import { useCartStore } from "@/stores/cartStore";
 
 interface Profile {
   id: string;
@@ -68,6 +70,10 @@ export default function AccountPage() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
+  const [isOrderDialogOpen, setIsOrderDialogOpen] = useState(false);
+
+  const { addItem } = useCartStore();
 
   const fetchProfile = useCallback(async (userId: string) => {
     const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
@@ -190,6 +196,36 @@ export default function AccountPage() {
     setConfirmPassword("");
     await fetchProfile(profile.id);
     setIsLoading(false);
+  };
+
+  const handleViewDetails = (order: Order) => {
+    setSelectedOrder(order);
+    setIsOrderDialogOpen(true);
+  };
+
+  const handleBuyAgain = (order: Order) => {
+    order.order_items.forEach((item) => {
+      // You may want to fetch the real product object here if available
+      const product = {
+        id: item.product_name, // Use product_id if available
+        title: item.product_name,
+        name: item.product_name,
+        price: Number(item.price),
+        images: ["/placeholder.svg"],
+        image: "/placeholder.svg",
+        category: "Frame",
+        description: "",
+        variants: [],
+        stock: 10,
+        rating: 5,
+        reviewCount: 0,
+        reviews: [],
+        sku: item.product_name,
+        tags: [],
+      };
+      addItem(product, {}, item.quantity);
+    });
+    toast.success(`${order.order_items.length} item(s) added to cart!`);
   };
 
   const totalSpent = orders.reduce((sum, order) => sum + Number(order.total), 0);
@@ -383,8 +419,19 @@ export default function AccountPage() {
                   </div>
 
                   <div className="flex gap-3 pt-3">
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href={`/order/${order.id}`}>View Details</Link>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleViewDetails(order)}
+                    >
+                      View Details
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleBuyAgain(order)}
+                    >
+                      Order Again
                     </Button>
                   </div>
                 </div>
@@ -393,6 +440,88 @@ export default function AccountPage() {
           )}
         </CardContent>
       </Card>
+
+      {/* Order Details Dialog */}
+      <Dialog open={isOrderDialogOpen} onOpenChange={setIsOrderDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Order Details</DialogTitle>
+            <DialogDescription>
+              Order #{selectedOrder?.id.slice(0, 8)}
+            </DialogDescription>
+          </DialogHeader>
+          {selectedOrder && (
+            <div className="space-y-6">
+              {/* Order Info */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-muted-foreground">Order Date</p>
+                  <p className="font-semibold">
+                    {new Date(selectedOrder.created_at).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Status</p>
+                  <Badge className={statusColors[selectedOrder.status]}>
+                    {selectedOrder.status}
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Total</p>
+                  <p className="font-bold text-lg">GH₵{Number(selectedOrder.total).toFixed(2)}</p>
+                </div>
+              </div>
+              {/* Order Items */}
+              <div>
+                <h3 className="font-semibold mb-3 flex items-center gap-2">
+                  <Package className="h-4 w-4" />
+                  Items Ordered
+                </h3>
+                <div className="space-y-3">
+                  {selectedOrder.order_items.map((item, idx) => (
+                    <div key={idx} className="border rounded-lg p-4">
+                      <div className="flex justify-between items-start mb-2">
+                        <div className="flex-1">
+                          <p className="font-semibold">{item.product_name}</p>
+                          <p className="text-sm text-muted-foreground">
+                            Quantity: {item.quantity}
+                          </p>
+                        </div>
+                        <p className="font-bold">
+                          GH₵{(Number(item.price) * item.quantity).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Action Buttons */}
+              <div className="flex gap-3 pt-4 border-t">
+                <Button
+                  className="flex-1"
+                  onClick={() => {
+                    handleBuyAgain(selectedOrder);
+                    setIsOrderDialogOpen(false);
+                  }}
+                >
+                  Order Again
+                </Button>
+                <Button
+                  variant="outline"
+                  className="flex-1"
+                  onClick={() => setIsOrderDialogOpen(false)}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
