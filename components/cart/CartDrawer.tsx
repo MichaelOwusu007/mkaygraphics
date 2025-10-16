@@ -22,11 +22,11 @@ export const CartDrawer = () => {
 
   const totalPrice = getTotalPrice();
 
-  // ✅ Generate a unique key for selected variants
+  // ✅ FIXED: Correct variant key generator
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([ value]) => value)
+      .map(([_, value]) => value)
       .join('-');
   };
 
@@ -37,7 +37,6 @@ export const CartDrawer = () => {
           <SheetTitle className="font-serif text-xl">Shopping Cart</SheetTitle>
         </SheetHeader>
 
-        {/* ✅ Empty Cart State */}
         {items.length === 0 && serviceItems.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-[50vh] space-y-4">
             <p className="text-gray-500">Your cart is empty</p>
