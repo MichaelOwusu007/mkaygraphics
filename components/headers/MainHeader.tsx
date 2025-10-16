@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ShoppingCart, Search, Menu, X, Frame, User, ChevronDown } from 'lucide-react';
+import { ShoppingCart, Search, Menu, X, Frame, User, } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import { supabase } from '@/integrations/supabase/client';
@@ -59,63 +59,95 @@ export const Header = () => {
 
             {/* Desktop Navigation - Changes based on auth */}
             {!isAuthenticated ? (
-              <nav className="hidden md:flex items-center space-x-8">
-                <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
-                  About Us
-                </Link>
-                <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
-                  Blog
-                </Link>
-                <Link href="/shop" className="text-sm font-medium transition-colors hover:text-primary">
-                  Shop Frames
-                </Link>
-                <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
-                  Contact
-                </Link>
-                <NavigationMenu>
-                  <NavigationMenuList>
-                    <NavigationMenuItem>
-                      <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
-                        Services
-                      </NavigationMenuTrigger>
-                      <NavigationMenuContent>
-                        <ul className="grid w-48 gap-1 p-2">
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href="/services/editing"
-                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              >
-                                Editing Services
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href="/services/photobook"
-                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              >
-                                Photobook Services
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                          <li>
-                            <NavigationMenuLink asChild>
-                              <Link
-                                href="/services/photography"
-                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                              >
-                                Photography
-                              </Link>
-                            </NavigationMenuLink>
-                          </li>
-                        </ul>
-                      </NavigationMenuContent>
-                    </NavigationMenuItem>
-                  </NavigationMenuList>
-                </NavigationMenu>
-              </nav>
+              <>
+                <nav className="hidden md:flex items-center space-x-8">
+                  <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
+                    About Us
+                  </Link>
+                  <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
+                    Blog
+                  </Link>
+                  <Link href="/shop" className="text-sm font-medium transition-colors hover:text-primary">
+                    Shop Frames
+                  </Link>
+                  <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
+                    Contact
+                  </Link>
+                  <NavigationMenu>
+                    <NavigationMenuList>
+                      <NavigationMenuItem>
+                        <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                          Services
+                        </NavigationMenuTrigger>
+                        <NavigationMenuContent>
+                          <ul className="grid w-48 gap-1 p-2">
+                            <li>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href="/services/editing"
+                                  className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  Editing Services
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                            <li>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href="/services/photobook"
+                                  className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  Photobook Services
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                            <li>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href="/services/design"
+                                  className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  Design Services
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                            <li>
+                              <NavigationMenuLink asChild>
+                                <Link
+                                  href="/services/photography"
+                                  className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                                >
+                                  Photography
+                                </Link>
+                              </NavigationMenuLink>
+                            </li>
+                          </ul>
+                        </NavigationMenuContent>
+                      </NavigationMenuItem>
+                    </NavigationMenuList>
+                  </NavigationMenu>
+                </nav>
+                <div className=" -mr-40 flex items-center">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="relative cursor-pointer"
+                    onClick={toggleCart}
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    {getTotalItems() > 0 && (
+                      <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center animate-scale-in">
+                        {getTotalItems()}
+                      </span>
+                    )}
+                  </Button>
+                  {/* <Link href="/auth">
+                    <Button className="bg-black hover:opacity-70">
+                      Sign Up
+                    </Button>
+                  </Link> */}
+                </div>
+              </>
             ) : (
               <nav className="hidden md:flex items-center space-x-8">
                 <Link href="/shop" className="text-sm font-medium transition-colors hover:text-primary">
@@ -152,6 +184,16 @@ export const Header = () => {
                           <li>
                             <NavigationMenuLink asChild>
                               <Link
+                                href="/services/design"
+                                className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                              >
+                                Design Services
+                              </Link>
+                            </NavigationMenuLink>
+                          </li>
+                          <li>
+                            <NavigationMenuLink asChild>
+                              <Link
                                 href="/services/photography"
                                 className="block select-none rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                               >
@@ -174,8 +216,8 @@ export const Header = () => {
             <div className="flex items-center space-x-4">
               {!isAuthenticated ? (
                 <Link href="/auth">
-                  <Button className="bg-black hover:opacity-70 hidden md:flex">
-                    Sign Up
+                  <Button className="bg-black hover:bg-yellow-500 cursor-pointer hidden md:flex">
+                    SignUp
                   </Button>
                 </Link>
               ) : (
@@ -285,6 +327,13 @@ export const Header = () => {
                       Photobook Services
                     </Link>
                     <Link
+                      href="/services/design"
+                      className="block py-2 pl-4 text-sm font-medium transition-colors hover:text-primary"
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      Design services
+                    </Link>
+                      <Link
                       href="/services/photography"
                       className="block py-2 pl-4 text-sm font-medium transition-colors hover:text-primary"
                       onClick={() => setMobileMenuOpen(false)}
