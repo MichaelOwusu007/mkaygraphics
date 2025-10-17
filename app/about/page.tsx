@@ -7,7 +7,7 @@ export default function About() {
         <div className="max-w-4xl mx-auto text-center mb-16 animate-fade-in">
           <h1 className="text-5xl font-bold mb-6">About Us</h1>
           <p className="text-xl text-muted-foreground">
-            Your premier destination for custom framing and professional photo editing services
+            Your premier destination for custom framing,beautiful photobook, photography, graphic design and professional photo editing services since 2020.
           </p>
         </div>
 
