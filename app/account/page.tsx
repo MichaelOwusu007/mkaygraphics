@@ -203,30 +203,30 @@ export default function AccountPage() {
     setIsOrderDialogOpen(true);
   };
 
-  const handleBuyAgain = (order: Order) => {
-    order.order_items.forEach((item) => {
-      // You may want to fetch the real product object here if available
-      const product = {
-        id: item.product_name, // Use product_id if available
-        title: item.product_name,
-        name: item.product_name,
-        price: Number(item.price),
-        images: ["/placeholder.svg"],
-        image: "/placeholder.svg",
-        category: "Frame",
-        description: "",
-        variants: [],
-        stock: 10,
-        rating: 5,
-        reviewCount: 0,
-        reviews: [],
-        sku: item.product_name,
-        tags: [],
-      };
-      addItem(product, {}, item.quantity);
-    });
-    toast.success(`${order.order_items.length} item(s) added to cart!`);
-  };
+//   const handleBuyAgain = (order: Order) => {
+//     order.order_items.forEach((item) => {
+//       // You may want to fetch the real product object here if available
+//       const product = {
+//         id: item.product_name, // Use product_id if available
+//         title: item.product_name,
+//         name: item.product_name,
+//         price: Number(item.price),
+//         images: ["/placeholder.svg"],
+//         image: "/placeholder.svg",
+//         category: "Frame",
+//         description: "",
+//         variants: [],
+//         stock: 10,
+//         rating: 5,
+//         reviewCount: 0,
+//         reviews: [],
+//         sku: item.product_name,
+//         tags: [],
+//       };
+//       addItem(product, {}, item.quantity);
+//     });
+//     toast.success(`${order.order_items.length} item(s) added to cart!`);
+//   };
 
   const totalSpent = orders.reduce((sum, order) => sum + Number(order.total), 0);
 
