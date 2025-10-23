@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,12 @@ type DraftService = {
   turnaroundTime?: string;
 };
 
+type User = {
+  id: string;
+  email?: string | null;
+  [key: string]: any;
+};
+
 export default function ServiceCheckoutPage() {
   const router = useRouter();
 
@@ -32,7 +39,7 @@ export default function ServiceCheckoutPage() {
   const [step, setStep] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paypal');
   const [showPayPalModal, setShowPayPalModal] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
 
   const [projectInfo, setProjectInfo] = useState({
     name: '',
@@ -46,7 +53,8 @@ export default function ServiceCheckoutPage() {
     specialRequirements: '',
   });
 
-  const [paymentInfo, setPaymentInfo] = useState({
+  // Keep paymentInfo state for validation (setter not needed in current UI)
+  const [paymentInfo] = useState({
     mobileNumber: '',
     mobileProvider: '',
     bankName: '',
@@ -79,7 +87,7 @@ export default function ServiceCheckoutPage() {
         router.push("/auth");
         return;
       }
-      setUser(session.user);
+      setUser(session.user as User);
 
       const { data: profile } = await supabase
         .from("profiles")
@@ -199,7 +207,7 @@ export default function ServiceCheckoutPage() {
       // success: clear draft
       try {
         sessionStorage.removeItem("serviceCheckoutDraft");
-      } catch (e) {
+      } catch {
         /* ignore */
       }
 
@@ -209,7 +217,7 @@ export default function ServiceCheckoutPage() {
       setTimeout(() => {
         router.push('/account');
       }, 2500);
-    } catch (err: any) {
+    } catch (err) {
       console.error('Complete order error:', err);
       toast.error('Error completing order');
     }
@@ -288,10 +296,6 @@ export default function ServiceCheckoutPage() {
                       <Input id="projectTitle" placeholder="e.g., Wedding Album Editing" value={projectInfo.projectTitle} onChange={(e) => setProjectInfo({ ...projectInfo, projectTitle: e.target.value })} required />
                     </div>
                     <div>
-                      <Label htmlFor="projectDescription">Project Description *</Label>
-                      <Textarea id="projectDescription" placeholder="Describe your project..." value={projectInfo.projectDescription} onChange={(e) => setProjectInfo({ ...projectInfo, projectDescription: e.target.value })} className="min-h-[120px]" required />
-                    </div>
-                         <div>
                       <Label htmlFor="projectDescription">Project Description *</Label>
                       <Textarea
                         id="projectDescription"
@@ -408,7 +412,7 @@ export default function ServiceCheckoutPage() {
                 </div>
                 <h2 className="font-serif text-3xl font-bold mb-4">Order Confirmed!</h2>
                 <p className="text-muted-foreground mb-6">
-                  Thank you for your order. We've received your project details and will contact you within 24 hours to discuss next steps.
+                  Thank you for your order. We&apos;ve received your project details and will contact you within 24 hours to discuss next steps.
                 </p>
 
                 <Button onClick={() => router.push('/account')} size="lg">View Order Status</Button>
@@ -426,7 +430,9 @@ export default function ServiceCheckoutPage() {
             <CardContent className="space-y-4">
               <div className="space-y-3">
                 <div className="flex gap-3 pb-3 border-b last:border-0">
-                  <img src={draft.image} alt={draft.title} className="w-16 h-16 object-cover rounded" />
+                  <div className="relative w-16 h-16 rounded overflow-hidden">
+                    <Image src={draft.image} alt={draft.title} fill sizes="64px" style={{ objectFit: 'cover' }} />
+                  </div>
                   <div className="flex-1 min-w-0">
                     <h3 className="font-semibold text-sm mb-1 truncate">{draft.title}</h3>
                     <p className="text-xs text-muted-foreground mb-1">

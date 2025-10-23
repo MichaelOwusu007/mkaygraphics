@@ -116,7 +116,7 @@ export default function ServiceDetailPage() {
                 </div>
 
                 <div className="pt-6 border-t">
-                  <h3 className="font-semibold text-lg mb-4">What's Included:</h3>
+                  <h3 className="font-semibold text-lg mb-4">What&apos;s Included:</h3>
                   <ul className="space-y-3">
                     {service.features.map((feature: string, index: number) => (
                       <li key={index} className="flex items-start gap-3">
@@ -169,7 +169,7 @@ export default function ServiceDetailPage() {
                         className="text-lg font-semibold"
                       />
                       <p className="text-xs text-muted-foreground mt-2">
-                        💡 You'll share your files after checkout via secure
+                        💡 You&apos;ll share your files after checkout via secure
                         transfer
                       </p>
                     </div>
@@ -208,7 +208,7 @@ export default function ServiceDetailPage() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Shield className="h-4 w-4 text-secondary" />
-                      <span>Secure file handling & privacy</span>
+                      <span>Secure file handling &amp; privacy</span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="h-4 w-4 text-secondary" />

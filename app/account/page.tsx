@@ -13,7 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { User, Package, MapPin, Edit2, Save, X } from "lucide-react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { useCartStore } from "@/stores/cartStore";
+//import { useCartStore } from "@/stores/cartStore";
 
 interface Profile {
   id: string;
