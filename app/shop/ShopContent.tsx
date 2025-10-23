@@ -26,7 +26,7 @@ export default function ShopContent() {
 
   const categoryParam = searchParams.get("category") || "all";
 
-  const [priceRange, setPriceRange] = useState([0, 200]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("featured");
 

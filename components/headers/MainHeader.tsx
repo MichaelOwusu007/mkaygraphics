@@ -65,7 +65,7 @@ export const Header = () => {
             href="/"
             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
           >
-            <Frame className="h-6 w-6 text-primary" />
+            <Frame className="h-6  w-6 text-yellow-600" />
             <span className="text-xl font-semibold lg:font-bold">
               MkayGraphix
             </span>
@@ -99,16 +99,19 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
-              About Us
-            </Link>
-            <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
-              Blog
-            </Link>
             <Link href="/shop" className="text-sm font-medium transition-colors hover:text-primary">
               Shop Frames
             </Link>
-            <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
+            <Link href="/projects" className="text-sm font-medium transition-colors hover:text-primary">
+              Project
+            </Link>
+            <Link href="/about" className="text-sm font-medium transition-colors hover:text-primary">
+              About
+            </Link>
+             <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
+              Blog
+            </Link>
+            <Link href="/Contact" className="text-sm font-medium transition-colors hover:text-primary">
               Contact
             </Link>
 
@@ -116,7 +119,7 @@ export const Header = () => {
             <NavigationMenu>
               <NavigationMenuList>
                 <NavigationMenuItem>
-                  <NavigationMenuTrigger className="text-sm font-medium bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
+                  <NavigationMenuTrigger className="text-sm font-medium cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
                     Services
                   </NavigationMenuTrigger>
                   <NavigationMenuContent>
@@ -150,10 +153,10 @@ export const Header = () => {
             <Button
               variant="ghost"
               size="icon"
-              className="relative"
+              className="relative cursor-pointer"
               onClick={toggleCart}
             >
-              <ShoppingCart className="h-5 w-5" />
+              <ShoppingCart className="h-5 w-5 cursor-pointer" />
               {getTotalItems() > 0 && (
                 <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs flex items-center justify-center animate-scale-in">
                   {getTotalItems()}
@@ -163,7 +166,7 @@ export const Header = () => {
 
             {!isAuthenticated ? (
               <Link href="/auth">
-                <Button className="bg-black hover:bg-yellow-500">
+                <Button className="bg-black hover:bg-yellow-600 cursor-pointer">
                   Sign Up
                 </Button>
               </Link>
@@ -215,10 +218,11 @@ export const Header = () => {
           >
             <div className="px-4 py-4 space-y-4">
               {[
-                ["/about", "About Us"],
-                ["/blog", "Blog"],
                 ["/shop", "Shop Frames"],
-                ["/contact", "Contact"],
+                ["/projects", "Projects"],
+                ["/about", "About"],
+                ["/blog", "Blog"],
+                ["/Contact", "Contact"],
               ].map(([href, label]) => (
                 <Link
                   key={href}

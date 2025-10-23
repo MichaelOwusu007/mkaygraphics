@@ -4,11 +4,11 @@ export const mockProducts: Product[] = [
   {
     id: '1',
     title: ' 12x16 Wooden Canvas Frame',
-    description: 'Handcrafted gold edge frame with natural finish. Perfect for family photos, certificates, and artwork. Features premium natural wood and acid-free matting.',
-    price: 110.00,
+    description: 'Handcrafted Wooden Canvas frame with natural finish. Perfect for family photos, certificates, and artwork. Features premium natural wood and acid-free matting.',
+    price: 120.00,
     images: [
-      '/images/ibrand1.jpg',
-      '/images/iedit.jpg',
+      '/images/12X16_normal edge.jpg',
+      '/images/12X16_goldedge.jpg',
     ],
     category: 'frames',
     variants: [
@@ -35,28 +35,28 @@ export const mockProducts: Product[] = [
     dimensions: '12" x 16" (default)',
     stock: 999,
     rating: 4.8,
-    reviewCount: 127,
+    reviewCount: 135,
     reviews: [
       {
         id: 'r1',
         author: 'Sarah M.',
         rating: 5,
         date: '2024-01-15',
-        comment: 'Beautiful quality frame! The oak finish is stunning.',
+        comment: 'Beautiful quality frame! The Wooden Canvas finish is stunning.',
         verified: true,
       },
     ],
     sku: 'FRAME-OAK-001',
-    tags: ['wood', 'classic', 'oak', 'natural'],
+    tags: ['wood', 'classic', 'goldedge', 'natural'],
     featured: true,
   },
   {
     id: '2',
     title: '16x20 Wooden Canvas Frame',
-    description: 'Sleek contemporary metal frame in matte black. Minimalist design that complements modern interiors. Includes UV-protective acrylic glazing.',
+    description: 'Sleek contemporary Wooden Canvas frame with gold edge. Minimalist design that complements modern interiors.',
     price: 150.00,
     images: [
-     '/images/ibrand1.jpg',
+     '/images/16X20_goldedge.jpg',
       '/images/iedit.jpg',
     ],
     category: 'frames',
@@ -92,12 +92,12 @@ export const mockProducts: Product[] = [
   },
   {
     id: '3',
-    title: '8x12 Wooden Canvas Frame',
+    title: '20x24 Wooden Canvas Frame',
     description: 'Authentic reclaimed barn wood frame with distressed finish. Each piece is unique with natural weathering and character. Perfect for farmhouse style decor.',
-    price: 75.00,
+    price: 220.00,
     images: [
- '/images/ibrand1.jpg',
-      '/images/iedit.jpg',
+ '/images/20X24_goldedge.jpg',
+      '/images/20X24_normaledge.jpg',
     ],
     category: 'frames',
     variants: [
@@ -106,7 +106,7 @@ export const mockProducts: Product[] = [
         name: 'Size',
         type: 'size',
         options: [
-          { value: '8x12', label: '8" x 12"', priceAdjustment: 0, inStock: true },
+          { value: '20x24', label: '20" x 24"', priceAdjustment: 0, inStock: true },
   
         ],
       },
@@ -122,10 +122,10 @@ export const mockProducts: Product[] = [
       },
     
     ],
-     dimensions: '8" x 12" (default)',
+     dimensions: '20" x 24" (default)',
     stock: 999,
     rating: 4.9,
-    reviewCount: 156,
+    reviewCount: 15,
     reviews: [],
     sku: 'FRAME-BARN-003',
     tags: ['wood', 'rustic', 'reclaimed', 'farmhouse'],
@@ -133,11 +133,11 @@ export const mockProducts: Product[] = [
   },
     {
     id: '4',
-    title: '8x12 Wooden Canvas Frame',
+    title: '20x30 Wooden Canvas Frame',
     description: 'Authentic reclaimed barn wood frame with distressed finish. Each piece is unique with natural weathering and character. Perfect for farmhouse style decor.',
-    price: 75.00,
+    price: 250.00,
     images: [
- '/images/ibrand1.jpg',
+ '/images/20X30_goldedge.jpg',
       '/images/iedit.jpg',
     ],
     category: 'frames',
@@ -147,7 +147,7 @@ export const mockProducts: Product[] = [
         name: 'Size',
         type: 'size',
         options: [
-          { value: '8x12', label: '8" x 12"', priceAdjustment: 0, inStock: true },
+          { value: '20x30', label: '20" x 30"', priceAdjustment: 0, inStock: true },
   
         ],
       },
@@ -163,22 +163,22 @@ export const mockProducts: Product[] = [
       },
     
     ],
-     dimensions: '8" x 12" (default)',
+     dimensions: '20" x 30" (default)',
     stock: 999,
     rating: 4.9,
-    reviewCount: 156,
+    reviewCount: 20,
     reviews: [],
     sku: 'FRAME-BARN-003',
     tags: ['wood', 'rustic', 'reclaimed', 'farmhouse'],
-    featured: false,
+    featured: true,
   },
     {
     id: '5',
-    title: '8x12 Wooden Canvas Frame',
-    description: 'Authentic reclaimed barn wood frame with distressed finish. Each piece is unique with natural weathering and character. Perfect for farmhouse style decor.',
-    price: 75.00,
+    title: '12x16 Wooden Canvas (aluminium Edge) Frame',
+    description: 'Authentic reclaimed barn wood frame with distressed finish and aluminium edge. Each piece is unique with natural weathering and character.',
+    price: 135.00,
     images: [
- '/images/ibrand1.jpg',
+ '/images/12X16_aluminiumedge.jpg',
       '/images/iedit.jpg',
     ],
     category: 'frames',
@@ -188,7 +188,7 @@ export const mockProducts: Product[] = [
         name: 'Size',
         type: 'size',
         options: [
-          { value: '8x12', label: '8" x 12"', priceAdjustment: 0, inStock: true },
+          { value: '12x16', label: '12" x 16"', priceAdjustment: 0, inStock: true },
   
         ],
       },
@@ -197,8 +197,8 @@ export const mockProducts: Product[] = [
         name: 'Edge Style',
         type: 'edge style',
         options: [
-          { value: 'none', label: 'Normal Edge', priceAdjustment: 0, inStock: true },
-          { value: 'Gold', label: 'Gold Edge', priceAdjustment: 10, inStock: true },
+          { value: 'Aluminium', label: 'Aluminium Edge', priceAdjustment: 0, inStock: true },
+          
        
         ],
       },
@@ -207,19 +207,19 @@ export const mockProducts: Product[] = [
      dimensions: '8" x 12" (default)',
     stock: 999,
     rating: 4.9,
-    reviewCount: 156,
+    reviewCount: 15,
     reviews: [],
     sku: 'FRAME-BARN-003',
     tags: ['wood', 'rustic', 'reclaimed', 'farmhouse'],
-    featured: false,
+    featured: true,
   },
     {
     id: '6',
-    title: '8x12 Wooden Canvas Frame',
-    description: 'Authentic reclaimed barn wood frame with distressed finish. Each piece is unique with natural weathering and character. Perfect for farmhouse style decor.',
-    price: 75.00,
+    title: '24x36 Normal Frame (Not Glass)',
+    description: 'Quality picture printout and frame. Each piece is unique with natural weathering and character. Perfect for farmhouse style decor.',
+    price: 350.00,
     images: [
- '/images/ibrand1.jpg',
+ '/images/citation.jpg',
       '/images/iedit.jpg',
     ],
     category: 'frames',
@@ -229,7 +229,7 @@ export const mockProducts: Product[] = [
         name: 'Size',
         type: 'size',
         options: [
-          { value: '8x12', label: '8" x 12"', priceAdjustment: 0, inStock: true },
+          { value: '24x36', label: '24" x 36"', priceAdjustment: 0, inStock: true },
   
         ],
       },
@@ -238,8 +238,8 @@ export const mockProducts: Product[] = [
         name: 'Edge Style',
         type: 'edge style',
         options: [
-          { value: 'none', label: 'Normal Edge', priceAdjustment: 0, inStock: true },
-          { value: 'Gold', label: 'Gold Edge', priceAdjustment: 10, inStock: true },
+          { value: 'Normal Frame Edge', label: 'Normal Frame Edge', priceAdjustment: 0, inStock: true },
+          { value: 'Gold Edge', label: 'Gold Edge', priceAdjustment: 10, inStock: true },
        
         ],
       },
@@ -454,7 +454,7 @@ export const mockProducts: Product[] = [
     reviews: [],
     sku: 'FRAME-GOLD-004',
     tags: ['gold', 'ornate', 'elegant', 'gallery'],
-    featured: true,
+    featured: false,
   },
     {
     id: '12',
@@ -537,7 +537,7 @@ export const mockProducts: Product[] = [
     reviews: [],
     sku: 'CUSTOM-FRAME-005',
     tags: ['custom', 'service', 'professional', 'printing'],
-    featured: true,
+    featured: false,
   },
    {
     id: '14',
@@ -578,7 +578,7 @@ export const mockProducts: Product[] = [
     reviews: [],
     sku: 'CUSTOM-FRAME-005',
     tags: ['custom', 'service', 'professional', 'printing'],
-    featured: true,
+    featured: false,
   },
    {
     id: '15',

@@ -23,42 +23,63 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-gray-900">
       {/* Hero Section */}
       
-      <section className="relative h-[600px] bg-gradient-to-br from-gray-800 via-gray-900 to-black flex items-center justify-center text-center px-4">
-        <div className="max-w-4xl space-y-5 text-white">
-          <h1 className=" text-3xl md:text-5xl font-bold">
-            Edit Your Photos,Frame Your Memories &amp; Design Your Ideas.
-          </h1>
-          <p className="text-lg md:text-xl text-gray-200">
-            Premium handcrafted frames, professional custom framing services, photo editing and design services all in one place.We frame, edit and design it best for you.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-            <Button
-              size="lg"
-              className="bg-yellow-500 hover:bg-yellow-600 text-white"
-              asChild
-            >
-              <Link href="/shop">
-                Shop Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border-white/40 text-black hover:text-white hover:bg-black backdrop-blur"
-              asChild
-            >
-              <Link href="/services">Photo Editing</Link>
-            </Button>
-          </div>
+       <section
+      className="relative h-[600px] flex items-center justify-center text-center px-4 sm:px-8"
+      aria-label="Photo editing and custom framing hero section"
+    >
+      {/* ✅ Background Image */}
+      <Image
+        src="/images/hero_image.jpg"
+        alt="Beautiful photo frames and editing workspace"
+        fill
+        priority
+        className="object-cover object-center brightness-75 opacity-50"
+        sizes="100vw"
+      />
+
+          {/* ✅ Enhanced Overlay for better readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+
+      {/* ✅ Content */}
+      <div className="relative z-10 max-w-4xl mx-auto text-white space-y-5">
+        <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+          Edit Your Photos, Frame Your Memories &amp; Design Your Ideas.
+        </h1>
+
+        <p className="text-base md:text-lg text-gray-200 max-w-2xl mx-auto">
+          Premium handcrafted frames, professional custom framing services, photo editing, and design services all in one place. We frame, edit, and design it best for you.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+          <Button
+            size="lg"
+            className="bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center"
+            asChild
+          >
+            <Link href="/shop">
+              Shop Now
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Link>
+          </Button>
+
+          <Button
+            size="lg"
+            variant="outline"
+            className="border-white/60 text-white hover:bg-white/10 backdrop-blur-md"
+            asChild
+          >
+            <Link href="/services/editing">Photo Editing</Link>
+          </Button>
         </div>
-      </section>
+      </div>
+    </section>
 
       {/* Categories */}
       <section className="container mx-auto px-4 py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Link href="/shop?category=frames">
-            <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg">
-              <CardContent className="p-0">
+            <Card className="group cursor-pointer  overflow-hidden transition-all duration-300 hover:shadow-lg">
+              <CardContent className="p-0 ">
                 <div className="h-64 bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center">
                   <h3 className=" text-3xl font-bold text-white group-hover:scale-110 transition-transform">
                     Order a frame

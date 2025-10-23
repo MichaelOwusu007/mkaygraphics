@@ -1,251 +1,260 @@
-"use client";
+'use client';
 
-import { useState, ChangeEvent } from "react";
-import { useParams, useRouter } from "next/navigation";
-import Link from "next/link";
+import { useMemo, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Check, Upload, Star, Clock, Shield } from "lucide-react";
-import { editingServices } from "@/lib/mockData";
-import { useCartStore } from "@/stores/cartStore";
+import { ArrowLeft, Check, Clock, Shield, Star } from "lucide-react";
+import { editingServices } from "@/lib/mockData"; // your mock data
 import { toast } from "sonner";
 
 export default function ServiceDetailPage() {
-  const { id } = useParams();
   const router = useRouter();
-  const { addServiceItem, toggleCart } = useCartStore();
+  const params = useParams();
+  const [photoCount, setPhotoCount] = useState<number>(1);
 
-  const service = editingServices.find((s) => s.id === id);
-  const [photoCount, setPhotoCount] = useState(1);
-  const [specialInstructions, setSpecialInstructions] = useState("");
-  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const service = useMemo(
+    () => editingServices.find((s) => s.id === params?.id),
+    [params?.id]
+  );
 
   if (!service) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h1 className="text-2xl font-bold mb-4">Service not found</h1>
-        <Button onClick={() => router.push("/services")}>Back to Services</Button>
+        <Link href="/services">
+          <Button>Back to Services</Button>
+        </Link>
       </div>
     );
   }
 
   const totalPrice = service.price * photoCount;
 
-  const handleFileUpload = (e: ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    setUploadedFiles((prev) => [...prev, ...files]);
-    setPhotoCount(uploadedFiles.length + files.length);
-    toast.success(`${files.length} photo(s) uploaded`);
-  };
-
-  const handleOrder = () => {
-    if (uploadedFiles.length === 0) {
-      toast.error("Please upload at least one photo");
+  const handleProceedToCheckout = () => {
+    if (photoCount < 1) {
+      toast.error("Please select at least one photo");
       return;
     }
 
-    addServiceItem(service, photoCount, specialInstructions, uploadedFiles);
-    toast.success("Service added to cart!");
-    toggleCart();
+    // Save a small draft to sessionStorage (no long query params)
+    const draft = {
+      serviceId: service.id,
+      title: service.title,
+      image: service.image,
+      price: service.price,
+      photoCount,
+      turnaroundTime: service.turnaroundTime || "",
+    };
+
+    try {
+      sessionStorage.setItem("serviceCheckoutDraft", JSON.stringify(draft));
+      router.push("/service-checkout");
+    } catch (err) {
+      console.error("Failed to save draft:", err);
+      toast.error("Unable to start checkout — please try again");
+    }
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
-        <Button
-          variant="ghost"
-          onClick={() => router.push("/services")}
-          className="mb-6 flex items-center"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Services
-        </Button>
+    <>
+      <div className="min-h-screen">
+        <div className="container mx-auto px-4 py-8">
+          <Button
+            variant="ghost"
+            onClick={() => router.push("/services")}
+            className="mb-6"
+          >
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Back to Services
+          </Button>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Left Column - Service Info */}
-          <div className="space-y-6 animate-fade-in">
-            <div className="aspect-video rounded-lg overflow-hidden shadow-md">
-              <Image
-                src={service.image}
-                alt={service.title}
-                width={800}
-                height={450}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            <div className="space-y-4">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h1 className="font-serif text-4xl font-bold mb-2">
-                    {service.title}
-                  </h1>
-                  <p className="text-gray-600 text-lg">{service.description}</p>
-                </div>
-                {service.popular && (
-                  <Badge className="bg-blue-600 text-white">Most Popular</Badge>
-                )}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            {/* Left Column - Service Info */}
+            <div className="space-y-6 animate-fade-in">
+              <div className="aspect-video rounded-lg overflow-hidden shadow-elegant relative">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  priority
+                  className="object-cover"
+                />
               </div>
 
-              <div className="flex gap-4 text-sm">
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Clock className="h-4 w-4" />
-                  <span>{service.turnaroundTime}</span>
-                </div>
-                <div className="flex items-center gap-2 text-gray-500">
-                  <Shield className="h-4 w-4" />
-                  <span>Money-back guarantee</span>
-                </div>
-              </div>
-
-              <div className="pt-6 border-t">
-                <h3 className="font-semibold text-lg mb-4">What&apos;s Included:</h3>
-                <ul className="space-y-3">
-                  {service.features.map((feature, index) => (
-                    <li key={index} className="flex items-start gap-3">
-                      <Check className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column - Order Form */}
-          <div className="lg:sticky lg:top-20 h-fit">
-            <Card className="animate-fade-in" style={{ animationDelay: "200ms" }}>
-              <CardContent className="p-6 space-y-6">
-                <div className="space-y-2">
-                  <div className="flex items-baseline justify-between">
-                    <span className="text-sm text-gray-500">Price per photo</span>
-                    <span className="font-serif text-3xl font-bold">${service.price}</span>
+              <div className="space-y-4">
+                <div className="flex items-start justify-between flex-wrap gap-2">
+                  <div>
+                    <h1 className="font-serif text-4xl font-bold mb-2">
+                      {service.title}
+                    </h1>
+                    <p className="text-muted-foreground text-lg">
+                      {service.description}
+                    </p>
                   </div>
-                </div>
-
-                {/* File Upload */}
-                <div className="space-y-3">
-                  <Label>Upload Your Photos</Label>
-                  <div className="border-2 border-dashed rounded-lg p-8 text-center hover:border-blue-600 transition-colors cursor-pointer">
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                      id="file-upload"
-                    />
-                    <label htmlFor="file-upload" className="cursor-pointer">
-                      <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="font-semibold mb-1">Click to upload</p>
-                      <p className="text-sm text-gray-500">PNG, JPG, HEIC up to 50MB each</p>
-                    </label>
-                  </div>
-
-                  {uploadedFiles.length > 0 && (
-                    <div className="space-y-2">
-                      <p className="text-sm font-semibold">
-                        {uploadedFiles.length} photo(s) uploaded:
-                      </p>
-                      <div className="max-h-32 overflow-y-auto space-y-1">
-                        {uploadedFiles.map((file, index) => (
-                          <div
-                            key={index}
-                            className="text-sm text-gray-600 flex items-center gap-2"
-                          >
-                            <Check className="h-3 w-3 text-blue-600" />
-                            {file.name}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+                  {service.popular && (
+                    <Badge className="bg-secondary text-secondary-foreground">
+                      Most Popular
+                    </Badge>
                   )}
                 </div>
 
-                {/* Special Instructions */}
+                <div className="flex flex-wrap gap-4 text-sm">
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    <span>{service.turnaroundTime}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-muted-foreground">
+                    <Shield className="h-4 w-4" />
+                    <span>Money-back guarantee</span>
+                  </div>
+                </div>
+
+                <div className="pt-6 border-t">
+                  <h3 className="font-semibold text-lg mb-4">What's Included:</h3>
+                  <ul className="space-y-3">
+                    {service.features.map((feature: string, index: number) => (
+                      <li key={index} className="flex items-start gap-3">
+                        <Check className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column - Order Form */}
+            <div className="lg:sticky lg:top-20 h-fit">
+              <Card className="animate-fade-in" style={{ animationDelay: "200ms" }}>
+                <CardContent className="p-6 space-y-6">
+                  <div className="space-y-2">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-sm text-muted-foreground">
+                        Price per photo
+                      </span>
+                      <span className="font-serif text-3xl font-bold">
+                        ${service.price}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div>
+                      <Label
+                        htmlFor="photoCount"
+                        className="text-base font-semibold"
+                      >
+                        Number of Photos
+                      </Label>
+                      <p className="text-sm text-muted-foreground mb-3">
+                        How many photos do you need edited?
+                      </p>
+                      <Input
+                        id="photoCount"
+                        type="number"
+                        min={1}
+                        max={1000}
+                        value={photoCount}
+                        onChange={(e) =>
+                          setPhotoCount(
+                            Math.max(1, parseInt(e.target.value) || 1)
+                          )
+                        }
+                        className="text-lg font-semibold"
+                      />
+                      <p className="text-xs text-muted-foreground mt-2">
+                        💡 You'll share your files after checkout via secure
+                        transfer
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Pricing Summary */}
+                  <div className="border-t pt-4 space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        Number of photos
+                      </span>
+                      <span className="font-semibold">{photoCount}</span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">
+                        Price per photo
+                      </span>
+                      <span className="font-semibold">${service.price}</span>
+                    </div>
+                    <div className="flex justify-between text-lg font-bold border-t pt-3">
+                      <span>Total</span>
+                      <span className="text-secondary">
+                        ${totalPrice.toFixed(2)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Button size="lg" className="w-full" onClick={handleProceedToCheckout}>
+                    Proceed to Checkout
+                  </Button>
+
+                  <div className="space-y-2 pt-4 border-t">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Star className="h-4 w-4 text-secondary fill-secondary" />
+                      <span>Professional editing by experts</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Shield className="h-4 w-4 text-secondary" />
+                      <span>Secure file handling & privacy</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Clock className="h-4 w-4 text-secondary" />
+                      <span>Fast turnaround guaranteed</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Related Services */}
+              <div className="mt-6 space-y-4">
+                <h3 className="font-semibold">Other Services</h3>
                 <div className="space-y-3">
-                  <Label htmlFor="instructions">Special Instructions (Optional)</Label>
-                  <Textarea
-                    id="instructions"
-                    placeholder="Tell us about any specific requirements, areas of focus, or preferences..."
-                    value={specialInstructions}
-                    onChange={(e) => setSpecialInstructions(e.target.value)}
-                    rows={4}
-                  />
-                </div>
-
-                {/* Pricing Summary */}
-                <div className="border-t pt-4 space-y-3">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Number of photos</span>
-                    <span className="font-semibold">{photoCount}</span>
-                  </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-gray-500">Price per photo</span>
-                    <span className="font-semibold">${service.price}</span>
-                  </div>
-                  <div className="flex justify-between text-lg font-bold border-t pt-3">
-                    <span>Total</span>
-                    <span className="text-blue-600">${totalPrice.toFixed(2)}</span>
-                  </div>
-                </div>
-
-                <Button size="lg" className="w-full" onClick={handleOrder}>
-                  Add to Cart
-                </Button>
-
-                <div className="space-y-2 pt-4 border-t">
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Star className="h-4 w-4 text-blue-600 fill-blue-600" />
-                    <span>Professional editing by experts</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Shield className="h-4 w-4 text-blue-600" />
-                    <span>Secure file handling &amp; privacy</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-500">
-                    <Clock className="h-4 w-4 text-blue-600" />
-                    <span>Fast turnaround guaranteed</span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Related Services */}
-            <div className="mt-6 space-y-4">
-              <h3 className="font-semibold">Other Services</h3>
-              <div className="space-y-3">
-                {editingServices
-                  .filter((s) => s.id !== service.id)
-                  .map((s) => (
-                    <Link key={s.id} href={`/services/${s.id}`}>
-                      <Card className="hover:shadow-md transition-shadow cursor-pointer">
+                  {editingServices
+                    .filter((s) => s.id !== service.id)
+                    .slice(0, 2)
+                    .map((s) => (
+                      <Card
+                        key={s.id}
+                        className="hover:shadow-md transition-shadow cursor-pointer"
+                        onClick={() => router.push(`/services/${s.id}`)}
+                      >
                         <CardContent className="p-4 flex items-center gap-4">
-                          <Image
-                            src={s.image}
-                            alt={s.title}
-                            width={64}
-                            height={64}
-                            className="w-16 h-16 rounded object-cover"
-                          />
+                          <div className="relative w-16 h-16 flex-shrink-0">
+                            <Image
+                              src={s.image}
+                              alt={s.title}
+                              fill
+                              className="rounded object-cover"
+                            />
+                          </div>
                           <div className="flex-1">
                             <p className="font-semibold text-sm">{s.title}</p>
-                            <p className="text-xs text-gray-500">${s.price} per photo</p>
+                            <p className="text-xs text-muted-foreground">
+                              ${s.price} per photo
+                            </p>
                           </div>
                         </CardContent>
                       </Card>
-                    </Link>
-                  ))}
+                    ))}
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

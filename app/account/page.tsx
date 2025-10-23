@@ -73,7 +73,7 @@ export default function AccountPage() {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [isOrderDialogOpen, setIsOrderDialogOpen] = useState(false);
 
-  const { addItem } = useCartStore();
+  // const { addItem } = useCartStore();
 
   const fetchProfile = useCallback(async (userId: string) => {
     const { data, error } = await supabase.from("profiles").select("*").eq("id", userId).single();
