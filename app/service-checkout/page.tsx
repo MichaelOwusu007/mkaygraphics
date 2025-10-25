@@ -40,7 +40,7 @@ export default function ServiceCheckoutPage() {
   const [step, setStep] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paypal');
   const [showPayPalModal, setShowPayPalModal] = useState(false);
-  const [user, setUser] = useState<UserProfile | null>(null);
+  const [, setUser] = useState<UserProfile | null>(null);
 
   const [projectInfo, setProjectInfo] = useState({
     name: '',
@@ -83,7 +83,7 @@ export default function ServiceCheckoutPage() {
       const { data: { session } } = await supabase.auth.getSession();
 
       if (!session) {
-        toast.info("You're checking out as a guest");
+        toast.info("You&apos;re checking out as guest");
         return;
       }
 

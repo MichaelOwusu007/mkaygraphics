@@ -5,8 +5,8 @@ import type { ReactNode } from "react";
 // ✅ Google Fonts
 import { Space_Grotesk, Archivo_Black, Poppins } from "next/font/google";
 
-// ✅ Toast Notifications
-import { Toaster } from "sonner";
+// // ✅ Toast Notifications
+// import { Toaster } from "sonner";
 
 // ✅ Client layout (handles Header, CartDrawer, Footer, etc.)
 import ClientLayout from "./ClientLayout";
