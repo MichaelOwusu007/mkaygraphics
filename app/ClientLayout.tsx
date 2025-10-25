@@ -11,7 +11,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
       <Header />
       <CartDrawer />   {/* ✅ Mount it globally */}
       <main className="min-h-screen">{children}</main>
-      <Toaster position="top-right" richColors />
+      <Toaster position="bottom-right" richColors />
     </>
   );
 }

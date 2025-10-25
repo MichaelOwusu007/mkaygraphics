@@ -106,12 +106,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
       </head>
 
-      <body className={`${poppins.className} text-lg text-black`}>
+      <body className={`${poppins.className} text-lg  text-black`}>
         {/* ✅ ClientLayout handles all client-side components */}
         <ClientLayout>{children}</ClientLayout>
 
         {/* ✅ Toast notifications */}
-        <Toaster position="top-right" richColors />
+       
       </body>
     </html>
   );

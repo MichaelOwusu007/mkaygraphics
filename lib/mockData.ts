@@ -18,6 +18,7 @@ export const mockProducts: Product[] = [
         type: 'size',
         options: [
           { value: '12x16', label: '12" x 16"', priceAdjustment: 0, inStock: true },
+            { value: '16x20', label: '16" x 20"', priceAdjustment: 20, inStock: true },
        
         ],
       },
@@ -687,7 +688,7 @@ export const editingServices: EditingService[] = [
 export const testimonials: Testimonial[] = [
   {
     id: '1',
-    author: 'Sarah Johnson',
+    author: 'Lydia Owusu',
     role: 'Wedding Photographer',
     content: 'The advanced retouching service transformed my wedding photos into absolute masterpieces. The attention to detail is incredible!',
     rating: 5,
@@ -695,16 +696,16 @@ export const testimonials: Testimonial[] = [
   },
   {
     id: '2',
-    author: 'Michael Chen',
-    role: 'Art Collector',
+    author: 'Jacinta',
+    role: 'University Of CapeCoast',
     content: 'Their custom framing service is unmatched. They helped me frame my entire collection with expert guidance and premium materials.',
     rating: 5,
     avatar: '/images/edit.jpg',
   },
   {
     id: '3',
-    author: 'Emily Rodriguez',
-    role: 'Interior Designer',
+    author: 'Veronica',
+    role: 'Student Nurse',
     content: 'I order frames for all my client projects. The quality is consistently excellent and the delivery is always on time.',
     rating: 5,
     avatar: '/images/design1.jpg',

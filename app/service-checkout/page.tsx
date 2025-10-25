@@ -26,11 +26,12 @@ type DraftService = {
   turnaroundTime?: string;
 };
 
-type User = {
+interface UserProfile {
   id: string;
   email?: string | null;
-  [key: string]: any;
-};
+  name?: string | null;
+  phone?: string | null;
+}
 
 export default function ServiceCheckoutPage() {
   const router = useRouter();
@@ -39,7 +40,7 @@ export default function ServiceCheckoutPage() {
   const [step, setStep] = useState<number>(1);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paypal');
   const [showPayPalModal, setShowPayPalModal] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<UserProfile | null>(null);
 
   const [projectInfo, setProjectInfo] = useState({
     name: '',
@@ -53,7 +54,7 @@ export default function ServiceCheckoutPage() {
     specialRequirements: '',
   });
 
-  // Keep paymentInfo state for validation (setter not needed in current UI)
+  // Keep paymentInfo for validation, but not persisted anywhere
   const [paymentInfo] = useState({
     mobileNumber: '',
     mobileProvider: '',
@@ -63,11 +64,10 @@ export default function ServiceCheckoutPage() {
   });
 
   useEffect(() => {
-    // read draft from sessionStorage
+    // Load draft from sessionStorage
     try {
       const raw = sessionStorage.getItem("serviceCheckoutDraft");
       if (!raw) {
-        // no draft → redirect to services listing
         router.push("/services");
         return;
       }
@@ -78,16 +78,20 @@ export default function ServiceCheckoutPage() {
       router.push("/services");
     }
 
-    // check auth and prefill profile
+    // Try fetching user session, prefill if exists
     (async () => {
       const { data: { session } } = await supabase.auth.getSession();
+
       if (!session) {
-        // not signed in → redirect and message
-        toast.error("Please sign in to continue checkout");
-        router.push("/auth");
+        toast.info("You're checking out as a guest");
         return;
       }
-      setUser(session.user as User);
+
+      const currentUser: UserProfile = {
+        id: session.user.id,
+        email: session.user.email,
+      };
+      setUser(currentUser);
 
       const { data: profile } = await supabase
         .from("profiles")
@@ -104,8 +108,7 @@ export default function ServiceCheckoutPage() {
         }));
       }
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [router]);
 
   if (!draft) {
     return null; // initial loading / redirect handled above
@@ -113,7 +116,7 @@ export default function ServiceCheckoutPage() {
 
   const total = draft.price * draft.photoCount;
 
-  const handleSubmitProjectInfo = (e: React.FormEvent) => {
+  const handleSubmitProjectInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!projectInfo.name || !projectInfo.email || !projectInfo.phone || !projectInfo.projectTitle || !projectInfo.projectDescription) {
       toast.error('Please fill in all required fields');
@@ -122,7 +125,7 @@ export default function ServiceCheckoutPage() {
     setStep(2);
   };
 
-  const handleSubmitPayment = (e: React.FormEvent) => {
+  const handleSubmitPayment = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (paymentMethod === 'paypal') {
@@ -153,74 +156,20 @@ export default function ServiceCheckoutPage() {
     }, 1500);
   };
 
-  const handleCompleteOrder = async () => {
-    if (!user) {
-      toast.error('Please sign in to complete order');
-      router.push('/auth');
-      return;
-    }
-
+  const handleCompleteOrder = () => {
+    // Remove Supabase order creation — this is manual now
     try {
-      // Create service order
-      const { data: order, error: orderError } = await supabase
-        .from('orders')
-        .insert({
-          user_id: user.id,
-          total: total,
-          status: 'pending',
-          payment_method: paymentMethod,
-          // store service reference if you want
-          metadata: { serviceId: draft.serviceId, photoCount: draft.photoCount },
-        })
-        .select()
-        .single();
-
-      if (orderError) {
-        console.error('Order error:', orderError);
-        toast.error('Error creating order');
-        return;
-      }
-
-      const orderItems = [
-        {
-          order_id: order.id,
-          product_id: draft.serviceId,
-          product_name: draft.title,
-          quantity: draft.photoCount,
-          price: draft.price,
-          selected_variants: {
-            project_info: projectInfo,
-          },
-        },
-      ];
-
-      const { error: itemsError } = await supabase
-        .from('order_items')
-        .insert(orderItems);
-
-      if (itemsError) {
-        console.error('Items error:', itemsError);
-        toast.error('Error saving order items');
-        return;
-      }
-
-      // success: clear draft
-      try {
-        sessionStorage.removeItem("serviceCheckoutDraft");
-      } catch {
-        /* ignore */
-      }
-
-      toast.success('Service order placed successfully! We will contact you within 24 hours.');
-      setStep(3);
-
-      setTimeout(() => {
-        router.push('/account');
-      }, 2500);
-    } catch (err) {
-      console.error('Complete order error:', err);
-      toast.error('Error completing order');
+      sessionStorage.removeItem("serviceCheckoutDraft");
+    } catch {
+      /* ignore */
     }
+
+    toast.success('Service order request submitted successfully! We will contact you within 24 hours.');
+    setStep(3);
+
+    setTimeout(() => {
+      router.push('/');
+    }, 2500);
   };
 
   return (
@@ -412,10 +361,10 @@ export default function ServiceCheckoutPage() {
                 </div>
                 <h2 className="font-serif text-3xl font-bold mb-4">Order Confirmed!</h2>
                 <p className="text-muted-foreground mb-6">
-                  Thank you for your order. We&apos;ve received your project details and will contact you within 24 hours to discuss next steps.
+                  Thank you for your order. We\'ve received your project details and will contact you within 24 hours to discuss next steps.
                 </p>
 
-                <Button onClick={() => router.push('/account')} size="lg">View Order Status</Button>
+                <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
               </CardContent>
             </Card>
           )}

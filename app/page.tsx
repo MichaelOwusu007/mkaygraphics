@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import Footer from '@/components/headers/Footer';
 import {
   ArrowRight,
   Star,
@@ -33,7 +34,7 @@ export default function HomePage() {
         alt="Beautiful photo frames and editing workspace"
         fill
         priority
-        className="object-cover object-center brightness-75 opacity-50"
+        className="object-cover object-center brightness-75 "
         sizes="100vw"
       />
 
@@ -47,13 +48,13 @@ export default function HomePage() {
         </h1>
 
         <p className="text-base md:text-lg text-gray-200 max-w-2xl mx-auto">
-          Premium handcrafted frames, professional custom framing services, photo editing, and design services all in one place. We frame, edit, and design it best for you.
+          Premium handcrafted frames, photo editing, and design services all in one place. We frame, edit, and design it best for you.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
           <Button
             size="lg"
-            className="bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center"
+            className="bg-yellow-600 hover:bg-yellow-600 text-white flex items-center justify-center"
             asChild
           >
             <Link href="/shop">
@@ -65,7 +66,7 @@ export default function HomePage() {
           <Button
             size="lg"
             variant="outline"
-            className="border-white/60 text-white hover:bg-white/10 backdrop-blur-md"
+            className=" text-white bg-black"
             asChild
           >
             <Link href="/services/editing">Photo Editing</Link>
@@ -80,7 +81,7 @@ export default function HomePage() {
           <Link href="/shop?category=frames">
             <Card className="group cursor-pointer  overflow-hidden transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-0 ">
-                <div className="h-64 bg-gradient-to-br from-amber-300 to-amber-500 flex items-center justify-center">
+                <div className="h-64 bg-gradient-to-br from-yellow-600 to-black flex items-center justify-center">
                   <h3 className=" text-3xl font-bold text-white group-hover:scale-110 transition-transform">
                     Order a frame
                   </h3>
@@ -92,7 +93,7 @@ export default function HomePage() {
           <Link href="/shop?category=custom">
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg">
               <CardContent className="p-0">
-                <div className="h-64 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
+                <div className="h-64 bg-gradient-to-br from-yellow-600 to-black flex items-center justify-center">
                   <h3 className=" text-3xl font-bold text-white group-hover:scale-110 transition-transform">
                     Custom Frames
                   </h3>
@@ -174,9 +175,9 @@ export default function HomePage() {
       {/* Editing Services */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-yellow-100 rounded-full mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-black rounded-full mb-4">
             <Sparkles className="h-5 w-5 text-yellow-600" />
-            <span className="text-sm font-semibold text-yellow-600">
+            <span className="text-sm font-semibold text-white">
               Professional Photo Editing
             </span>
           </div>
@@ -258,8 +259,8 @@ export default function HomePage() {
 
         <div className="text-center mt-12">
           <Button size="lg" variant="outline" asChild>
-            <Link href="/services">
-              View All Services <ArrowRight className="ml-2 h-5 w-5" />
+            <Link href="/services/editing">
+              View All Editing Services <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
         </div>
@@ -284,7 +285,7 @@ export default function HomePage() {
                 icon: ImageIcon,
                 title: 'Upload Your Photos',
                 description:
-                  'Select your service and upload photos securely through our platform',
+                  'Select your service,make payment and our team will reach out immediately to recieve your photos.',
                 step: '01',
               },
               {
@@ -311,7 +312,7 @@ export default function HomePage() {
             ].map((item, i) => (
               <div key={i} className="relative group text-center space-y-4">
                 <div className="relative inline-flex items-center justify-center">
-                  <div className="w-20 h-20 rounded-full bg-yellow-500 flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-20 h-20 rounded-full bg-black flex items-center justify-center relative z-10 group-hover:scale-110 transition-transform duration-300">
                     <item.icon className="h-10 w-10 text-white" />
                   </div>
                   <div className="absolute -top-4 -right-4 font-serif text-6xl font-bold text-gray-200">
@@ -329,11 +330,11 @@ export default function HomePage() {
       {/* Testimonials */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center space-y-4 mb-12">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold">
+          <h2 className=" text-4xl md:text-5xl font-bold">
             What Our Clients Say
           </h2>
           <p className="text-gray-500 text-lg">
-            Trusted by thousands of satisfied customers
+            Trusted by hundrands of satisfied customers
           </p>
         </div>
 
@@ -381,17 +382,17 @@ export default function HomePage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-black mx-auto flex items-center justify-center">
                 <Palette className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-bold">Premium Quality</h3>
               <p className="text-gray-500">
-                Handcrafted frames and expert photo editing using finest
+                Handcrafted frames and expert photo editing and design using finest
                 materials and techniques
               </p>
             </div>
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-black mx-auto flex items-center justify-center">
                 <Shield className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-bold">Expert Service</h3>
@@ -401,7 +402,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="space-y-3">
-              <div className="w-16 h-16 rounded-full bg-yellow-500 mx-auto flex items-center justify-center">
+              <div className="w-16 h-16 rounded-full bg-black mx-auto flex items-center justify-center">
                 <Clock className="h-8 w-8 text-white" />
               </div>
               <h3 className="font-serif text-xl font-bold">Fast Delivery</h3>
@@ -412,6 +413,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+      < Footer />
     </div>
   );
 }
