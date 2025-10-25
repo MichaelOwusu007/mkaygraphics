@@ -361,7 +361,7 @@ export default function ServiceCheckoutPage() {
                 </div>
                 <h2 className="font-serif text-3xl font-bold mb-4">Order Confirmed!</h2>
                 <p className="text-muted-foreground mb-6">
-                  Thank you for your order. We\'ve received your project details and will contact you within 24 hours to discuss next steps.
+                  Thank you for your order. We have received your project details and will contact you within 24 hours to discuss next steps.
                 </p>
 
                 <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
