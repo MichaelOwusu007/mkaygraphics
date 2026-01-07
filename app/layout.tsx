@@ -39,7 +39,7 @@ export const metadata = {
   description:
     "Your number one stop shop for all kinds of Premium handcrafted frames, professional custom framing services, photo editing and design services.We frame, edit and design it best for you.",
   alternates: {
-    canonical: "https://www.mkaygraphix.com/",
+    canonical: "https://www.mkaygraphix.site/",
   },
 };
 
@@ -67,7 +67,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* ✅ Open Graph */}
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://www.framestationgh.com/" />
+        <meta property="og:url" content="https://www.mkaygraphix.site/" />
         <meta property="og:title" content="MkayGraphix" />
         <meta
           property="og:description"
@@ -80,7 +80,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
         {/* ✅ Twitter Card */}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content="https://www.mkaygraphix.com/" />
+        <meta name="twitter:url" content="https://www.mkaygraphix.site/" />
         <meta name="twitter:title" content="FrameStation" />
         <meta
           name="twitter:description"
@@ -99,7 +99,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               "@context": "https://schema.org",
               "@type": "Organization",
               name: "MkayGraphix",
-              url: "https://www.mkaygraphix.com",
+              url: "https://www.mkaygraphix.site",
               logo: "https://www.mkaygraphix.com/images/logo2.png",
             }),
           }}
