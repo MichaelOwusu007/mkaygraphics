@@ -8,6 +8,6 @@ export default function robots(): MetadataRoute.Robots {
         allow: "/",
       },
     ],
-    sitemap: "https://mkaygraphix.site/sitemap.xml",
+    sitemap: "https://www.mkaygraphix.site/sitemap.xml",
   };
 }
