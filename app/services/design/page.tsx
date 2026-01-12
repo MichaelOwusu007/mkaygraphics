@@ -108,7 +108,7 @@ const Page: React.FC = () => {
                 <p className="mt-5 text-xl leading-8 font-medium">{section.text}</p>
                 <div className="lg:text-2xl my-10 mb-0 w-max">
                   <div className="border-b hover:border-b-blue-500 hover:text-blue-500 flex items-center p-2">
-                    <a href="/Contact">Let&apos;s talk</a>
+                    <a href="/contact">Let&apos;s talk</a>
                     <div className="m-1"></div>
                     <div>&rarr;</div>
                   </div>

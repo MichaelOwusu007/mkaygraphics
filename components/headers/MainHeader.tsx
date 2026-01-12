@@ -111,7 +111,7 @@ export const Header = () => {
              <Link href="/blog" className="text-sm font-medium transition-colors hover:text-primary">
               Blog
             </Link>
-            <Link href="/Contact" className="text-sm font-medium transition-colors hover:text-primary">
+            <Link href="/contact" className="text-sm font-medium transition-colors hover:text-primary">
               Contact
             </Link>
 
@@ -222,7 +222,7 @@ export const Header = () => {
                 ["/projects", "Projects"],
                 ["/about", "About"],
                 ["/blog", "Blog"],
-                ["/Contact", "Contact"],
+                ["/contact", "Contact"],
               ].map(([href, label]) => (
                 <Link
                   key={href}
