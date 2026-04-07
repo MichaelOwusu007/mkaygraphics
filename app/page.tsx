@@ -608,14 +608,14 @@ export default function HomePage() {
               <div key={i} className="group relative">
                 <div className={`absolute inset-0 bg-gradient-to-br ${item.color} opacity-0 group-hover:opacity-100 rounded-2xl blur-xl transition-opacity duration-500`} />
                 <div className="relative bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5 md:p-8 hover:bg-white/10 transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full">
-                  {/* Step number - positioned differently for mobile */}
-                  <div className={`absolute top-3 right-3 md:top-0 md:right-0 md:relative w-10 h-10 md:w-14 md:h-14 bg-gradient-to-br ${item.color} rounded-xl md:rounded-2xl flex items-center justify-center shadow-xl mb-3 md:mb-6 rotate-0 md:rotate-3 group-hover:rotate-0 md:group-hover:rotate-6 transition-transform duration-500`}>
-                    <span className="text-base md:text-2xl font-bold text-white">{item.step}</span>
+                  {/* Step number - positioned at top-right edge */}
+                  <div className={`absolute top-3 right-3 lg:top-4 lg:right-4 w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br ${item.color} rounded-xl lg:rounded-2xl flex items-center justify-center shadow-xl rotate-3 lg:rotate-6 group-hover:rotate-0 transition-transform duration-500`}>
+                    <span className="text-base lg:text-xl font-bold text-white">{item.step}</span>
                   </div>
 
                   {/* Icon */}
-                  <div className={`w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 md:mb-6 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
-                    <item.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                  <div className={`w-12 h-12 lg:w-14 lg:h-14 rounded-xl lg:rounded-2xl bg-gradient-to-br ${item.color} flex items-center justify-center mb-4 lg:mb-5 shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                    <item.icon className="h-6 w-6 lg:h-7 lg:w-7 text-white" />
                   </div>
 
                   <h3 className="text-base md:text-xl font-bold text-white mb-2 md:mb-3 group-hover:text-yellow-400 transition-colors">
