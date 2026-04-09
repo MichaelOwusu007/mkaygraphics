@@ -128,7 +128,7 @@ export const Header = () => {
                         ["editing", "Editing Services"],
                         ["photobook", "Photobook Services"],
                         ["design", "Design Services"],
-                        ["photography", "Photography"],
+                        ["printing", "printing Services"],
                       ].map(([slug, label]) => (
                         <li key={slug}>
                           <NavigationMenuLink asChild>
@@ -242,7 +242,7 @@ export const Header = () => {
                   ["editing", "Editing Services"],
                   ["photobook", "Photobook Services"],
                   ["design", "Design Services"],
-                  ["photography", "Photography"],
+                  ["printing", "Printing Services"],
                 ].map(([slug, label]) => (
                   <Link
                     key={slug}

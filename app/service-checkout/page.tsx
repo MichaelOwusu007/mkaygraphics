@@ -8,14 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Badge } from "@/components/ui/badge";
-import { PayPalModal } from "@/components/PayPalModal";
-import { CheckCircle2, CreditCard, Smartphone, Building2, FileText, Zap } from "lucide-react";
+import { CheckCircle2, CreditCard, FileText, Zap, Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
-
-type PaymentMethod = 'paypal' | 'mobile-money' | 'bank-transfer';
 
 type DraftService = {
   serviceId: string;
@@ -26,21 +21,12 @@ type DraftService = {
   turnaroundTime?: string;
 };
 
-interface UserProfile {
-  id: string;
-  email?: string | null;
-  name?: string | null;
-  phone?: string | null;
-}
-
 export default function ServiceCheckoutPage() {
   const router = useRouter();
 
   const [draft, setDraft] = useState<DraftService | null>(null);
   const [step, setStep] = useState<number>(1);
-  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('paypal');
-  const [showPayPalModal, setShowPayPalModal] = useState(false);
-  const [, setUser] = useState<UserProfile | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const [projectInfo, setProjectInfo] = useState({
     name: '',
@@ -54,64 +40,27 @@ export default function ServiceCheckoutPage() {
     specialRequirements: '',
   });
 
-  // Keep paymentInfo for validation, but not persisted anywhere
-  const [paymentInfo] = useState({
-    mobileNumber: '',
-    mobileProvider: '',
-    bankName: '',
-    accountNumber: '',
-    accountName: '',
-  });
-
   useEffect(() => {
-    // Load draft from sessionStorage
     try {
       const raw = sessionStorage.getItem("serviceCheckoutDraft");
       if (!raw) {
-        router.push("/services");
+        router.push("/services/editing");
         return;
       }
       const d: DraftService = JSON.parse(raw);
       setDraft(d);
     } catch (err) {
       console.error("Failed to load checkout draft:", err);
-      router.push("/services");
+      router.push("/services/editing");
     }
-
-    // Try fetching user session, prefill if exists
-    (async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-
-      if (!session) {
-        toast.info("You&apos;re checking out as guest");
-        return;
-      }
-
-      const currentUser: UserProfile = {
-        id: session.user.id,
-        email: session.user.email,
-      };
-      setUser(currentUser);
-
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", session.user.id)
-        .single();
-
-      if (profile) {
-        setProjectInfo(prev => ({
-          ...prev,
-          name: profile.name || prev.name,
-          email: session.user.email || prev.email,
-          phone: profile.phone || prev.phone,
-        }));
-      }
-    })();
   }, [router]);
 
   if (!draft) {
-    return null; // initial loading / redirect handled above
+    return (
+      <div className="container mx-auto px-4 py-20 text-center">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto" />
+      </div>
+    );
   }
 
   const total = draft.price * draft.photoCount;
@@ -122,54 +71,48 @@ export default function ServiceCheckoutPage() {
       toast.error('Please fill in all required fields');
       return;
     }
+    if (!projectInfo.email.includes('@')) {
+      toast.error('Please enter a valid email address');
+      return;
+    }
     setStep(2);
   };
 
-  const handleSubmitPayment = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitPayment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (paymentMethod === 'paypal') {
-      setShowPayPalModal(true);
-      return;
-    }
-
-    if (paymentMethod === 'mobile-money') {
-      if (!paymentInfo.mobileNumber || !paymentInfo.mobileProvider) {
-        toast.error('Please fill in all mobile money details');
-        return;
-      }
-    } else if (paymentMethod === 'bank-transfer') {
-      if (!paymentInfo.bankName || !paymentInfo.accountNumber || !paymentInfo.accountName) {
-        toast.error('Please fill in all bank transfer details');
-        return;
-      }
-    }
-
-    handleCompleteOrder();
+    await initiatePaystackPayment();
   };
 
-  const handlePayPalPayment = () => {
-    setShowPayPalModal(false);
-    toast.success('Processing PayPal payment...');
-    setTimeout(() => {
-      handleCompleteOrder();
-    }, 1500);
-  };
+  const initiatePaystackPayment = async () => {
+    setIsProcessing(true);
 
-  const handleCompleteOrder = () => {
-    // Remove Supabase order creation — this is manual now
     try {
-      sessionStorage.removeItem("serviceCheckoutDraft");
-    } catch {
-      /* ignore */
+      const response = await fetch("/api/paystack", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: total,
+          email: projectInfo.email,
+          name: projectInfo.name,
+          phone: projectInfo.phone,
+          orderId: `SVC-${Date.now()}`,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        toast.error(data.error || "Failed to initialize payment");
+        setIsProcessing(false);
+        return;
+      }
+
+      window.location.href = data.authorizationUrl;
+    } catch (error) {
+      console.error("Paystack error:", error);
+      toast.error("Payment initialization failed");
+      setIsProcessing(false);
     }
-
-    toast.success('Service order request submitted successfully! We will contact you within 24 hours.');
-    setStep(3);
-
-    setTimeout(() => {
-      router.push('/');
-    }, 2500);
   };
 
   return (
@@ -296,57 +239,49 @@ export default function ServiceCheckoutPage() {
           {step === 2 && (
             <Card>
               <CardHeader>
-                <CardTitle className="font-serif">Payment Method</CardTitle>
+                <CardTitle className="font-serif">Payment</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmitPayment} className="space-y-6">
-                  <RadioGroup value={paymentMethod} onValueChange={(value) => setPaymentMethod(value as PaymentMethod)}>
-                    <div className="space-y-3">
-                      <div className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                        <RadioGroupItem value="paypal" id="paypal" />
-                        <Label htmlFor="paypal" className="flex items-center gap-3 cursor-pointer flex-1">
-                          <div className="h-10 w-16 bg-gradient-to-r from-blue-500 to-blue-700 rounded flex items-center justify-center text-white font-bold text-xs">
-                            PayPal
-                          </div>
-                          <div>
-                            <p className="font-semibold">PayPal</p>
-                            <p className="text-sm text-muted-foreground">Pay securely with your PayPal account</p>
-                          </div>
-                        </Label>
+                  <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 p-6 rounded-lg">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-12 w-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded flex items-center justify-center text-white font-bold text-sm">
+                        Paystack
                       </div>
-
-                      <div className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                        <RadioGroupItem value="mobile-money" id="mobile-money" />
-                        <Label htmlFor="mobile-money" className="flex items-center gap-3 cursor-pointer flex-1">
-                          <div className="h-10 w-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                            <Smartphone className="h-5 w-5 text-secondary" />
-                          </div>
-                          <div>
-                            <p className="font-semibold">Mobile Money</p>
-                            <p className="text-sm text-muted-foreground">Pay with MTN, Airtel, or other providers</p>
-                          </div>
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-3 border rounded-lg p-4 cursor-pointer hover:bg-muted/50 transition-colors">
-                        <RadioGroupItem value="bank-transfer" id="bank-transfer" />
-                        <Label htmlFor="bank-transfer" className="flex items-center gap-3 cursor-pointer flex-1">
-                          <div className="h-10 w-10 rounded-full bg-secondary/10 flex items-center justify-center">
-                            <Building2 className="h-5 w-5 text-secondary" />
-                          </div>
-                          <div>
-                            <p className="font-semibold">Bank Transfer</p>
-                            <p className="text-sm text-muted-foreground">Direct bank account transfer</p>
-                          </div>
-                        </Label>
+                      <div>
+                        <p className="font-semibold">Pay securely with Paystack</p>
+                        <p className="text-sm text-muted-foreground">Card, USSD, or Bank Transfer</p>
                       </div>
                     </div>
-                  </RadioGroup>
-
-                  <div className="flex gap-4">
-                    <Button type="button" variant="outline" onClick={() => setStep(1)} className="flex-1">Back</Button>
-                    <Button type="submit" size="lg" className="flex-1">Complete Order - ${total.toFixed(2)}</Button>
+                    <p className="text-sm text-green-800 dark:text-green-200">
+                      You will be redirected to Paystack to complete your payment securely.
+                    </p>
                   </div>
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                    disabled={isProcessing}
+                  >
+                    {isProcessing ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Processing...
+                      </>
+                    ) : (
+                      `Pay GH₵${total.toFixed(2)} with Paystack`
+                    )}
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => setStep(1)}
+                  >
+                    Back
+                  </Button>
                 </form>
               </CardContent>
             </Card>
@@ -363,7 +298,6 @@ export default function ServiceCheckoutPage() {
                 <p className="text-muted-foreground mb-6">
                   Thank you for your order. We have received your project details and will contact you within 24 hours to discuss next steps.
                 </p>
-
                 <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
               </CardContent>
             </Card>
@@ -392,7 +326,7 @@ export default function ServiceCheckoutPage() {
                     </Badge>
                   </div>
                   <div className="text-right">
-                    <p className="font-semibold">${(draft.price * draft.photoCount).toFixed(2)}</p>
+                    <p className="font-semibold">GH₵{(draft.price * draft.photoCount).toFixed(2)}</p>
                   </div>
                 </div>
               </div>
@@ -400,32 +334,21 @@ export default function ServiceCheckoutPage() {
               <div className="space-y-2 pt-4 border-t">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
-                  <span>${total.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Processing Fee</span>
-                  <span>$0.00</span>
+                  <span>GH₵{total.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-lg font-bold pt-2 border-t">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>GH₵{total.toFixed(2)}</span>
                 </div>
               </div>
 
               <div className="bg-accent/30 p-4 rounded-lg">
-                <p className="text-xs text-center">🎨 Digital services • No shipping required</p>
+                <p className="text-xs text-center">Digital services - No shipping required</p>
               </div>
             </CardContent>
           </Card>
         </div>
       </div>
-
-      <PayPalModal
-        open={showPayPalModal}
-        onClose={() => setShowPayPalModal(false)}
-        amount={total}
-        onConfirm={handlePayPalPayment}
-      />
     </div>
   );
 }

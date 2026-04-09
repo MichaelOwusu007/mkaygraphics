@@ -176,7 +176,7 @@ export default function ContactForm() {
       <a
         className="whatsup fixed bottom-[100px] right-[100px] flex gap-3 items-center"
         aria-label="Chat on WhatsApp"
-        href="https://wa.me/+233542512399"
+        href="https://wa.me/+233592515464"
         target="_blank"
         rel="noopener noreferrer"
       >

@@ -32,6 +32,7 @@ import {
   Palette,
   Briefcase,
   PartyPopper,
+  MessageCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
 import Footer from '@/components/headers/Footer';
@@ -328,61 +329,71 @@ export default function PrintingPage() {
           {/* Services Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
             {filteredServices.map((service) => (
-              <Card
-                key={service.id}
-                className="group overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2"
-              >
-                {service.popular && (
-                  <div className="absolute top-3 right-3 md:top-4 right-4 z-10">
-                    <Badge className="bg-yellow-500 text-black text-xs">
-                      <Star className="w-2.5 h-2.5 md:w-3 md:h-3 mr-0.5 md:mr-1" />
-                      Popular
-                    </Badge>
-                  </div>
-                )}
-                <CardContent className="p-0">
-                  <div className="relative h-36 md:h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
-                    <service.icon className="h-14 w-14 md:h-20 md:w-20 text-yellow-400/50 group-hover:scale-110 group-hover:text-yellow-400 transition-all duration-300" />
-                    <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 md:p-4">
-                      <Badge variant="outline" className="border-yellow-400/50 text-yellow-400 text-xs">
-                        {service.category}
+              <div key={service.id} className="group relative">
+                <Card
+                  className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full"
+                >
+                  {service.popular && (
+                    <div className="absolute top-3 md:top-4 right-4 z-10">
+                      <Badge className="bg-yellow-500 text-black text-xs">
+                        <Star className="w-2.5 h-2.5 md:w-3 md:h-3 mr-0.5 md:mr-1" />
+                        Popular
                       </Badge>
                     </div>
-                  </div>
-
-                  <div className="p-4 md:p-6 space-y-3 md:space-y-4">
-                    <h3 className="text-base md:text-xl font-bold group-hover:text-yellow-600 transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-500 text-xs md:text-sm line-clamp-2">{service.description}</p>
-
-                    <ul className="space-y-1.5 md:space-y-2">
-                      {service.features.slice(0, 3).map((feature, i) => (
-                        <li key={i} className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
-                          <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 flex-shrink-0" />
-                          <span className="truncate">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 md:pt-4 border-t">
-                      <div>
-                        <span className="text-xs md:text-sm text-gray-400">From</span>
-                        <p className="text-lg md:text-2xl font-bold text-gray-900">{service.basePrice}</p>
+                  )}
+                  <CardContent className="p-0 flex flex-col h-full">
+                    <div className="relative h-36 md:h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
+                      <service.icon className="h-14 w-14 md:h-20 md:w-20 text-yellow-400/50 group-hover:scale-110 group-hover:text-yellow-400 transition-all duration-300" />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 md:p-4">
+                        <Badge variant="outline" className="border-yellow-400/50 text-yellow-400 text-xs">
+                          {service.category}
+                        </Badge>
                       </div>
-                      <Button
-                        size="sm"
-                        onClick={() => handleBookService(service)}
-                        className="bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white w-full sm:w-auto text-xs md:text-sm"
-                      >
-                        Book Now
-                        <ArrowRight className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" />
-                      </Button>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+
+                    <div className="p-4 md:p-6 space-y-3 md:space-y-4 flex-1 flex flex-col">
+                      <h3 className="text-base md:text-xl font-bold group-hover:text-yellow-600 transition-colors">
+                        {service.title}
+                      </h3>
+                      <p className="text-gray-500 text-xs md:text-sm line-clamp-2">{service.description}</p>
+
+                      <ul className="space-y-1.5 md:space-y-2 flex-1">
+                        {service.features.slice(0, 3).map((feature, i) => (
+                          <li key={i} className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
+                            <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 flex-shrink-0" />
+                            <span className="truncate">{feature}</span>
+                          </li>
+                        ))}
+                      </ul>
+
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 md:pt-4 border-t">
+                        <div>
+                          <span className="text-xs md:text-sm text-gray-400">From</span>
+                          <p className="text-lg md:text-2xl font-bold text-gray-900">{service.basePrice}</p>
+                        </div>
+                        <Button
+                          size="sm"
+                          onClick={() => handleBookService(service)}
+                          className="bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white w-full sm:w-auto text-xs md:text-sm"
+                        >
+                          Book Now
+                          <ArrowRight className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" />
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+                <a
+                  href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(service.title)} printing service`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-20 right-4 bg-green-500 hover:bg-green-600 text-white p-2.5 md:p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 z-10"
+                  title="Chat on WhatsApp"
+                >
+                  <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
+                </a>
+              </div>
             ))}
           </div>
         </div>

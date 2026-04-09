@@ -13,7 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Star, ChevronLeft, Check } from 'lucide-react';
+import { Star, ChevronLeft, Check, MessageCircle } from 'lucide-react';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import Image from 'next/image'; // Added import
@@ -206,6 +206,17 @@ export default function ProductDetailPage() {
           <Button size="lg" className="w-full bg-gray-900 text-white hover:bg-gray-700" onClick={handleAddToCart}>
             Add to Cart
           </Button>
+
+          {/* WhatsApp */}
+          <a
+            href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(product.title)} (GH₵${calculateTotalPrice().toFixed(2)})`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+          >
+            <MessageCircle className="h-5 w-5" />
+            Chat on WhatsApp
+          </a>
 
           {/* Features */}
           <Card>
