@@ -29,7 +29,7 @@ export default function Services() {
           {editingServices.map((service, index) => (
             <div
               key={service.id}
-              className={`group relative overflow-hidden hover:shadow-elegant transition-all duration-500 animate-fade-in flex flex-col ${
+              className={`group relative animate-fade-in ${
                 service.popular ? 'lg:scale-105' : ''
               }`}
               style={{ animationDelay: `${index * 100}ms` }}
@@ -37,13 +37,8 @@ export default function Services() {
               <Card className={`relative overflow-hidden hover:shadow-elegant transition-all duration-500 flex flex-col h-full ${
                 service.popular ? 'border-2 border-secondary shadow-glow' : ''
               }`}>
-                {service.popular && (
-                  <Badge className="absolute top-4 right-4 z-10 bg-secondary text-secondary-foreground">
-                    Most Popular
-                  </Badge>
-                )}
-                <CardContent className="p-0 flex flex-col flex-1">
-                  <div className="aspect-video overflow-hidden relative">
+                <div className="relative">
+                  <div className="aspect-video overflow-hidden">
                     <Image
                       src={service.image}
                       alt={service.title}
@@ -51,59 +46,63 @@ export default function Services() {
                       height={450}
                       className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
                   </div>
-                  <div className="p-6 space-y-6 flex-1 flex flex-col">
-                    <div>
-                      <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                      <p className="text-muted-foreground">{service.description}</p>
-                    </div>
+                  <a
+                    href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(service.title)} editing service (GH₵${service.price} per photo)`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-green-500 hover:bg-green-600 text-white p-2 sm:p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
+                    title="Chat on WhatsApp"
+                  >
+                    <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                  </a>
+                  {service.popular && (
+                    <Badge className="absolute top-3 left-3 sm:top-4 sm:left-4 z-10 bg-secondary text-secondary-foreground">
+                      Most Popular
+                    </Badge>
+                  )}
+                </div>
+                <CardContent className="p-6 space-y-6 flex-1 flex flex-col">
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+                    <p className="text-muted-foreground">{service.description}</p>
+                  </div>
 
-                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <Clock className="h-4 w-4" />
-                      <span>Turnaround: {service.turnaroundTime}</span>
-                    </div>
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                    <Clock className="h-4 w-4" />
+                    <span>Turnaround: {service.turnaroundTime}</span>
+                  </div>
 
-                    <div className="space-y-3 flex-1">
-                      <p className="font-semibold text-sm">What&apos;s included:</p>
-                      
-                      <ul className="space-y-2">
-                        {service.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm">
-                            <Check className="h-4 w-4 text-secondary flex-shrink-0 mt-0.5" />
-                            <span>{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
+                  <div className="space-y-3 flex-1">
+                    <p className="font-semibold text-sm">What&apos;s included:</p>
+                    
+                    <ul className="space-y-2">
+                      {service.features.map((feature, i) => (
+                        <li key={i} className="flex items-start gap-2 text-sm">
+                          <Check className="h-4 w-4 text-secondary flex-shrink-0 mt-0.5" />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
 
-                    <div className="pt-6 border-t space-y-3 mt-auto">
-                      <div className="flex items-baseline justify-between">
-                        <span className="text-sm text-muted-foreground">Starting at</span>
-                        <div className="text-right">
-                          <span className=" text-3xl font-bold">GH{service.price}</span>
-                          <span className="text-sm text-muted-foreground ml-1">per photo</span>
-                        </div>
+                  <div className="pt-6 border-t space-y-3 mt-auto">
+                    <div className="flex items-baseline justify-between">
+                      <span className="text-sm text-muted-foreground">Starting at</span>
+                      <div className="text-right">
+                        <span className=" text-3xl font-bold">GH{service.price}</span>
+                        <span className="text-sm text-muted-foreground ml-1">per photo</span>
                       </div>
-                      <Button className="w-full group" size="lg" asChild>
-                        <Link href={`/services/${service.id}`}>
-                          Order Service
-                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                      </Button>
                     </div>
+                    <Button className="w-full group" size="lg" asChild>
+                      <Link href={`/services/${service.id}`}>
+                        Order Service
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Link>
+                    </Button>
                   </div>
                 </CardContent>
               </Card>
-              <a
-                href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(service.title)} editing service (GH₵${service.price} per photo)`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="absolute bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 z-10"
-                title="Chat on WhatsApp"
-              >
-                <MessageCircle className="h-5 w-5" />
-              </a>
             </div>
           ))}
         </div>

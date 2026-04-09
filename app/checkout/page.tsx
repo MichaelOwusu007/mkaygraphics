@@ -12,6 +12,7 @@ import {
   CreditCard,
   Truck,
   Loader2,
+  MessageCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -363,6 +364,16 @@ function CheckoutContent() {
                   <Button type="submit" size="lg" className="w-full">
                     Continue to Payment
                   </Button>
+                  
+                  <a
+                    href="https://wa.me/233592515464?text=Hi, I need help with my order"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
                 </form>
               </CardContent>
             </Card>
@@ -417,6 +428,16 @@ function CheckoutContent() {
                   >
                     Back
                   </Button>
+
+                  <a
+                    href="https://wa.me/233592515464?text=Hi, I need help with my payment"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
                 </form>
               </CardContent>
             </Card>
@@ -439,9 +460,20 @@ function CheckoutContent() {
                 <p className="text-sm text-muted-foreground">
                   We will contact you shortly to confirm your order.
                 </p>
-                <Button onClick={() => router.push("/")}>
-                  Return Home
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button onClick={() => router.push("/")}>
+                    Return Home
+                  </Button>
+                  <a
+                    href="https://wa.me/233592515464?text=Hi, I just placed an order and have a question"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
+                </div>
               </CardContent>
             </Card>
           )}

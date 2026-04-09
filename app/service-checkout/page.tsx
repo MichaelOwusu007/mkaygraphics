@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, CreditCard, FileText, Zap, Loader2 } from "lucide-react";
+import { CheckCircle2, CreditCard, FileText, Zap, Loader2, MessageCircle } from "lucide-react";
 import { toast } from "sonner";
 
 type DraftService = {
@@ -330,6 +330,16 @@ function ServiceCheckoutContent() {
                   </div>
 
                   <Button type="submit" size="lg" className="w-full">Continue to Payment</Button>
+                  
+                  <a
+                    href={`https://wa.me/233592515464?text=Hi, I need help with ${draft?.title || 'editing service'} (GH₵${total.toFixed(2)})`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
                 </form>
               </CardContent>
             </Card>
@@ -382,6 +392,16 @@ function ServiceCheckoutContent() {
                   >
                     Back
                   </Button>
+
+                  <a
+                    href="https://wa.me/233592515464?text=Hi, I need help with my order"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
                 </form>
               </CardContent>
             </Card>
@@ -390,7 +410,7 @@ function ServiceCheckoutContent() {
           {/* Step 3 */}
           {step === 3 && (
             <Card className="text-center">
-              <CardContent className="py-12">
+              <CardContent className="py-12 space-y-6">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-secondary/10 flex items-center justify-center">
                   <CheckCircle2 className="h-10 w-10 text-secondary" />
                 </div>
@@ -398,7 +418,18 @@ function ServiceCheckoutContent() {
                 <p className="text-muted-foreground mb-6">
                   Thank you for your order! A confirmation email has been sent to {orderData?.customerEmail}. We will contact you within 24 hours to discuss next steps.
                 </p>
-                <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
+                  <a
+                    href="https://wa.me/233592515464?text=Hi, I just placed an order and have a question"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </a>
+                </div>
               </CardContent>
             </Card>
           )}

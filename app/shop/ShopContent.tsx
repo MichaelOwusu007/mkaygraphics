@@ -207,7 +207,7 @@ export default function ShopContent() {
                     href={`/product/${product.id}`}
                     className="block"
                   >
-                    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden">
+                    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden h-full">
                       <CardContent className="p-0">
                         <div className="aspect-square overflow-hidden rounded-t-lg relative">
                           <Image
@@ -218,6 +218,16 @@ export default function ShopContent() {
                             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                          <a
+                            href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(product.title)} (GH₵${product.price.toFixed(2)})`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white p-2 sm:p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
+                            title="Chat on WhatsApp"
+                            onClick={(e) => e.stopPropagation()}
+                          >
+                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                          </a>
                         </div>
                         <div className="p-4 space-y-2">
                           <h3 className="font-semibold line-clamp-2">
@@ -235,15 +245,6 @@ export default function ShopContent() {
                       </CardContent>
                     </Card>
                   </Link>
-                  <a
-                    href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(product.title)} (GH₵${product.price.toFixed(2)})`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute bottom-4 right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:scale-110 z-10"
-                    title="Chat on WhatsApp"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                  </a>
                 </div>
               ))}
             </div>
