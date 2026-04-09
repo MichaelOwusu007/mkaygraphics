@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useState, useEffect, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,34 @@ import {
 import Image from "next/image";
 import { toast } from "sonner";
 
+type OrderData = {
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  items: Array<{
+    productName: string;
+    quantity: number;
+    price: number;
+    selectedVariants?: Record<string, string>;
+  }>;
+  serviceItems: Array<{
+    serviceTitle: string;
+    photoCount: number;
+    totalPrice: number;
+  }>;
+  total: number;
+  shippingInfo: {
+    name: string;
+    email: string;
+    phone: string;
+    address: string;
+    city: string;
+    state: string;
+    zip: string;
+    country: string;
+  };
+};
+
 function CheckoutContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -24,6 +52,7 @@ function CheckoutContent() {
   const [step, setStep] = useState<number>(1);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+  const [orderData, setOrderData] = useState<OrderData | null>(null);
 
   const [shippingInfo, setShippingInfo] = useState({
     name: "",
@@ -39,18 +68,46 @@ function CheckoutContent() {
   const subtotal = getTotalPrice();
   const total = subtotal;
 
+  const sendOrderEmail = useCallback(async (data: OrderData, paymentRef?: string) => {
+    try {
+      const response = await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...data,
+          paymentMethod: "Paystack",
+          paymentReference: paymentRef || searchParams.get("ref"),
+          orderType: "Shop Order",
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Failed to send order email");
+      }
+    } catch (error) {
+      console.error("Error sending order email:", error);
+    }
+  }, [searchParams]);
+
   useEffect(() => {
     const paymentStatus = searchParams.get("payment");
     const ref = searchParams.get("ref");
 
     if (paymentStatus === "success" && ref) {
+      const savedOrderData = sessionStorage.getItem("pendingOrder");
+      if (savedOrderData) {
+        const data = JSON.parse(savedOrderData) as OrderData;
+        setOrderData(data);
+        sendOrderEmail(data, ref);
+        sessionStorage.removeItem("pendingOrder");
+      }
       setStep(3);
       clearCart();
       toast.success("Payment successful! Your order has been placed.");
     }
 
     setIsInitializing(false);
-  }, [searchParams, clearCart]);
+  }, [searchParams, clearCart, sendOrderEmail]);
 
   if (isInitializing) {
     return (
@@ -60,7 +117,7 @@ function CheckoutContent() {
     );
   }
 
-  if (items.length === 0 && serviceItems.length === 0) {
+  if (items.length === 0 && serviceItems.length === 0 && step !== 3) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
@@ -91,6 +148,27 @@ function CheckoutContent() {
   const initiatePaystackPayment = async () => {
     setIsProcessing(true);
 
+    const orderDataToSave: OrderData = {
+      customerName: shippingInfo.name,
+      customerEmail: shippingInfo.email,
+      customerPhone: shippingInfo.phone,
+      items: items.map((item) => ({
+        productName: item.product.title,
+        quantity: item.quantity,
+        price: item.totalPrice / item.quantity,
+        selectedVariants: item.selectedVariants,
+      })),
+      serviceItems: serviceItems.map((item) => ({
+        serviceTitle: item.service.title,
+        photoCount: item.photoCount,
+        totalPrice: item.totalPrice,
+      })),
+      total,
+      shippingInfo,
+    };
+
+    sessionStorage.setItem("pendingOrder", JSON.stringify(orderDataToSave));
+
     try {
       const response = await fetch("/api/paystack", {
         method: "POST",
@@ -108,6 +186,7 @@ function CheckoutContent() {
 
       if (!response.ok) {
         toast.error(data.error || "Failed to initialize payment");
+        sessionStorage.removeItem("pendingOrder");
         setIsProcessing(false);
         return;
       }
@@ -116,6 +195,7 @@ function CheckoutContent() {
     } catch (error) {
       console.error("Paystack error:", error);
       toast.error("Payment initialization failed");
+      sessionStorage.removeItem("pendingOrder");
       setIsProcessing(false);
     }
   };
@@ -353,7 +433,7 @@ function CheckoutContent() {
                   <h2 className="font-serif text-3xl font-bold mb-2">Order Complete!</h2>
                   <p className="text-muted-foreground">
                     Thank you for your order! A confirmation email has been sent to{" "}
-                    {shippingInfo.email}
+                    {orderData?.customerEmail || shippingInfo.email}
                   </p>
                 </div>
                 <p className="text-sm text-muted-foreground">
@@ -376,7 +456,7 @@ function CheckoutContent() {
 
             <CardContent className="space-y-4">
               <div className="space-y-3 max-h-64 overflow-auto">
-                {items.map((item, index) => (
+                {items.length > 0 && items.map((item, index) => (
                   <div key={index} className="flex gap-3">
                     <Image
                       src={item.product.images[0]}
@@ -395,7 +475,7 @@ function CheckoutContent() {
                   </div>
                 ))}
 
-                {serviceItems.map((item, index) => (
+                {serviceItems.length > 0 && serviceItems.map((item, index) => (
                   <div key={index} className="flex gap-3">
                     <div className="w-16 h-16 bg-secondary/10 rounded flex items-center justify-center">
                       <CreditCard className="h-8 w-8 text-secondary" />
@@ -409,16 +489,44 @@ function CheckoutContent() {
                     </div>
                   </div>
                 ))}
+
+                {step === 3 && orderData && (
+                  <>
+                    {orderData.items.map((item, index) => (
+                      <div key={`order-${index}`} className="flex gap-3">
+                        <div className="w-16 h-16 bg-secondary/10 rounded flex items-center justify-center">
+                          <CreditCard className="h-8 w-8 text-secondary" />
+                        </div>
+                        <div className="flex-1 text-sm">
+                          <p className="font-semibold line-clamp-1">{item.productName}</p>
+                          <p className="text-muted-foreground">Qty: {item.quantity}</p>
+                          <p className="font-semibold">GH₵{(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                      </div>
+                    ))}
+                    {orderData.serviceItems.map((item, index) => (
+                      <div key={`service-${index}`} className="flex gap-3">
+                        <div className="w-16 h-16 bg-secondary/10 rounded flex items-center justify-center">
+                          <CreditCard className="h-8 w-8 text-secondary" />
+                        </div>
+                        <div className="flex-1 text-sm">
+                          <p className="font-semibold line-clamp-1">{item.serviceTitle}</p>
+                          <p className="font-semibold">GH₵{item.totalPrice.toFixed(2)}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </>
+                )}
               </div>
 
               <div className="border-t pt-4 space-y-2">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-semibold">GH₵{subtotal.toFixed(2)}</span>
+                  <span className="font-semibold">GH₵{(orderData?.total || subtotal).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
                   <span>Total</span>
-                  <span>GH₵{total.toFixed(2)}</span>
+                  <span>GH₵{(orderData?.total || total).toFixed(2)}</span>
                 </div>
               </div>
             </CardContent>

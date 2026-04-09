@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, Suspense } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -21,12 +21,33 @@ type DraftService = {
   turnaroundTime?: string;
 };
 
-export default function ServiceCheckoutPage() {
+type ServiceOrderData = {
+  customerName: string;
+  customerEmail: string;
+  customerPhone: string;
+  serviceTitle: string;
+  photoCount: number;
+  totalPrice: number;
+  total: number;
+  projectInfo: {
+    company: string;
+    projectTitle: string;
+    projectDescription: string;
+    deadline: string;
+    referenceLinks: string;
+    specialRequirements: string;
+  };
+};
+
+function ServiceCheckoutContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const [draft, setDraft] = useState<DraftService | null>(null);
   const [step, setStep] = useState<number>(1);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isInitializing, setIsInitializing] = useState(true);
+  const [orderData, setOrderData] = useState<ServiceOrderData | null>(null);
 
   const [projectInfo, setProjectInfo] = useState({
     name: '',
@@ -41,21 +62,69 @@ export default function ServiceCheckoutPage() {
   });
 
   useEffect(() => {
+    const paymentStatus = searchParams.get("payment");
+    const ref = searchParams.get("ref");
+
+    if (paymentStatus === "success" && ref) {
+      const savedOrderData = sessionStorage.getItem("pendingServiceOrder");
+      if (savedOrderData) {
+        const data = JSON.parse(savedOrderData) as ServiceOrderData;
+        setOrderData(data);
+        sendOrderEmail(data, ref);
+        sessionStorage.removeItem("pendingServiceOrder");
+        sessionStorage.removeItem("serviceCheckoutDraft");
+      }
+      setStep(3);
+      toast.success("Payment successful! Your order has been placed.");
+    }
+    setIsInitializing(false);
+  }, [searchParams]);
+
+  const sendOrderEmail = async (data: ServiceOrderData, paymentRef?: string) => {
+    try {
+      await fetch("/api/order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          customerName: data.customerName,
+          customerEmail: data.customerEmail,
+          customerPhone: data.customerPhone,
+          items: [],
+          serviceItems: [{
+            serviceTitle: `${data.serviceTitle} - ${data.photoCount} photos`,
+            photoCount: data.photoCount,
+            totalPrice: data.totalPrice,
+          }],
+          total: data.total,
+          shippingInfo: data.projectInfo,
+          paymentMethod: "Paystack",
+          paymentReference: paymentRef,
+          orderType: "Editing Service",
+        }),
+      });
+    } catch (error) {
+      console.error("Error sending order email:", error);
+    }
+  };
+
+  useEffect(() => {
     try {
       const raw = sessionStorage.getItem("serviceCheckoutDraft");
-      if (!raw) {
+      if (!raw && step !== 3) {
         router.push("/services/editing");
         return;
       }
-      const d: DraftService = JSON.parse(raw);
-      setDraft(d);
+      if (raw) {
+        const d: DraftService = JSON.parse(raw);
+        setDraft(d);
+      }
     } catch (err) {
       console.error("Failed to load checkout draft:", err);
       router.push("/services/editing");
     }
-  }, [router]);
+  }, [router, step]);
 
-  if (!draft) {
+  if (isInitializing) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <Loader2 className="w-8 h-8 animate-spin mx-auto" />
@@ -63,7 +132,15 @@ export default function ServiceCheckoutPage() {
     );
   }
 
-  const total = draft.price * draft.photoCount;
+  if (!draft && step !== 3) {
+    return (
+      <div className="container mx-auto px-4 py-20 text-center">
+        <Loader2 className="w-8 h-8 animate-spin mx-auto" />
+      </div>
+    );
+  }
+
+  const total = draft ? draft.price * draft.photoCount : orderData?.total || 0;
 
   const handleSubmitProjectInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,7 +161,28 @@ export default function ServiceCheckoutPage() {
   };
 
   const initiatePaystackPayment = async () => {
+    if (!draft) return;
     setIsProcessing(true);
+
+    const orderDataToSave: ServiceOrderData = {
+      customerName: projectInfo.name,
+      customerEmail: projectInfo.email,
+      customerPhone: projectInfo.phone,
+      serviceTitle: draft.title,
+      photoCount: draft.photoCount,
+      totalPrice: total,
+      total,
+      projectInfo: {
+        company: projectInfo.company,
+        projectTitle: projectInfo.projectTitle,
+        projectDescription: projectInfo.projectDescription,
+        deadline: projectInfo.deadline,
+        referenceLinks: projectInfo.referenceLinks,
+        specialRequirements: projectInfo.specialRequirements,
+      },
+    };
+
+    sessionStorage.setItem("pendingServiceOrder", JSON.stringify(orderDataToSave));
 
     try {
       const response = await fetch("/api/paystack", {
@@ -103,6 +201,7 @@ export default function ServiceCheckoutPage() {
 
       if (!response.ok) {
         toast.error(data.error || "Failed to initialize payment");
+        sessionStorage.removeItem("pendingServiceOrder");
         setIsProcessing(false);
         return;
       }
@@ -111,6 +210,7 @@ export default function ServiceCheckoutPage() {
     } catch (error) {
       console.error("Paystack error:", error);
       toast.error("Payment initialization failed");
+      sessionStorage.removeItem("pendingServiceOrder");
       setIsProcessing(false);
     }
   };
@@ -148,7 +248,7 @@ export default function ServiceCheckoutPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
           {/* Step 1 */}
-          {step === 1 && (
+          {step === 1 && draft && (
             <Card>
               <CardHeader>
                 <CardTitle className="font-serif flex items-center gap-2">
@@ -236,7 +336,7 @@ export default function ServiceCheckoutPage() {
           )}
 
           {/* Step 2 */}
-          {step === 2 && (
+          {step === 2 && draft && (
             <Card>
               <CardHeader>
                 <CardTitle className="font-serif">Payment</CardTitle>
@@ -296,7 +396,7 @@ export default function ServiceCheckoutPage() {
                 </div>
                 <h2 className="font-serif text-3xl font-bold mb-4">Order Confirmed!</h2>
                 <p className="text-muted-foreground mb-6">
-                  Thank you for your order. We have received your project details and will contact you within 24 hours to discuss next steps.
+                  Thank you for your order! A confirmation email has been sent to {orderData?.customerEmail}. We will contact you within 24 hours to discuss next steps.
                 </p>
                 <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
               </CardContent>
@@ -312,23 +412,31 @@ export default function ServiceCheckoutPage() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">
-                <div className="flex gap-3 pb-3 border-b last:border-0">
-                  <div className="relative w-16 h-16 rounded overflow-hidden">
-                    <Image src={draft.image} alt={draft.title} fill sizes="64px" style={{ objectFit: 'cover' }} />
+                {(draft || orderData) && (
+                  <div className="flex gap-3 pb-3 border-b last:border-0">
+                    <div className="relative w-16 h-16 rounded overflow-hidden">
+                      <Image 
+                        src={draft?.image || "/images/service-placeholder.jpg"} 
+                        alt={draft?.title || orderData?.serviceTitle || "Service"} 
+                        fill 
+                        sizes="64px" 
+                        style={{ objectFit: 'cover' }} 
+                      />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-sm mb-1 truncate">{draft?.title || orderData?.serviceTitle}</h3>
+                      <p className="text-xs text-muted-foreground mb-1">
+                        {draft?.photoCount || orderData?.photoCount} {draft?.photoCount === 1 ? 'photo' : 'photos'}
+                      </p>
+                      <Badge variant="secondary" className="text-xs">
+                        {draft?.turnaroundTime || "Standard"}
+                      </Badge>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold">GH₵{total.toFixed(2)}</p>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-sm mb-1 truncate">{draft.title}</h3>
-                    <p className="text-xs text-muted-foreground mb-1">
-                      {draft.photoCount} {draft.photoCount === 1 ? 'photo' : 'photos'}
-                    </p>
-                    <Badge variant="secondary" className="text-xs">
-                      {draft.turnaroundTime || "Standard"}
-                    </Badge>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold">GH₵{(draft.price * draft.photoCount).toFixed(2)}</p>
-                  </div>
-                </div>
+                )}
               </div>
 
               <div className="space-y-2 pt-4 border-t">
@@ -350,5 +458,21 @@ export default function ServiceCheckoutPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function ServiceCheckoutLoading() {
+  return (
+    <div className="container mx-auto px-4 py-20 text-center">
+      <Loader2 className="w-8 h-8 animate-spin mx-auto" />
+    </div>
+  );
+}
+
+export default function ServiceCheckoutPage() {
+  return (
+    <Suspense fallback={<ServiceCheckoutLoading />}>
+      <ServiceCheckoutContent />
+    </Suspense>
   );
 }
