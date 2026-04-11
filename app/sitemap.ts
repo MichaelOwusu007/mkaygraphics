@@ -4,28 +4,71 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://www.mkaygraphix.site";
 
   return [
+    // Main pages
     {
-      url: `${baseUrl}`,
+      url: baseUrl,
       lastModified: new Date(),
       changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: `${baseUrl}/shop`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/about`,
       lastModified: new Date(),
-      changeFrequency: "weekly",
+      changeFrequency: "monthly",
       priority: 0.9,
     },
     {
       url: `${baseUrl}/contact`,
       lastModified: new Date(),
       changeFrequency: "monthly",
+      priority: 0.9,
+    },
+
+    // Shop
+    {
+      url: `${baseUrl}/shop`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+
+    // Services
+    {
+      url: `${baseUrl}/services`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/editing`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/printing`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/photobook`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/services/design`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    },
+
+    // Checkout
+    {
+      url: `${baseUrl}/checkout`,
+      lastModified: new Date(),
+      changeFrequency: "weekly",
       priority: 0.7,
     },
   ];

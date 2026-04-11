@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#1a1a1a"/>
+  
+  <!-- Gradient overlay -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#333333;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bgGradient)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="150" fill="#f59e0b" opacity="0.05"/>
+  <circle cx="1100" cy="530" r="200" fill="#f59e0b" opacity="0.05"/>
+  
+  <!-- Frame Icon - Large centered (Lucide style) -->
+  <g transform="translate(500, 140)">
+    <!-- Outer frame -->
+    <rect x="0" y="0" width="200" height="160" rx="6" fill="none" stroke="url(#goldGradient)" stroke-width="10"/>
+    <!-- Inner frame -->
+    <rect x="28" y="28" width="144" height="104" rx="3" fill="none" stroke="url(#goldGradient)" stroke-width="5"/>
+  </g>
+  
+  <!-- Brand Name -->
+  <text x="600" y="400" font-family="Arial Black, sans-serif" font-size="72" font-weight="900" fill="#ffffff" text-anchor="middle">MkayGraphix</text>
+  
+  <!-- Tagline -->
+  <text x="600" y="460" font-family="Arial, sans-serif" font-size="28" fill="#f59e0b" text-anchor="middle" letter-spacing="3">PREMIUM FRAMES &amp; DESIGN SERVICES</text>
+  
+  <!-- Services list -->
+  <text x="600" y="520" font-family="Arial, sans-serif" font-size="20" fill="#888888" text-anchor="middle">Custom Framing • Photo Editing • Printing • Photobooks • Graphic Design</text>
+  
+  <!-- Location -->
+  <text x="600" y="570" font-family="Arial, sans-serif" font-size="18" fill="#666666" text-anchor="middle">📍 Accra, Ghana</text>
+</svg>

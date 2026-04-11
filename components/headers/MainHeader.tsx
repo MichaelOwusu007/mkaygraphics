@@ -13,7 +13,6 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCartStore } from "@/stores/cartStore";
-import { supabase } from "@/integrations/supabase/client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,23 +35,23 @@ export const Header = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setIsAuthenticated(!!session);
-    });
+  // useEffect(() => {
+  //   supabase.auth.getSession().then(({ data: { session } }) => {
+  //     setIsAuthenticated(!!session);
+  //   });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (_event, session) => setIsAuthenticated(!!session)
-    );
+  //   const { data: { subscription } } = supabase.auth.onAuthStateChange(
+  //     (_event, session) => setIsAuthenticated(!!session)
+  //   );
 
-    return () => subscription.unsubscribe();
-  }, []);
+  //   return () => subscription.unsubscribe();
+  // }, []);
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    setIsAuthenticated(false);
-    router.push("/");
-  };
+  // const handleLogout = async () => {
+  //   await supabase.auth.signOut();
+  //   setIsAuthenticated(false);
+  //   router.push("/");
+  // };
 
   const closeMobileMenu = () => setMobileMenuOpen(false);
 
@@ -193,7 +192,6 @@ export const Header = () => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      onClick={handleLogout}
                       className="cursor-pointer text-destructive"
                     >
                       Logout
@@ -270,7 +268,7 @@ export const Header = () => {
                   >
                     My Account
                   </Link>
-                  <button
+                  {/* <button
                     onClick={() => {
                       handleLogout();
                       closeMobileMenu();
@@ -278,7 +276,7 @@ export const Header = () => {
                     className="block w-full text-left py-2 text-sm font-medium transition-colors hover:text-primary text-destructive"
                   >
                     Logout
-                  </button>
+                  </button> */}
                 </>
               )}
             </div>
