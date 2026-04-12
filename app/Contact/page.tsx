@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Footer from "@/components/headers/Footer"
+import Footer from "@/components/headers/Footer";
 import { toast } from "sonner"; // ✅ for toast notifications
 import "./contact.css";
 
@@ -192,7 +192,7 @@ export default function ContactForm() {
           WhatsAppUs
         </p>
       </a>
-       < Footer />
+       <Footer />
     </div>
   );
 }
