@@ -217,7 +217,7 @@ function ServiceCheckoutContent() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="font-serif text-4xl font-bold mb-8">Service Checkout</h1>
+      <h1 className=" text-4xl font-bold mb-8">Service Checkout</h1>
 
       {/* Progress Indicator */}
       <div className="flex items-center justify-center mb-12 max-w-2xl mx-auto">
@@ -414,7 +414,7 @@ function ServiceCheckoutContent() {
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-secondary/10 flex items-center justify-center">
                   <CheckCircle2 className="h-10 w-10 text-secondary" />
                 </div>
-                <h2 className="font-serif text-3xl font-bold mb-4">Order Confirmed!</h2>
+                <h2 className=" text-3xl font-bold mb-4">Order Confirmed!</h2>
                 <p className="text-muted-foreground mb-6">
                   Thank you for your order! A confirmation email has been sent to {orderData?.customerEmail}. We will contact you within 24 hours to discuss next steps.
                 </p>
@@ -439,7 +439,7 @@ function ServiceCheckoutContent() {
         <div className="lg:col-span-1">
           <Card className="sticky top-8">
             <CardHeader>
-              <CardTitle className="font-serif">Order Summary</CardTitle>
+              <CardTitle className="">Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-3">

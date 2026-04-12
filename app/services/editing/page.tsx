@@ -8,6 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import "./photoediting.css";
 import { ArrowRight, Star, Clock, Check, MessageCircle } from 'lucide-react';
 import { editingServices } from '@/lib/mockData';
+import Footer from '@/components/headers/Footer';
 
 export default function Services() {
   return (
@@ -35,16 +36,16 @@ export default function Services() {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <Card className={`relative overflow-hidden hover:shadow-elegant transition-all duration-500 flex flex-col h-full ${
-                service.popular ? 'border-2 border-secondary shadow-glow' : ''
+                service.popular ? 'border-2  shadow-glow' : ''
               }`}>
                 <div className="relative">
-                  <div className="aspect-video overflow-hidden">
+                  <div className="aspect-square pt-0 -mt-6 overflow-hidden">
                     <Image
                       src={service.image}
                       alt={service.title}
-                      width={800}
-                      height={450}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                      width={600}
+                      height={800}
+                      className="w-full pt-0 mt-0 h-full object-cover group-hover:scale-110 transition-transform duration-700"
                     />
                   </div>
                   <a
@@ -79,7 +80,7 @@ export default function Services() {
                     <ul className="space-y-2">
                       {service.features.map((feature, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
-                          <Check className="h-4 w-4 text-secondary flex-shrink-0 mt-0.5" />
+                           <Check className="h-5 w-5 text-yellow-500 flex-shrink-0 mt-0.5" />
                           <span>{feature}</span>
                         </li>
                       ))}
@@ -123,8 +124,8 @@ export default function Services() {
                   <th className="text-left p-4 text-lg">Features</th>
                   {editingServices.map((service) => (
                     <th key={service.id} className="p-4 text-center">
-                      <div className="font-serif text-lg font-bold">{service.title}</div>
-                      <div className="text-2xl font-bold text-secondary mt-2">${service.price}</div>
+                      <div className=" text-lg font-bold">{service.title}</div>
+                      <div className="text-2xl text-black font-bold mt-2">GH{service.price}</div>
                     </th>
                   ))}
                 </tr>
@@ -176,11 +177,14 @@ export default function Services() {
           <p className="text-muted-foreground text-lg">
             Contact our team for a free consultation and we&apos;ll help you find the perfect editing solution
           </p>
-          <Button size="lg" variant="outline">
+          <Button className="cursor-pointer"  size="lg" variant="outline">
+            <Link href='/contact' >
             Get Free Consultation
+            </Link>
           </Button>
         </div>
       </section>
+      < Footer />
     </div>
   );
 }

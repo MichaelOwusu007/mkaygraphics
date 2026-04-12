@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
 import { Card, CardContent } from "@/components/ui/card";
@@ -203,48 +202,46 @@ export default function ShopContent() {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredProducts.map((product) => (
                 <div key={product.id} className="group relative">
-                  <Link
-                    href={`/product/${product.id}`}
-                    className="block"
+                  <Card 
+                    className="cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden h-full"
+                    onClick={() => router.push(`/product/${product.id}`)}
                   >
-                    <Card className="cursor-pointer hover:shadow-lg transition-all duration-300 overflow-hidden h-full">
-                      <CardContent className="p-0">
-                        <div className="aspect-square overflow-hidden rounded-t-lg relative">
-                          <Image
-                            src={product.images[0]}
-                            alt={product.title}
-                            width={400}
-                            height={400}
-                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                          />
-                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
-                          <a
-                            href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(product.title)} (GH₵${product.price.toFixed(2)})`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white p-2 sm:p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
-                            title="Chat on WhatsApp"
-                            onClick={(e) => e.stopPropagation()}
-                          >
-                            <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
-                          </a>
+                    <CardContent className="p-0">
+                      <div className="aspect-square overflow-hidden rounded-t-lg relative">
+                        <Image
+                          src={product.images[0]}
+                          alt={product.title}
+                          width={400}
+                          height={400}
+                          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300" />
+                        <a
+                          href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(product.title)} (GH₵${product.price.toFixed(2)})`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute top-3 right-3 bg-green-500 hover:bg-green-600 text-white p-2 sm:p-2.5 md:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
+                          title="Chat on WhatsApp"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          <MessageCircle className="h-4 w-4 sm:h-5 sm:w-5" />
+                        </a>
+                      </div>
+                      <div className="p-4 space-y-2">
+                        <h3 className="font-semibold line-clamp-2">
+                          {product.title}
+                        </h3>
+                        <div className="flex items-center gap-1 text-sm text-gray-500">
+                          <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
+                          <span>{product.rating}</span>
+                          <span>({product.reviewCount})</span>
                         </div>
-                        <div className="p-4 space-y-2">
-                          <h3 className="font-semibold line-clamp-2">
-                            {product.title}
-                          </h3>
-                          <div className="flex items-center gap-1 text-sm text-gray-500">
-                            <Star className="h-4 w-4 text-yellow-500 fill-yellow-500" />
-                            <span>{product.rating}</span>
-                            <span>({product.reviewCount})</span>
-                          </div>
-                          <p className="font-semibold text-lg">
-                            GH{product.price.toFixed(2)}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
+                        <p className="font-semibold text-lg">
+                          GH{product.price.toFixed(2)}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
                 </div>
               ))}
             </div>

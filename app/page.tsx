@@ -362,7 +362,7 @@ export default function HomePage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
           <Link href="/shop?category=frames">
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <CardContent className="p-0">
+              <CardContent className="p-0 -m-6">
                 <div className="h-48 sm:h-56 md:h-64 bg-gradient-to-br from-yellow-600 to-black flex items-center justify-center p-4">
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-center group-hover:scale-110 transition-transform">
                     Order a Frame
@@ -374,7 +374,7 @@ export default function HomePage() {
 
           <Link href="/shop?category=custom">
             <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <CardContent className="p-0">
+              <CardContent className="p-0 -m-6">
                 <div className="h-48 sm:h-56 md:h-64 bg-gradient-to-br from-yellow-600 to-black flex items-center justify-center p-4">
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white text-center group-hover:scale-110 transition-transform">
                     Custom Frames
@@ -385,8 +385,8 @@ export default function HomePage() {
           </Link>
 
           <Link href="/shop" className="sm:col-span-2 md:col-span-1">
-            <Card className="group cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-              <CardContent className="p-0">
+            <Card className="group  cursor-pointer overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+              <CardContent className="p-0 -m-6 ">
                 <div className="h-48 sm:h-56 md:h-64 bg-gradient-to-b from-gray-100 to-gray-200 flex items-center justify-center p-4">
                   <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 text-center group-hover:scale-110 transition-transform">
                     View All
@@ -491,7 +491,7 @@ export default function HomePage() {
                 </div>
               )}
               <CardContent className="p-0">
-                <div className="aspect-video overflow-hidden">
+                <div className="aspect-square pt-0 -mt-6 overflow-hidden">
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -502,7 +502,7 @@ export default function HomePage() {
                 </div>
                 <div className="p-6 space-y-4">
                   <div>
-                    <h3 className="font-serif text-2xl font-bold mb-2">
+                    <h3 className=" text-2xl font-bold mb-2">
                       {service.title}
                     </h3>
                     <p className="text-gray-500 text-sm">{service.description}</p>
@@ -522,8 +522,8 @@ export default function HomePage() {
                   <div className="pt-4 border-t space-y-3">
                     <div className="flex items-baseline justify-between">
                       <span className="text-sm text-gray-500">Starting at</span>
-                      <span className="font-serif text-3xl font-bold">
-                        ${service.price}
+                      <span className="text-3xl font-bold">
+                        GH{service.price}
                       </span>
                     </div>
                     <Button className="w-full group" asChild>
@@ -588,7 +588,7 @@ export default function HomePage() {
                 icon: Upload,
                 title: 'Share Your Content',
                 description: 'Upload photos, designs, or files. Share specifications and preferences.',
-                color: 'from-purple-500 to-pink-500',
+                color: 'from-black/50 to-white/50',
               },
               {
                 step: '03',
@@ -651,7 +651,7 @@ export default function HomePage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 text-xs md:text-sm md:px-6 md:py-5"
+                  className="border-white/30 text-black hover:bg-white/10 text-xs md:text-sm md:px-6 md:py-5"
                   asChild
                 >
                   <Link href="/services/printing">Printing</Link>
@@ -659,10 +659,10 @@ export default function HomePage() {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="border-white/30 text-white hover:bg-white/10 text-xs md:text-sm md:px-6 md:py-5"
+                  className="border-white/30 text-black hover:bg-white/10 text-xs md:text-sm md:px-6 md:py-5"
                   asChild
                 >
-                  <Link href="/services/photography">Photobooks</Link>
+                  <Link href="/services/design">Design</Link>
                 </Button>
               </div>
             </div>

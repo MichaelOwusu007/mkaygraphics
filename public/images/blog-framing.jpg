@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" width="800" height="500">
+  <!-- Background -->
+  <rect width="800" height="500" fill="#fef9e7"/>
+  
+  <!-- Decorative frame elements -->
+  <rect x="100" y="80" width="250" height="300" rx="8" fill="none" stroke="#b8860b" stroke-width="8"/>
+  <rect x="120" y="100" width="210" height="260" rx="4" fill="none" stroke="#daa520" stroke-width="4"/>
+  <rect x="140" y="120" width="170" height="220" rx="2" fill="#f5deb3"/>
+  
+  <!-- Abstract art inside frame -->
+  <circle cx="190" cy="200" r="50" fill="#e74c3c" opacity="0.8"/>
+  <circle cx="240" cy="250" r="40" fill="#3498db" opacity="0.7"/>
+  <rect x="160" y="280" width="60" height="40" fill="#2ecc71" opacity="0.6" transform="rotate(-15 190 300)"/>
+  
+  <!-- Second frame -->
+  <rect x="450" y="100" width="250" height="300" rx="8" fill="none" stroke="#8b4513" stroke-width="8"/>
+  <rect x="470" y="120" width="210" height="260" rx="4" fill="none" stroke="#a0522d" stroke-width="4"/>
+  <rect x="490" y="140" width="170" height="220" rx="2" fill="#fff8dc"/>
+  
+  <!-- Landscape art inside second frame -->
+  <rect x="490" y="220" width="170" height="140" fill="#87ceeb"/>
+  <polygon points="550,180 620,280 480,280" fill="#228b22"/>
+  <polygon points="600,200 660,280 540,280" fill="#2e8b57"/>
+  <circle cx="600" cy="180" r="20" fill="#ffd700"/>
+  
+  <!-- Tools scattered -->
+  <rect x="700" y="150" width="60" height="8" rx="2" fill="#696969" transform="rotate(45 730 154)"/>
+  <rect x="80" y="420" width="80" height="6" rx="2" fill="#808080" transform="rotate(-20 120 423)"/>
+  <circle cx="720" y="380" r="15" fill="none" stroke="#b8860b" stroke-width="4"/>
+  
+  <!-- Decorative elements -->
+  <text x="400" y="450" font-family="Arial" font-size="24" fill="#8b4513" text-anchor="middle">The Art of Framing</text>
+  
+  <!-- Corner accents -->
+  <circle cx="50" cy="50" r="30" fill="#daa520" opacity="0.3"/>
+  <circle cx="750" cy="450" r="40" fill="#daa520" opacity="0.2"/>
+</svg>

@@ -77,7 +77,7 @@ export default function ServiceDetailPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Left Column - Service Info */}
             <div className="space-y-6 animate-fade-in">
-              <div className="aspect-video rounded-lg overflow-hidden shadow-elegant relative">
+              <div className="aspect-square rounded-lg overflow-hidden shadow-elegant relative">
                 <Image
                   src={service.image}
                   alt={service.title}
@@ -90,7 +90,7 @@ export default function ServiceDetailPage() {
               <div className="space-y-4">
                 <div className="flex items-start justify-between flex-wrap gap-2">
                   <div>
-                    <h1 className="font-serif text-4xl font-bold mb-2">
+                    <h1 className=" text-4xl font-bold mb-2">
                       {service.title}
                     </h1>
                     <p className="text-muted-foreground text-lg">
@@ -138,8 +138,8 @@ export default function ServiceDetailPage() {
                       <span className="text-sm text-muted-foreground">
                         Price per photo
                       </span>
-                      <span className="font-serif text-3xl font-bold">
-                        ${service.price}
+                      <span className=" text-3xl font-bold">
+                        GH{service.price}
                       </span>
                     </div>
                   </div>
@@ -243,7 +243,7 @@ export default function ServiceDetailPage() {
                           <div className="flex-1">
                             <p className="font-semibold text-sm">{s.title}</p>
                             <p className="text-xs text-muted-foreground">
-                              ${s.price} per photo
+                              GH{s.price} per photo
                             </p>
                           </div>
                         </CardContent>

@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7c3aed"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect x="100" y="80" width="250" height="150" rx="12" fill="#1e1b4b" transform="rotate(-5 225 155)"/>
+  <rect x="120" y="100" width="210" height="110" rx="8" fill="#312e81" transform="rotate(-5 225 155)"/>
+  <text x="225" y="160" font-family="Arial, sans-serif" font-size="14" fill="#c4b5fd" text-anchor="middle" transform="rotate(-5 225 155)">MkayGraphix</text>
+  <rect x="300" y="120" width="250" height="150" rx="12" fill="#1e1b4b" transform="rotate(3 425 195)"/>
+  <rect x="320" y="140" width="210" height="110" rx="8" fill="#312e81" transform="rotate(3 425 195)"/>
+  <text x="425" y="200" font-family="Arial, sans-serif" font-size="14" fill="#c4b5fd" text-anchor="middle" transform="rotate(3 425 195)">Your Brand</text>
+  <rect x="450" y="180" width="250" height="150" rx="12" fill="#1e1b4b" transform="rotate(-2 575 255)"/>
+  <rect x="470" y="200" width="210" height="110" rx="8" fill="#312e81" transform="rotate(-2 575 255)"/>
+  <text x="575" y="260" font-family="Arial, sans-serif" font-size="14" fill="#c4b5fd" text-anchor="middle" transform="rotate(-2 575 255)">Business</text>
+  <rect x="200" y="280" width="400" height="180" rx="16" fill="#1e1b4b"/>
+  <circle cx="280" cy="370" r="40" fill="#7c3aed"/>
+  <rect x="340" y="350" width="120" height="8" rx="4" fill="#4c1d95"/>
+  <rect x="340" y="370" width="80" height="6" rx="3" fill="#5b21b6"/>
+  <rect x="340" y="385" width="100" height="6" rx="3" fill="#5b21b6"/>
+  <rect x="480" y="340" width="80" height="8" rx="4" fill="#4c1d95"/>
+  <rect x="480" y="355" width="60" height="6" rx="3" fill="#5b21b6"/>
+  <text x="400" y="480" font-family="Arial, sans-serif" font-size="18" fill="#e9d5ff" text-anchor="middle">Brand Identity Design</text>
+</svg>
