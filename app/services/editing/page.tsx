@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import "./photoediting.css";
+import "./phtoediting.css";
 import { ArrowRight, Star, Clock, Check, MessageCircle } from 'lucide-react';
 import { editingServices } from '@/lib/mockData';
 import Footer from '@/components/headers/Footer';
