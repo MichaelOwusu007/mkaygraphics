@@ -200,7 +200,7 @@ export default function HomePage() {
             className=" text-white bg-black"
             asChild
           >
-            <Link href="/services/editing">Photo Editing</Link>
+            <Link href="/services">Our Services</Link>
           </Button>
         </div>
       </div>

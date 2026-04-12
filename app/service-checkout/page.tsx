@@ -251,7 +251,7 @@ function ServiceCheckoutContent() {
           {step === 1 && draft && (
             <Card>
               <CardHeader>
-                <CardTitle className="font-serif flex items-center gap-2">
+                <CardTitle className=" flex items-center gap-2">
                   <Zap className="h-5 w-5 text-secondary" />
                   Project Information
                 </CardTitle>
@@ -349,7 +349,7 @@ function ServiceCheckoutContent() {
           {step === 2 && draft && (
             <Card>
               <CardHeader>
-                <CardTitle className="font-serif">Payment</CardTitle>
+                <CardTitle >Payment</CardTitle>
               </CardHeader>
               <CardContent>
                 <form onSubmit={handleSubmitPayment} className="space-y-6">
@@ -371,7 +371,7 @@ function ServiceCheckoutContent() {
                   <Button
                     type="submit"
                     size="lg"
-                    className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600"
+                    className="w-full bg-gradient-to-r from-yellow-500 cursor-pointer to-orange-500 hover:from-green-600 hover:to-emerald-600"
                     disabled={isProcessing}
                   >
                     {isProcessing ? (
@@ -387,7 +387,7 @@ function ServiceCheckoutContent() {
                   <Button
                     type="button"
                     variant="outline"
-                    className="w-full"
+                    className="w-full cursor-pointer "
                     onClick={() => setStep(1)}
                   >
                     Back

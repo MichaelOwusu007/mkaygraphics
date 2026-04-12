@@ -5,6 +5,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import "./graphicdesign.css";
 import Image from "next/image";
+import Footer from "@/components/headers/Footer";
 
 const Page: React.FC = () => {
   useEffect(() => {
@@ -118,6 +119,7 @@ const Page: React.FC = () => {
           </section>
         ))}
       </main>
+      < Footer />
     </div>
   );
 };

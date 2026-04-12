@@ -48,7 +48,7 @@ const services = [
     description:
       "From color correction to complex restorations, our expert editors bring your photos to life. Perfect for wedding albums, family portraits, and archival restoration.",
     icon: Palette,
-    color: "from-purple-500 to-pink-500",
+    color: "from-yellow-500 to-black",
     bgColor: "bg-purple-500/10",
     features: [
       "Color correction",
@@ -58,7 +58,7 @@ const services = [
       "Photo enhancement",
       "24-48 hour turnaround",
     ],
-    price: "Starting at GH₵ 15/photo",
+    price: "Starting at GH₵ 20/photo",
     image: "/images/portfolio2.jpg",
     href: "/services/editing",
   },
@@ -69,7 +69,7 @@ const services = [
     description:
       "High-quality printing for wedding cards, t-shirts, banners, flyers, and more. We use premium materials to ensure vibrant colors and lasting durability.",
     icon: Printer,
-    color: "from-green-500 to-emerald-500",
+    color: "from-yellow-500 to-black",
     bgColor: "bg-green-500/10",
     features: [
       "Wedding stationery",
@@ -90,7 +90,7 @@ const services = [
     description:
       "Create stunning photobooks for weddings, graduations, family albums, and travel memories. Premium paper and professional layouts turn your photos into treasured heirlooms.",
     icon: BookOpen,
-    color: "from-blue-500 to-cyan-500",
+    color: "from-yellow-500 to-black",
     bgColor: "bg-blue-500/10",
     features: [
       "Wedding albums",
@@ -100,7 +100,7 @@ const services = [
       "Premium paper quality",
       "Custom layouts",
     ],
-    price: "Starting at GH₵ 150",
+    price: "Varies by product",
     image: "/images/portfolio4.jpg",
     href: "/services/photobook",
   },
@@ -111,7 +111,7 @@ const services = [
     description:
       "From brand identities to marketing materials, our design team creates visuals that captivate. We blend Ghanaian culture with modern design for unique, memorable brands.",
     icon: PenTool,
-    color: "from-orange-500 to-red-500",
+    color: "from-yellow-500 to-black",
     bgColor: "bg-orange-500/10",
     features: [
       "Logo design",
@@ -121,7 +121,7 @@ const services = [
       "Marketing materials",
       "Brand guidelines",
     ],
-    price: "Starting at GH₵ 200",
+    price: "Starting at GH₵ 50",
     image: "/images/portfolio5.jpg",
     href: "/services/design",
   },
@@ -164,7 +164,7 @@ export default function ServicesPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Premium Creative Services for{" "}
               <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
-                Ghana
+                Our MotherLand
               </span>
             </h1>
             <p className="text-lg text-gray-300 max-w-2xl mx-auto">
@@ -187,7 +187,7 @@ export default function ServicesPage() {
                 <span className="text-yellow-500">Best</span> for You
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                At MkayGraphix, we believe every photo tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra, Ghana, we've been helping individuals and businesses bring their creative visions to life for years.
+                At MkayGraphix, we believe every photo tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra and Capecoast, Ghana, we've been helping individuals and businesses bring their creative visions to life for years.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 From custom frames that showcase your precious artwork to stunning photobooks that preserve your most cherished moments, we combine craftsmanship with modern technology to deliver results that exceed expectations.
@@ -203,7 +203,7 @@ export default function ServicesPage() {
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
                   <Users className="h-4 w-4 text-blue-500" />
-                  <span>1000+ Happy Clients</span>
+                  <span>100+ Happy Clients</span>
                 </div>
               </div>
             </div>
@@ -219,7 +219,7 @@ export default function ServicesPage() {
                     <p className="text-sm text-gray-600">Frame Styles</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">1000+</div>
+                    <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">100+</div>
                     <p className="text-sm text-gray-600">Projects Done</p>
                   </div>
                   <div className="text-center">
@@ -299,7 +299,7 @@ export default function ServicesPage() {
       {/* Services Grid */}
       <section className="py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {services.map((service) => {
               const Icon = service.icon;
               return (
@@ -308,7 +308,7 @@ export default function ServicesPage() {
                   className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100"
                 >
                   {/* Image Header */}
-                  <div className="relative h-48 md:h-56 overflow-hidden">
+                  <div className="relative h-48 md:h-56 overflow-hidden ">
                     <Image
                       src={service.image}
                       alt={service.title}
@@ -319,7 +319,7 @@ export default function ServicesPage() {
 
                     {/* Icon Badge */}
                     <div
-                      className={`absolute top-4 left-4 w-14 h-14 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-lg`}
+                      className={`absolute top-4 left-4 w-14 h-14 rounded-xl bg-yellow-500 flex items-center justify-center shadow-lg`}
                     >
                       <Icon className="h-7 w-7 text-white" />
                     </div>
@@ -369,7 +369,7 @@ export default function ServicesPage() {
                         href="https://wa.me/233592515464"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className={`w-12 h-12 rounded-xl bg-gradient-to-r ${service.color} flex items-center justify-center text-white hover:opacity-90 transition-opacity`}
+                        className={`w-12 h-12 rounded-xl bg-green-600 flex items-center justify-center text-white hover:opacity-90 transition-opacity`}
                       >
                         <MessageCircle className="h-5 w-5" />
                       </a>

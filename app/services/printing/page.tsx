@@ -57,7 +57,7 @@ const printServices: PrintService[] = [
     icon: Heart,
     image: '/images/wedding-card.jpg',
     features: ['Premium cardstock', 'Custom designs', 'Full color printing', 'Matching envelopes', 'RSVP cards included'],
-    basePrice: 'GH₵ 15',
+    basePrice: 'GH₵ 100',
     category: 'Wedding',
     popular: true,
   },
@@ -66,7 +66,7 @@ const printServices: PrintService[] = [
     title: 'Custom Branded T-Shirts',
     description: 'High quality printed T-shirts for events, corporate branding, or personal use.',
     icon: Shirt,
-    image: '/images/custom-shirt.jpg',
+    image: '/images/artwork.jpg',
     features: ['Quality cotton fabric', 'Screen printing', 'Full color options', 'Custom sizes', 'Bulk discounts available'],
     basePrice: 'GH₵ 80',
     category: 'Apparel',
@@ -76,7 +76,7 @@ const printServices: PrintService[] = [
     title: 'Roll-Up Banners',
     description: 'Professional retractable banners for events, trade shows, and promotional displays.',
     icon: ImageIcon,
-    image: '/images/rollup-banner.jpg',
+    image: '/images/edit.jpg',
     features: ['Weather-resistant vinyl', 'Chrome stand included', 'High-resolution print', 'Multiple sizes', 'Easy setup'],
     basePrice: 'GH₵ 250',
     category: 'Signage',
@@ -99,7 +99,7 @@ const printServices: PrintService[] = [
     icon: Palette,
     image: '/images/flyer.jpg',
     features: ['Various paper weights', 'Single or double-sided', 'Full color', 'Bulk pricing', 'Custom sizes available'],
-    basePrice: 'GH₵ 2',
+    basePrice: 'GH₵ 50',
     category: 'Marketing',
   },
   {
@@ -119,7 +119,7 @@ const printServices: PrintService[] = [
     icon: Gift,
     image: '/images/custom-gift.jpg',
     features: ['Photo printing', 'Custom text', 'Premium quality', 'Gift packaging', 'Bulk orders welcome'],
-    basePrice: 'GH₵ 45',
+    basePrice: 'GH₵ 60',
     category: 'Gifts',
   },
   {
@@ -129,7 +129,7 @@ const printServices: PrintService[] = [
     icon: Award,
     image: '/images/certificate.jpg',
     features: ['Premium parchment', 'Gold/silver foil options', 'Custom design', 'Various sizes', 'Elegant presentation'],
-    basePrice: 'GH₵ 35',
+    basePrice: 'GH₵ 70',
     category: 'Professional',
   },
   {
@@ -261,7 +261,7 @@ export default function PrintingPage() {
             <Button
               size="sm"
               variant="outline"
-              className="border-2 border-white/30 text-white hover:bg-white hover:text-black px-6 md:px-8 h-11 md:h-14 text-sm md:text-lg"
+              className="border-2 border-white/30 text-black hover:bg-white hover:text-black px-6 md:px-8 h-11 md:h-14 text-sm md:text-lg"
               asChild
             >
               <Link href="/contact">Contact Us</Link>
@@ -269,7 +269,7 @@ export default function PrintingPage() {
           </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 h-20 md:h-32 bg-gradient-to-t from-white to-transparent" />
+        {/* <div className="absolute bottom-0 left-0 right-0 h-20 md:h-32 bg-gradient-to-t from-white to-transparent" /> */}
       </header>
 
       {/* Stats Section */}
@@ -277,10 +277,10 @@ export default function PrintingPage() {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
             {[
-              { number: '5000+', label: 'Projects' },
+              { number: '150+', label: 'Projects' },
               { number: '100%', label: 'Satisfaction' },
               { number: '24hr', label: 'Fast Turnaround' },
-              { number: '500+', label: 'Happy Clients' },
+              { number: '100+', label: 'Happy Clients' },
             ].map((stat, i) => (
               <div key={i} className="space-y-1 md:space-y-2">
                 <p className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
@@ -333,7 +333,7 @@ export default function PrintingPage() {
                 <Card
                   className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full"
                 >
-                  <div className="relative">
+                  <div className=" -mt-6 relative">
                     <div className="h-36 md:h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center overflow-hidden">
                       <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
                       <service.icon className="h-14 w-14 md:h-20 md:w-20 text-yellow-400/50 group-hover:scale-110 group-hover:text-yellow-400 transition-all duration-300" />
@@ -441,25 +441,25 @@ export default function PrintingPage() {
                 <div className="space-y-3 md:space-y-4">
                   <div className="flex items-center gap-3">
                     <Phone className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base">+233 XX XXX XXXX</span>
+                    <span className="text-sm md:text-base">0592515464</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <Mail className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base break-all">prints@mkaygraphix.com</span>
+                    <span className="text-sm md:text-base break-all">mkaygraphix@gmail.com</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base">Cape Coast, Ghana</span>
+                    <span className="text-sm md:text-base">Accra and Cape Coast, Ghana</span>
                   </div>
                 </div>
+                 <Link href="/contact">
                 <Button
                   size="sm"
-                  className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold h-11 md:h-12"
-                  onClick={() => handleBookService(printServices[0])}
-                >
+                  className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold h-11 md:h-12 cursor-pointer ">
                   Get a Free Quote
                   <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
                 </Button>
+                </Link>
               </div>
             </div>
           </div>

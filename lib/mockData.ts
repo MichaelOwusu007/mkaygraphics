@@ -672,7 +672,7 @@ export const editingServices: EditingService[] = [
     price: 80,
     image: '/images/iedit.jpg',
     category: 'premium',
-    turnaroundTime: '5-7 days',
+    turnaroundTime: '2 days',
     features: [
       'Everything in Advanced Retouching',
       'Complex background replacement',
