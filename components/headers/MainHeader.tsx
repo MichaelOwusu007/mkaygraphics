@@ -29,6 +29,7 @@ import { useCartStore } from "@/stores/cartStore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
+  { href: "/services", label: "All Services", icon: Briefcase },
   { href: "/services/editing", label: "Photo Editing", icon: Palette },
   { href: "/services/printing", label: "Printing Services", icon: Printer },
   { href: "/services/photobook", label: "Photobooks", icon: BookOpen },
@@ -38,7 +39,6 @@ const services = [
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
   { href: "/shop", label: "Shop", icon: Layers },
-  { href: "/services", label: "Services", icon: Briefcase },
   { href: "/projects", label: "Projects", icon: Layers },
   { href: "/blog", label: "Blog", icon: Newspaper },
   { href: "/about", label: "About", icon: Info },
@@ -83,8 +83,8 @@ export const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/30 transition-shadow">
-                <Frame className="h-6 w-6 text-white" />
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/30 transition-shadow">
+                <Frame className="h-6 w-6 text-yellow-500" />
               </div>
             </div>
             <div className="flex flex-col">
@@ -99,7 +99,7 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.slice(0, 5).map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -192,27 +192,6 @@ export const Header = () => {
                 )}
               </AnimatePresence>
             </div>
-
-            {/* More Links */}
-            {navLinks.slice(5).map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`relative px-4 py-2 text-sm font-medium transition-colors rounded-lg ${
-                  isActive(link.href)
-                    ? "text-yellow-600"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-50"
-                }`}
-              >
-                {link.label}
-                {isActive(link.href) && (
-                  <motion.div
-                    layoutId="nav-indicator"
-                    className="absolute bottom-0 left-4 right-4 h-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-full"
-                  />
-                )}
-              </Link>
-            ))}
           </nav>
 
           {/* Right Section */}
@@ -313,7 +292,7 @@ export const Header = () => {
               </nav>
 
               {/* Services Section */}
-              <div>
+              {/* <div>
                 <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
                   Services
                 </p>
@@ -336,7 +315,7 @@ export const Header = () => {
                     );
                   })}
                 </div>
-              </div>
+              </div> */}
             </div>
           </motion.div>
         )}
