@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +19,7 @@ import {
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
+import Footer from "@/components/headers/Footer";
 
 const serviceProjects = [
   {
@@ -28,7 +30,6 @@ const serviceProjects = [
     color: "from-yellow-500 to-amber-500",
     bgColor: "bg-yellow-500/10",
     categories: ["Wood Frames", "Metal Frames", "Gold Frames", "Canvas Frames"],
-    featuredImage: "/images/artwork.jpg",
     gallery: [
       "/images/portfolio1.jpg",
       "/images/portfolio2.jpg",
@@ -53,7 +54,6 @@ const serviceProjects = [
     color: "from-purple-500 to-pink-500",
     bgColor: "bg-purple-500/10",
     categories: ["Retouching", "Color Correction", "Background Removal", "Restoration"],
-    featuredImage: "/images/editing-hero.jpg",
     gallery: [
       "/images/portfolio1.jpg",
       "/images/portfolio2.jpg",
@@ -62,7 +62,7 @@ const serviceProjects = [
       "/images/portfolio3.jpg",
       "/images/portfolio4.jpg",
       "/images/mine.jpg",
-      "/images/portfolio9.jpg",
+      "/images/portfolio8.jpg",
     ],
     stats: [
       { label: "Photos Edited", value: "1000+" },
@@ -78,14 +78,13 @@ const serviceProjects = [
     color: "from-green-500 to-emerald-500",
     bgColor: "bg-green-500/10",
     categories: ["Wedding Cards", "T-Shirts", "Banners", "Business Cards", "Flyers"],
-    featuredImage: "/images/printing-hero.jpg",
     gallery: [
       "/images/FLYER.jpg",
       "/images/banner1.jpg",
       "/images/banner2.jpg",
-      "/images/tshirt1.jpg",
-      "/images/tshirt2.jpg",
-      "/images/wedding-card1.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
       "/images/wedding-card2.jpg",
       "/images/business-card1.jpg",
     ],
@@ -103,16 +102,15 @@ const serviceProjects = [
     color: "from-blue-500 to-cyan-500",
     bgColor: "bg-blue-500/10",
     categories: ["Wedding Albums", "Graduation Books", "Family Albums", "Travel Books"],
-    featuredImage: "/images/photobook-hero.jpg",
     gallery: [
-      "/images/album1.jpg",
-      "/images/album2.jpg",
-      "/images/album3.jpg",
-      "/images/album4.jpg",
-      "/images/album5.jpg",
-      "/images/album6.jpg",
-      "/images/album7.jpg",
-      "/images/album8.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
+      "/images/artwork.jpg",
     ],
     stats: [
       { label: "Photobooks Created", value: "500+" },
@@ -128,13 +126,12 @@ const serviceProjects = [
     color: "from-orange-500 to-red-500",
     bgColor: "bg-orange-500/10",
     categories: ["Logo Design", "Brand Identity", "Social Media", "Print Design"],
-    featuredImage: "/images/design-hero.jpg",
     gallery: [
       "/images/logo.jpg",
       "/images/logo2.jpg",
       "/images/design.jpg",
       "/images/design1.jpg",
-      "/images/ibrand1.jpg",
+      "/images/artwork.jpg",
       "/images/artwork.jpg",
       "/images/design.jpg",
       "/images/design1.jpg",
@@ -146,6 +143,110 @@ const serviceProjects = [
     ],
   },
 ];
+
+const squareData = [
+  { id: 1 },
+  { id: 2 },
+  { id: 3 },
+  { id: 4 },
+];
+
+const shuffle = <T,>(array: T[]): T[] => {
+  const newArray = [...array];
+  let currentIndex = newArray.length;
+  while (currentIndex !== 0) {
+    const randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+    [newArray[currentIndex], newArray[randomIndex]] = [
+      newArray[randomIndex],
+      newArray[currentIndex],
+    ];
+  }
+  return newArray;
+};
+
+interface ShuffleGridProps {
+  images: string[];
+  serviceTitle: string;
+  color: string;
+  onViewAll: () => void;
+}
+
+const ShuffleGrid = ({ images, serviceTitle, onViewAll }: ShuffleGridProps) => {
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [squares, setSquares] = useState(squareData.map((sq, i) => ({
+    ...sq,
+    src: images[i]
+  })));
+
+  useEffect(() => {
+    setMounted(true);
+    
+    const shuffleSquares = () => {
+      setSquares(shuffle(squareData).map((sq, i) => ({
+        ...sq,
+        src: images[i]
+      })));
+      timeoutRef.current = setTimeout(shuffleSquares, 2000);
+    };
+
+    shuffleSquares();
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [images]);
+
+  if (!mounted) {
+    return (
+      <div className="relative">
+        <div className="grid grid-cols-2 gap-3 md:gap-4">
+          {squareData.map((sq, i) => (
+            <div
+              key={sq.id}
+              className="relative rounded-xl overflow-hidden shadow-lg aspect-square bg-gray-200 animate-pulse"
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <div className="grid grid-cols-2 gap-3 md:gap-4">
+        {squares.map((sq) => (
+          <motion.div
+            key={sq.id}
+            layout
+            transition={{ duration: 1.5, type: "spring" }}
+            className={`relative rounded-xl overflow-hidden shadow-lg cursor-pointer group aspect-square`}
+            onClick={onViewAll}
+          >
+            <motion.div
+              className="absolute inset-0"
+              layout
+              transition={{ duration: 1.5, type: "spring" }}
+            >
+              <Image
+                src={sq.src}
+                alt={`${serviceTitle}`}
+                fill
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </motion.div>
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
+              <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  );
+};
 
 export default function ProjectsPage() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -202,8 +303,6 @@ export default function ProjectsPage() {
             </p>
           </div>
         </div>
-
-        {/* <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent" /> */}
       </section>
 
       {/* Services Showcase */}
@@ -224,8 +323,12 @@ export default function ProjectsPage() {
               const isEven = index % 2 === 0;
 
               return (
-                <div
+                <motion.div
                   key={service.id}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.6 }}
                   className={`grid lg:grid-cols-2 gap-8 md:gap-12 items-center ${
                     !isEven ? "lg:flex-row-reverse" : ""
                   }`}
@@ -282,38 +385,27 @@ export default function ProjectsPage() {
                     </div>
                   </div>
 
-                  {/* Preview Grid */}
+                  {/* Shuffle Grid Preview */}
                   <div className={!isEven ? "lg:order-1" : ""}>
                     <div className="relative">
-                      <div className="grid grid-cols-2 gap-3 md:gap-4">
-                        {service.gallery.slice(0, 4).map((img, i) => (
-                          <div
-                            key={i}
-                            className={`relative rounded-xl overflow-hidden shadow-lg ${
-                              i === 0 ? "aspect-[4/4]" : "aspect-square"
-                            } group cursor-pointer`}
-                            onClick={() => openGallery(service)}
-                          >
-                            <Image
-                              src={img}
-                              alt={`${service.title} ${i + 1}`}
-                              fill
-                              className="object-cover group-hover:scale-110 transition-transform duration-500"
-                            />
-                            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                              <ZoomIn className="h-8 w-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <ShuffleGrid
+                        images={service.gallery}
+                        serviceTitle={service.title}
+                        color={service.color}
+                        onViewAll={() => openGallery(service)}
+                      />
 
                       {/* Service Icon Badge */}
-                      <div className={`absolute -bottom-4 -right-4 w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-xl`}>
+                      <motion.div 
+                        className={`absolute -bottom-4 -right-4 w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-r ${service.color} flex items-center justify-center shadow-xl`}
+                        whileHover={{ scale: 1.1 }}
+                        transition={{ type: "spring", stiffness: 300 }}
+                      >
                         <Icon className="h-8 w-8 md:h-10 md:w-10 text-white" />
-                      </div>
+                      </motion.div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
               );
             })}
           </div>
@@ -343,7 +435,7 @@ export default function ProjectsPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white text-white hover:bg-white hover:text-black"
+              className="border-white text-black hover:bg-white hover:text-black"
               asChild
             >
               <Link href="/shop">
@@ -363,7 +455,7 @@ export default function ProjectsPage() {
         >
           <button
             onClick={closeModal}
-            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+            className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
           >
             <X className="h-8 w-8" />
           </button>
@@ -380,12 +472,23 @@ export default function ProjectsPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative aspect-[4/3] bg-gray-900 rounded-lg overflow-hidden">
-              <Image
-                src={activeGallery[currentImageIndex]}
-                alt={`Gallery image ${currentImageIndex + 1}`}
-                fill
-                className="object-contain"
-              />
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentImageIndex}
+                  initial={{ opacity: 0, scale: 1.05 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative w-full h-full"
+                >
+                  <Image
+                    src={activeGallery[currentImageIndex]}
+                    alt={`Gallery image ${currentImageIndex + 1}`}
+                    fill
+                    className="object-contain"
+                  />
+                </motion.div>
+              </AnimatePresence>
             </div>
 
             <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
@@ -418,6 +521,7 @@ export default function ProjectsPage() {
           </div>
         </div>
       )}
+      < Footer /> 
     </div>
   );
 }

@@ -150,13 +150,17 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative py-20 md:py-28 bg-gradient-to-br from-gray-900 via-gray-900 to-black overflow-hidden">
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-20 right-20 w-96 h-96 bg-yellow-500 rounded-full blur-[128px]" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-amber-500 rounded-full blur-[128px]" />
-        </div>
+      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+        <Image
+          src="/images/servicesbanner.jpg"
+          alt="Our Services"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
 
-        <div className="container mx-auto px-4 relative z-10">
+        <div className="container mx-auto px-4 relative h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6 bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-4 py-1">
               Our Services
@@ -164,10 +168,10 @@ export default function ServicesPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Premium Creative Services for{" "}
               <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
-                Our MotherLand
+                Ghana
               </span>
             </h1>
-            <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+            <p className="text-lg text-gray-200 max-w-2xl mx-auto">
               From custom frames to stunning photobooks, we offer comprehensive creative services to preserve your precious moments and elevate your brand.
             </p>
           </div>

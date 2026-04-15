@@ -1,8 +1,8 @@
-.shop-banner{
+.shop-banner, .contact-banner{
     height: 200px;
-    width: 100vw;
+    width: 100%;
     position: relative;
-    z-index: -1;
+    overflow: hidden;
 }
 
 iframe{
@@ -15,42 +15,42 @@ iframe{
 }
 
 
-.shop-banner .shop-title{
+.shop-banner .shop-title, .contact-banner .contact-title{
     transform: translate(-50%,-50%);
 }
 
 @media (min-width: 380px) {
-    .shop-banner {
+    .shop-banner, .contact-banner {
       height: 200px;
     }
 }
   
   @media (min-width: 500px) {
-    .shop-banner {
+    .shop-banner, .contact-banner {
       height: 200px;
     }
   }
   
   @media (min-width: 670px) {
-    .shop-banner{
+    .shop-banner, .contact-banner {
       height: 300px;
     }
   }
   
   @media (min-width: 860px) {
-    .shop-banner{
-      height: 400px;
+    .shop-banner, .contact-banner {
+      height: 300px;
     }
   }
   
   @media (min-width: 1300px) {
-    .shop-banner{
-      height: 500px;
+    .shop-banner, .contact-banner {
+      height: 350px;
     }
   }
   
   @media (min-width: 1500px) {
-    .shop-banner{
-      height: 550px;
+    .shop-banner, .contact-banner {
+      height: 400px;
     }
   }

@@ -62,7 +62,7 @@ export default function CartPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="font-serif text-4xl font-bold mb-8">Shopping Cart</h1>
+      <h1 className="text-4xl font-bold mb-8">Shopping Cart</h1>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Cart Items */}
@@ -199,7 +199,7 @@ export default function CartPage() {
         <div className="lg:col-span-1">
           <Card className="sticky top-20">
             <CardContent className="p-6 space-y-6">
-              <h2 className="font-serif text-2xl font-bold">Order Summary</h2>
+              <h2 className="text-2xl font-bold">Order Summary</h2>
 
               <div className="space-y-3">
                 <div className="flex justify-between">
