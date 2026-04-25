@@ -246,12 +246,9 @@ export const Header = () => {
               size="icon"
               className="lg:hidden"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? "Close mobile menu" : "Open mobile menu"}
             >
-              {mobileMenuOpen ? (
-                <X className="h-5 w-5" />
-              ) : (
-                <Menu className="h-5 w-5" />
-              )}
+              <Menu className="h-5 w-5" />
             </Button>
           </div>
         </div>
@@ -279,7 +276,7 @@ export const Header = () => {
               transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
               className="fixed inset-x-3 top-[4.75rem] z-[60] lg:hidden"
             >
-              <div className="mx-auto max-w-xl overflow-hidden rounded-[28px] border border-white/60 bg-white/92 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+              <div className="mx-auto max-w-xl -mt-6 overflow-hidden rounded-[28px] border border-white/60 bg-white/92 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
                 <div className="bg-gradient-to-r from-yellow-100 via-amber-50 to-white px-5 py-4 border-b border-yellow-100">
                   <div className="flex items-center justify-between gap-3">
                     <div>
@@ -290,8 +287,18 @@ export const Header = () => {
                         Browse MkayGraphix
                       </p>
                     </div>
-                    <div className="rounded-full bg-black px-3 py-1 text-[11px] font-medium text-white">
-                      Menu
+                    <div className="flex items-center gap-2">
+                      <div className="rounded-full bg-black px-3 py-1 text-[11px] font-medium text-white">
+                        Menu
+                      </div>
+                      <button
+                        type="button"
+                        aria-label="Close mobile menu"
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="flex h-9 w-9 items-center justify-center rounded-full border border-black/10 bg-white/85 text-gray-700 shadow-sm transition-all hover:scale-105 hover:bg-white hover:text-black"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -328,7 +335,7 @@ export const Header = () => {
                             href={link.href}
                             className={`group flex items-center gap-3 rounded-2xl border px-4 py-3.5 transition-all duration-300 ${
                               active
-                                ? "border-yellow-200 bg-gradient-to-r from-yellow-50 to-amber-50 text-yellow-700 shadow-sm"
+                                ? "border-yellow-200 text-yellow-700 shadow-sm"
                                 : "border-transparent bg-gray-50/80 text-gray-700 hover:-translate-y-0.5 hover:border-yellow-100 hover:bg-white hover:shadow-md"
                             }`}
                           >
@@ -336,7 +343,7 @@ export const Header = () => {
                               className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-colors ${
                                 active
                                   ? "bg-yellow-500 text-white"
-                                  : "bg-white text-gray-700 group-hover:bg-yellow-500 group-hover:text-white"
+                                  : "bg-white text-gray-700 group-hover:bg-black group-hover:text-white"
                               }`}
                             >
                               <Icon className="h-5 w-5" />
