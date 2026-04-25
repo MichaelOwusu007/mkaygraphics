@@ -5,7 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   ShoppingCart,
-  Search,
   Menu,
   X,
   Frame,
@@ -16,7 +15,6 @@ import {
   Info,
   Newspaper,
   Phone,
-  Users,
   Briefcase,
   Palette,
   Printer,
@@ -39,11 +37,14 @@ const services = [
 const navLinks = [
   { href: "/", label: "Home", icon: Home },
   { href: "/shop", label: "Shop", icon: Layers },
+  { href: "/services", label: "Services", icon: Briefcase },
   { href: "/projects", label: "Projects", icon: Layers },
   { href: "/blog", label: "Blog", icon: Newspaper },
   { href: "/about", label: "About", icon: Info },
   { href: "/contact", label: "Contact", icon: Phone },
 ];
+
+const desktopNavLinks = navLinks.filter((link) => link.href !== "/services");
 
 export const Header = () => {
   const { toggleCart, getTotalItems } = useCartStore();
@@ -65,6 +66,19 @@ export const Header = () => {
     setServicesOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    if (!mobileMenuOpen) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
@@ -72,7 +86,7 @@ export const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-all duration-300 ${
+      className={`sticky top-0 z-[80] w-full transition-all duration-300 ${
         scrolled
           ? "bg-white/95 backdrop-blur-md shadow-lg border-b border-gray-100"
           : "bg-white border-b border-gray-100"
@@ -99,7 +113,7 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => (
+            {desktopNavLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -147,7 +161,7 @@ export const Header = () => {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 10 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full left-0 pt-2"
+                    className="absolute left-0 top-full z-[90] pt-2"
                   >
                     <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-2 w-[280px]">
                       <div className="p-3 border-b border-gray-100">
@@ -246,78 +260,113 @@ export const Header = () => {
       {/* Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
-            className="lg:hidden bg-white border-t border-gray-100 overflow-hidden"
-          >
-            <div className="container mx-auto px-4 py-6 space-y-6">
-              {/* WhatsApp CTA */}
-              <a
-                href="https://wa.me/233592515464"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-green-500 text-white font-medium"
-              >
-                <MessageCircle className="h-5 w-5" />
-                Chat on WhatsApp
-              </a>
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close mobile menu"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-40 bg-black/45 backdrop-blur-[2px] lg:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
 
-              {/* Navigation Links */}
-              <nav className="space-y-1">
-                {navLinks.map((link) => {
-                  const Icon = link.icon;
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
-                        isActive(link.href)
-                          ? "bg-yellow-50 text-yellow-600"
-                          : "text-gray-600 hover:bg-gray-50"
-                      }`}
-                    >
-                      <Icon className="h-5 w-5" />
-                      <span className="font-medium">{link.label}</span>
-                      {isActive(link.href) && (
-                        <Badge className="ml-auto bg-yellow-500 text-white text-[10px]">
-                          Active
-                        </Badge>
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-
-              {/* Services Section */}
-              {/* <div>
-                <p className="px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider mb-2">
-                  Services
-                </p>
-                <div className="grid grid-cols-2 gap-2">
-                  {services.map((service) => {
-                    const Icon = service.icon;
-                    return (
-                      <Link
-                        key={service.href}
-                        href={service.href}
-                        className="flex flex-col items-center gap-2 p-4 rounded-xl bg-gray-50 hover:bg-yellow-50 transition-colors"
-                      >
-                        <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-sm">
-                          <Icon className="h-5 w-5 text-yellow-600" />
-                        </div>
-                        <span className="text-xs font-medium text-gray-600 text-center">
-                          {service.label}
-                        </span>
-                      </Link>
-                    );
-                  })}
+            <motion.div
+              initial={{ opacity: 0, y: -18, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -18, scale: 0.98 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+              className="fixed inset-x-3 top-[4.75rem] z-[60] lg:hidden"
+            >
+              <div className="mx-auto max-w-xl overflow-hidden rounded-[28px] border border-white/60 bg-white/92 shadow-[0_24px_80px_rgba(0,0,0,0.22)] backdrop-blur-xl">
+                <div className="bg-gradient-to-r from-yellow-100 via-amber-50 to-white px-5 py-4 border-b border-yellow-100">
+                  <div className="flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-yellow-700/80">
+                        Explore
+                      </p>
+                      <p className="text-sm font-semibold text-gray-900">
+                        Browse MkayGraphix
+                      </p>
+                    </div>
+                    <div className="rounded-full bg-black px-3 py-1 text-[11px] font-medium text-white">
+                      Menu
+                    </div>
+                  </div>
                 </div>
-              </div> */}
-            </div>
-          </motion.div>
+
+                <div className="max-h-[calc(100vh-7rem)] overflow-y-auto px-4 py-4">
+                  <motion.a
+                    href="https://wa.me/233592515464"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 8 }}
+                    transition={{ delay: 0.05, duration: 0.25 }}
+                    className="mb-4 flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-green-500 to-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-green-500/25"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    Chat on WhatsApp
+                  </motion.a>
+
+                  <nav className="space-y-2">
+                    {navLinks.map((link, index) => {
+                      const Icon = link.icon;
+                      const active = isActive(link.href);
+
+                      return (
+                        <motion.div
+                          key={link.href}
+                          initial={{ opacity: 0, y: 16 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 10 }}
+                          transition={{ delay: 0.08 + index * 0.04, duration: 0.28 }}
+                        >
+                          <Link
+                            href={link.href}
+                            className={`group flex items-center gap-3 rounded-2xl border px-4 py-3.5 transition-all duration-300 ${
+                              active
+                                ? "border-yellow-200 bg-gradient-to-r from-yellow-50 to-amber-50 text-yellow-700 shadow-sm"
+                                : "border-transparent bg-gray-50/80 text-gray-700 hover:-translate-y-0.5 hover:border-yellow-100 hover:bg-white hover:shadow-md"
+                            }`}
+                          >
+                            <div
+                              className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-colors ${
+                                active
+                                  ? "bg-yellow-500 text-white"
+                                  : "bg-white text-gray-700 group-hover:bg-yellow-500 group-hover:text-white"
+                              }`}
+                            >
+                              <Icon className="h-5 w-5" />
+                            </div>
+                            <div className="flex-1">
+                              <p className="text-sm font-semibold">{link.label}</p>
+                              <p className="text-xs text-gray-500">
+                                {link.href === "/services"
+                                  ? "See everything we offer"
+                                  : `Go to ${link.label.toLowerCase()}`}
+                              </p>
+                            </div>
+                            {active ? (
+                              <Badge className="bg-yellow-500 text-white text-[10px]">
+                                Active
+                              </Badge>
+                            ) : (
+                              <span className="text-lg text-gray-300 transition-transform duration-300 group-hover:translate-x-1">
+                                →
+                              </span>
+                            )}
+                          </Link>
+                        </motion.div>
+                      );
+                    })}
+                  </nav>
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>
