@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
 import Footer from "@/components/headers/Footer";
 import "./contact.css";
 import { Badge } from "@/components/ui/badge";
@@ -17,9 +15,7 @@ import {
   Send,
   Facebook,
   Instagram,
-  Twitter,
   ChevronDown,
-  Check,
 } from "lucide-react";
 
 const contactInfo = [
@@ -173,7 +169,7 @@ export default function ContactPage() {
             <div className="bg-gray-50 rounded-2xl p-6 md:p-8 lg:p-12">
               <h2 className="text-xl md:text-2xl lg:text-3xl font-bold mb-2">Send Us a Message</h2>
               <p className="text-gray-600 mb-6 md:mb-8">
-                Fill out the form below and we'll get back to you within 24 hours.
+                Fill out the form below and we&apos;ll get back to you within 24 hours.
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">

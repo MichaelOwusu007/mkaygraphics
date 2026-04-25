@@ -1,0 +1,16 @@
+{
+  "name": "MkayGraphix",
+  "short_name": "MkayGraphix",
+  "description": "Premium frames, photo editing, printing, photobooks, and design services in Ghana.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/images/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

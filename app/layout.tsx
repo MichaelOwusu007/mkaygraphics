@@ -127,8 +127,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               description:
                 "Ghana's premier destination for custom framing, photo editing, printing services, photobooks, and graphic design.",
               url: BASE_URL,
-              logo: `${BASE_URL}/images/logo2.png`,
-              image: `${BASE_URL}/images/og-image.jpg`,
+              logo: `${BASE_URL}/images/logo2.jpg`,
+              image: `${BASE_URL}/images/og-image.svg`,
               telephone: "+233-592-515-464",
               email: "mkaygraphix@gmail.com",
               address: {

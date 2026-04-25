@@ -83,7 +83,7 @@ export const Header = () => {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <div className="relative">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-yellow-500/30 transition-shadow">
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center">
                 <Frame className="h-6 w-6 text-yellow-500" />
               </div>
             </div>
