@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { Card, CardContent } from '@/components/ui/card';
 import Footer from "@/components/headers/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,10 @@ import {
   ArrowRight,
   Check,
   Star,
+  Zap,
+  Scissors,
+  Megaphone,
+  ChevronRight,
   MessageCircle,
   Heart,
   Sparkles,
@@ -19,113 +24,50 @@ import {
   Award,
 } from "lucide-react";
 
-const services = [
-  {
-    id: "framing",
-    title: "Custom Framing",
-    tagline: "Perfect Frames for Your Precious Moments",
-    description:
-      "Transform your artwork, photos, and memories into stunning display pieces. From classic wooden frames to sleek modern designs, we offer over 50 styles to match every aesthetic.",
-    icon: Frame,
-    color: "from-yellow-500 to-amber-500",
-    bgColor: "bg-yellow-500/10",
-    features: [
-      "50+ frame styles",
-      "Custom sizing",
-      "UV-protective glass",
-      "Professional matting",
-      "Canvas stretching",
-      "Shadow box frames",
-    ],
-    price: "Starting at GH₵ 50",
-    image: "/images/portfolio1.jpg",
-    href: "/shop",
-  },
-  {
-    id: "editing",
-    title: "Photo Editing",
-    tagline: "Professional Photo Enhancement",
-    description:
-      "From color correction to complex restorations, our expert editors bring your photos to life. Perfect for wedding albums, family portraits, and archival restoration.",
-    icon: Palette,
-    color: "from-yellow-500 to-black",
-    bgColor: "bg-purple-500/10",
-    features: [
-      "Color correction",
-      "Background removal",
-      "Old photo restoration",
-      "Portrait retouching",
-      "Photo enhancement",
-      "24-48 hour turnaround",
-    ],
-    price: "Starting at GH₵ 20/photo",
-    image: "/images/portfolio2.jpg",
-    href: "/services/editing",
-  },
-  {
-    id: "printing",
-    title: "Printing Services",
-    tagline: "Premium Prints for Every Occasion",
-    description:
-      "High-quality printing for wedding cards, t-shirts, banners, flyers, and more. We use premium materials to ensure vibrant colors and lasting durability.",
-    icon: Printer,
-    color: "from-yellow-500 to-black",
-    bgColor: "bg-green-500/10",
-    features: [
-      "Wedding stationery",
-      "Custom t-shirts",
-      "Banners & signage",
-      "Business cards",
-      "Flyers & brochures",
-      "Large format printing",
-    ],
-    price: "Varies by product",
-    image: "/images/portfolio3.jpg",
-    href: "/services/printing",
-  },
-  {
-    id: "photobook",
-    title: "Photobooks",
-    tagline: "Beautiful Books of Your Memories",
-    description:
-      "Create stunning photobooks for weddings, graduations, family albums, and travel memories. Premium paper and professional layouts turn your photos into treasured heirlooms.",
-    icon: BookOpen,
-    color: "from-yellow-500 to-black",
-    bgColor: "bg-blue-500/10",
-    features: [
-      "Wedding albums",
-      "Graduation books",
-      "Family albums",
-      "Travel journals",
-      "Premium paper quality",
-      "Custom layouts",
-    ],
-    price: "Varies by product",
-    image: "/images/portfolio4.jpg",
-    href: "/services/photobook",
-  },
-  {
-    id: "design",
-    title: "Graphic Design",
-    tagline: "Creative Solutions for Your Brand",
-    description:
-      "From brand identities to marketing materials, our design team creates visuals that captivate. We blend Ghanaian culture with modern design for unique, memorable brands.",
-    icon: PenTool,
-    color: "from-yellow-500 to-black",
-    bgColor: "bg-orange-500/10",
-    features: [
-      "Logo design",
-      "Brand identity",
-      "Business cards",
-      "Social media graphics",
-      "Marketing materials",
-      "Brand guidelines",
-    ],
-    price: "Starting at GH₵ 50",
-    image: "/images/portfolio5.jpg",
-    href: "/services/design",
-  },
-];
+  const services = [
+    {
+      icon: Scissors,
+      title: 'Photo Editing',
+      description: 'Professional retouching from basic corrections to advanced manipulation',
+      href: '/services/editing',
+      color: 'from-amber-500 to-orange-600',
+    },
+    {
+      icon: Printer,
+      title: 'Printing Services',
+      description: 'T-shirts, banners, cards, wedding items - all premium quality prints',
+      href: '/services/printing',
+      color: 'from-purple-500 to-pink-600',
+    },
+    {
+      icon: BookOpen,
+      title: 'Photobooks',
+      description: 'Beautiful wedding, graduation & memory photobooks - Ghana style',
+      href: '/services/photobook',
+      color: 'from-blue-500 to-cyan-600',
+    },
+    {
+      icon: PenTool,
+      title: 'Graphic Design',
+      description: 'Stunning visuals for branding, marketing, and digital media',
+      href: '/services/design',
+      color: 'from-emerald-500 to-teal-600',
+    },
+    {
+      icon: Frame,
+      title: 'Custom Framing',
+      description: 'Handcrafted frames for photos, art, and certificates',
+      href: '/shop',
+      color: 'from-yellow-500 to-amber-600',
+    },
+    {
+      icon: Megaphone,
+      title: 'Digital Marketing',
+      description: 'Complete branding solutions including logos, palettes, and guidelines',
+      href: '/services/design',
+      color: 'from-rose-500 to-red-600',
+    },
+  ];
 
 const whyChooseUs = [
   {
@@ -300,91 +242,89 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service) => {
-              const Icon = service.icon;
-              return (
-                <div
-                  key={service.id}
-                  className="group relative bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100"
-                >
-                  {/* Image Header */}
-                  <div className="relative h-48 md:h-56 overflow-hidden ">
-                    <Image
-                      src={service.image}
-                      alt={service.title}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-
-                    {/* Icon Badge */}
-                    <div
-                      className={`absolute top-4 left-4 w-14 h-14 rounded-xl bg-yellow-500 flex items-center justify-center shadow-lg`}
-                    >
-                      <Icon className="h-7 w-7 text-white" />
-                    </div>
-
-                    {/* Price Badge */}
-                    <div className="absolute top-4 right-4">
-                      <Badge className="bg-white/90 text-gray-900 backdrop-blur-sm">
-                        {service.price}
-                      </Badge>
-                    </div>
-
-                    {/* Title on Image */}
-                    <div className="absolute bottom-4 left-4 right-4">
-                      <h3 className="text-2xl font-bold text-white mb-1">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm text-gray-200">{service.tagline}</p>
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <p className="text-gray-600 mb-4">{service.description}</p>
-
-                    {/* Features */}
-                    <div className="grid grid-cols-2 gap-2 mb-6">
-                      {service.features.slice(0, 4).map((feature) => (
-                        <div key={feature} className="flex items-center gap-2">
-                          <Check className={`h-4 w-4 text-green-500 flex-shrink-0`} />
-                          <span className="text-sm text-gray-600">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* CTA */}
-                    <div className="flex gap-3">
-                      <Button
-                        asChild
-                        className={`flex-1 bg-gradient-to-r ${service.color} border-0 text-white hover:opacity-90`}
-                      >
-                        <Link href={service.href}>
-                          Learn More
-                          <ArrowRight className="ml-2 h-4 w-4" />
-                        </Link>
-                      </Button>
-                      <a
-                        href="https://wa.me/233592515464"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={`w-12 h-12 rounded-xl bg-green-600 flex items-center justify-center text-white hover:opacity-90 transition-opacity`}
-                      >
-                        <MessageCircle className="h-5 w-5" />
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+  {/* Services Overview */}
+       <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+         {/* Background decoration */}
+         <div className="absolute top-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-br from-yellow-400/10 to-transparent rounded-full -translate-x-1/2 -translate-y-1/2" />
+         <div className="absolute bottom-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-br from-amber-400/10 to-transparent rounded-full translate-x-1/2 translate-y-1/2" />
+         
+         <div className="container mx-auto px-4 relative z-10">
+           {/* Section Header */}
+           <div className="text-center mb-10 md:mb-16 space-y-3 md:space-y-4">
+             <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-black rounded-full">
+               <Zap className="h-3 w-3 md:h-4 md:w-4 text-yellow-400" />
+               <span className="text-xs md:text-sm font-semibold text-white">What We Offer</span>
+             </div>
+             <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight px-2">
+               Complete Creative
+               <span className="block bg-gradient-to-r from-yellow-600 via-amber-500 to-yellow-600 bg-clip-text text-transparent">
+                 Solutions
+               </span>
+             </h2>
+             <p className="text-gray-500 text-sm md:text-lg max-w-2xl mx-auto px-4">
+               From capturing moments to framing memories, we provide end-to-end creative services 
+               tailored to bring your vision to life.
+             </p>
+           </div>
+ 
+           {/* Services Grid */}
+           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+             {services.map((service) => (
+               <Link
+                 key={service.title}
+                 href={service.href}
+                 className="group relative"
+               >
+                 <Card className="relative overflow-hidden h-full transition-all duration-500 hover:shadow-2xl hover:-translate-y-1 md:hover:-translate-y-2">
+                   {/* Gradient overlay */}
+                   <div className={`absolute inset-0 bg-gradient-to-br ${service.color} opacity-0 group-hover:opacity-100 transition-opacity duration-500`} />
+                   
+                   {/* Content */}
+                   <CardContent className="relative z-10 p-5 md:p-8 h-full flex flex-col">
+                     {/* Icon */}
+                     <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-gray-900 to-gray-800 group-hover:from-white/20 group-hover:to-white/10 flex items-center justify-center mb-4 md:mb-6 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3 shadow-lg">
+                       <service.icon className="h-6 w-6 md:h-8 md:w-8 text-yellow-400 group-hover:text-white transition-colors duration-300" />
+                     </div>
+ 
+                     {/* Text */}
+                     <h3 className="text-lg md:text-2xl font-bold mb-2 md:mb-3 group-hover:text-white transition-colors duration-300">
+                       {service.title}
+                     </h3>
+                     <p className="text-gray-500 text-sm md:text-base group-hover:text-white/80 mb-4 md:mb-6 flex-grow transition-colors duration-300">
+                       {service.description}
+                     </p>
+ 
+                     {/* CTA */}
+                     <div className="flex items-center gap-2 text-xs md:text-sm font-semibold group-hover:text-white transition-colors duration-300 mt-auto">
+                       <span>Learn More</span>
+                       <ChevronRight className="h-3 w-3 md:h-4 md:w-4 group-hover:translate-x-2 transition-transform duration-300" />
+                     </div>
+                   </CardContent>
+                 </Card>
+               </Link>
+             ))}
+           </div>
+ 
+           {/* Bottom CTA */}
+           <div className="text-center mt-10 md:mt-16">
+             <div className="inline-flex flex-col sm:flex-row items-center gap-3 md:gap-4 bg-black text-white px-4 md:px-8 py-4 md:py-4 rounded-xl md:rounded-2xl">
+               <div className="text-center sm:text-left">
+                 <p className="text-xs md:text-sm text-gray-400">Need a custom solution?</p>
+                 <p className="font-bold text-sm md:text-base">Contact us for a free consultation</p>
+               </div>
+               <Button
+                 size="sm"
+                 className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold whitespace-nowrap w-full sm:w-auto md:text-base md:px-6 md:py-3"
+                 asChild
+               >
+                 <Link href="/contact">
+                   Get Started <ArrowRight className="ml-1 md:ml-2 h-4 w-4" />
+                 </Link>
+               </Button>
+             </div>
+           </div>
+         </div>
+       </section>
 
       {/* Why Choose Us */}
       <section className="py-16 md:py-24 bg-gray-50">

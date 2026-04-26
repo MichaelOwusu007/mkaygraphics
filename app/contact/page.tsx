@@ -97,6 +97,13 @@ export default function ContactPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    const phoneRegex = /^(\+233|233|0)5[89]\d{7}$/;
+    if (!formData.phone || !phoneRegex.test(formData.phone)) {
+      toast.error("Please enter a valid Ghana phone number: +233592515464, 233592515464, or 0592515464");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -209,7 +216,7 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                      Phone Number
+                      Phone Number *
                     </label>
                     <input
                       type="tel"
@@ -217,9 +224,11 @@ export default function ContactPage() {
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      placeholder="+233 XX XXX XXXX"
+                      required
+                      placeholder="Enter your phone number"
                       className="w-full px-3 md:px-4 py-3 rounded-lg border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 outline-none transition-all"
                     />
+                    <p className="text-xs text-gray-500 mt-1">Accepted: +233592515464, 233592515464, or 0592515464</p>
                   </div>
                   <div>
                     <label htmlFor="service" className="block text-sm font-medium mb-2">
