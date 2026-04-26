@@ -51,6 +51,7 @@ export const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -65,6 +66,10 @@ export const Header = () => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
   }, [pathname]);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   useEffect(() => {
     if (!mobileMenuOpen) {
@@ -83,6 +88,8 @@ export const Header = () => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
+
+  const totalItems = isHydrated ? getTotalItems() : 0;
 
   return (
     <header
@@ -229,13 +236,13 @@ export const Header = () => {
               onClick={toggleCart}
             >
               <ShoppingCart className="h-5 w-5 text-gray-600" />
-              {getTotalItems() > 0 && (
+              {totalItems > 0 && (
                 <motion.span
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-gradient-to-r from-yellow-400 to-amber-500 text-white text-[10px] font-bold flex items-center justify-center shadow-lg"
                 >
-                  {getTotalItems()}
+                  {totalItems}
                 </motion.span>
               )}
             </Button>

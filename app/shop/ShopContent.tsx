@@ -22,10 +22,11 @@ export default function ShopContent() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
+  const maxPrice = Math.ceil(Math.max(...mockProducts.map((product) => product.price)) / 10) * 10;
 
   const categoryParam = searchParams.get("category") || "all";
 
-  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [priceRange, setPriceRange] = useState([0, maxPrice]);
   const [selectedMaterials, setSelectedMaterials] = useState<string[]>([]);
   const [sortBy, setSortBy] = useState("featured");
 
@@ -104,13 +105,13 @@ export default function ShopContent() {
         <Slider
           value={priceRange}
           onValueChange={setPriceRange}
-          max={200}
+          max={maxPrice}
           step={10}
           className="mb-2"
         />
         <div className="flex justify-between text-sm text-gray-500">
-          <span>${priceRange[0]}</span>
-          <span>${priceRange[1]}</span>
+          <span>GH₵{priceRange[0]}</span>
+          <span>GH₵{priceRange[1]}</span>
         </div>
       </div>
 
@@ -237,7 +238,7 @@ export default function ShopContent() {
                           <span>({product.reviewCount})</span>
                         </div>
                         <p className="font-semibold text-lg">
-                          GH{product.price.toFixed(2)}
+                          GH₵{product.price.toFixed(2)}
                         </p>
                       </div>
                     </CardContent>

@@ -26,7 +26,7 @@ export const CartDrawer = () => {
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
-      .map(([_, value]) => value)
+      .map(([, value]) => value)
       .join('-');
   };
 
@@ -114,7 +114,7 @@ export const CartDrawer = () => {
                           </Button>
                         </div>
                         <p className="font-semibold text-gray-800">
-                          ${(item.totalPrice * item.quantity).toFixed(2)}
+                          GH₵{(item.totalPrice * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -151,7 +151,7 @@ export const CartDrawer = () => {
                         {item.photoCount} photo{item.photoCount > 1 ? 's' : ''}
                       </div>
                       <p className="font-semibold text-gray-800">
-                        ${item.totalPrice.toFixed(2)}
+                        GH₵{item.totalPrice.toFixed(2)}
                       </p>
                     </div>
                   </div>
@@ -163,7 +163,7 @@ export const CartDrawer = () => {
             <div className="border-t pt-4 space-y-4">
               <div className="flex justify-between text-lg font-semibold">
                 <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>GH₵{totalPrice.toFixed(2)}</span>
               </div>
               <Button className="w-full" size="lg" onClick={toggleCart} asChild>
                 <Link href="/checkout">Proceed to Checkout</Link>

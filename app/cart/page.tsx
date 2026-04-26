@@ -2,10 +2,8 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { useCartStore } from '@/stores/cartStore';
 import { Minus, Plus, X, ShoppingBag, Image as ImageIcon } from 'lucide-react';
@@ -20,26 +18,14 @@ export default function CartPage() {
     getTotalPrice,
   } = useCartStore();
 
-  const [promoCode, setPromoCode] = useState('');
-  const [promoApplied, setPromoApplied] = useState(false);
-
   const subtotal = getTotalPrice();
-    const shipping = subtotal > 500 ? 0 : 50; // Example: free shipping over 500, else 50
   const total = subtotal;
-  //const discount = promoApplied ? subtotal * 0.1 : 0;
-  //const total = subtotal + shipping - discount;
 
   const getVariantKey = (variants: Record<string, string>) => {
     return Object.entries(variants)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([, value]) => value)
       .join('-');
-  };
-
-  const handleApplyPromo = () => {
-    if (promoCode.toLowerCase() === 'save10') {
-      setPromoApplied(true);
-    }
   };
 
   // ✅ Empty Cart UI
@@ -134,7 +120,7 @@ export default function CartPage() {
                           </Button>
                         </div>
                         <p className="text-xl font-bold">
-                          ${(item.totalPrice * item.quantity).toFixed(2)}
+                          GH₵{(item.totalPrice * item.quantity).toFixed(2)}
                         </p>
                       </div>
                     </div>
@@ -169,7 +155,7 @@ export default function CartPage() {
                             {serviceItem.photoCount} photo
                             {serviceItem.photoCount > 1 ? 's' : ''}
                           </div>
-                          <div className="text-xs">${serviceItem.service.price} per photo</div>
+                          <div className="text-xs">GH₵{serviceItem.service.price} per photo</div>
                         </div>
                       </div>
                       <Button
@@ -186,7 +172,7 @@ export default function CartPage() {
                         {serviceItem.uploadedFiles.length} file
                         {serviceItem.uploadedFiles.length !== 1 ? 's' : ''} uploaded
                       </div>
-                      <p className="text-xl font-bold">${serviceItem.totalPrice.toFixed(2)}</p>
+                      <p className="text-xl font-bold">GH₵{serviceItem.totalPrice.toFixed(2)}</p>
                     </div>
                   </div>
                 </div>
@@ -204,54 +190,26 @@ export default function CartPage() {
               <div className="space-y-3">
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Subtotal</span>
-                  <span className="font-semibold">${subtotal.toFixed(2)}</span>
+                  <span className="font-semibold">GH₵{subtotal.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-muted-foreground">Shipping</span>
                   <span className="font-semibold">
-                    {shipping === 0 ? "FREE" : "15 GHC+"}
+                    Calculated at confirmation
                   </span>
                 </div>
-                {promoApplied && (
-                  <div className="flex justify-between text-secondary">
-                    <span>Promo Code</span>
-                    {/* <span>-${discount.toFixed(2)}</span> */}
-                  </div>
-                )}
-                {/* {subtotal > 0 && subtotal < 100 && (
-                  <p className="text-xs text-muted-foreground">
-                    Add ${(100 - subtotal).toFixed(2)} more for free shipping
-                  </p>
-                )} */}
               </div>
 
               <div className="border-t pt-3">
                 <div className="flex justify-between text-lg font-bold">
                   <span>Total</span>
-                  <span>${total.toFixed(2)}</span>
+                  <span>GH₵{total.toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Input
-                  placeholder="Promo code"
-                  value={promoCode}
-                  onChange={(e) => setPromoCode(e.target.value)}
-                  disabled={promoApplied}
-                />
-                <Button
-                  variant="outline"
-                  className="w-full"
-                  onClick={handleApplyPromo}
-                  disabled={promoApplied}
-                >
-                  {promoApplied ? 'Code Applied' : 'Apply Code'}
-                </Button>
-                {promoApplied && (
-                  <p className="text-xs text-center text-secondary">10% discount applied!</p>
-                )}
-                <p className="text-xs text-center text-muted-foreground">Try code: SAVE10</p>
-              </div>
+              <p className="text-xs text-center text-muted-foreground">
+                Shipping fees and any offline discounts are confirmed before fulfillment.
+              </p>
 
               <Button size="lg" className="w-full" asChild>
                 <Link href="/checkout">Proceed to Checkout</Link>

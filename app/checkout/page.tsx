@@ -69,6 +69,17 @@ function CheckoutContent() {
   const subtotal = getTotalPrice();
   const total = subtotal;
 
+  const verifyPayment = useCallback(async (reference: string) => {
+    const response = await fetch(`/api/paystack?reference=${encodeURIComponent(reference)}`);
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Payment verification failed");
+    }
+
+    return data as { status: string; reference: string };
+  }, []);
+
   const sendOrderEmail = useCallback(async (data: OrderData, paymentRef?: string) => {
     try {
       const response = await fetch("/api/order", {
@@ -94,21 +105,38 @@ function CheckoutContent() {
     const paymentStatus = searchParams.get("payment");
     const ref = searchParams.get("ref");
 
-    if (paymentStatus === "success" && ref) {
-      const savedOrderData = sessionStorage.getItem("pendingOrder");
-      if (savedOrderData) {
-        const data = JSON.parse(savedOrderData) as OrderData;
-        setOrderData(data);
-        sendOrderEmail(data, ref);
-        sessionStorage.removeItem("pendingOrder");
-      }
-      setStep(3);
-      clearCart();
-      toast.success("Payment successful! Your order has been placed.");
-    }
+    const handlePaymentReturn = async () => {
+      try {
+        if (paymentStatus === "success" && ref) {
+          const verification = await verifyPayment(ref);
 
-    setIsInitializing(false);
-  }, [searchParams, clearCart, sendOrderEmail]);
+          if (verification.status !== "success") {
+            toast.error("Payment was not completed successfully.");
+            return;
+          }
+
+          const savedOrderData = sessionStorage.getItem("pendingOrder");
+          if (savedOrderData) {
+            const data = JSON.parse(savedOrderData) as OrderData;
+            setOrderData(data);
+            await sendOrderEmail(data, ref);
+            sessionStorage.removeItem("pendingOrder");
+          }
+
+          setStep(3);
+          clearCart();
+          toast.success("Payment successful! Your order has been placed.");
+        }
+      } catch (error) {
+        console.error("Payment verification failed:", error);
+        toast.error("We could not verify your payment yet. Please contact support if you were charged.");
+      } finally {
+        setIsInitializing(false);
+      }
+    };
+
+    handlePaymentReturn();
+  }, [searchParams, clearCart, sendOrderEmail, verifyPayment]);
 
   if (isInitializing) {
     return (
@@ -156,7 +184,7 @@ function CheckoutContent() {
       items: items.map((item) => ({
         productName: item.product.title,
         quantity: item.quantity,
-        price: item.totalPrice / item.quantity,
+        price: item.totalPrice,
         selectedVariants: item.selectedVariants,
       })),
       serviceItems: serviceItems.map((item) => ({

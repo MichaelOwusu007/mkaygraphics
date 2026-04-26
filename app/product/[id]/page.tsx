@@ -81,7 +81,7 @@ export default function ProductDetailPage() {
           Home
         </Link>
         <span>/</span>
-        <Link href="/product" className="hover:text-gray-900">
+        <Link href="/shop" className="hover:text-gray-900">
           Shop
         </Link>
         <span>/</span>
@@ -89,7 +89,7 @@ export default function ProductDetailPage() {
       </div>
 
       <Button variant="ghost" className="mb-6" asChild>
-        <Link href="/product">
+        <Link href="/shop">
           <ChevronLeft className="h-4 w-4 mr-2" />
           Back to Shop
         </Link>
@@ -142,7 +142,7 @@ export default function ProductDetailPage() {
               </div>
               <span>({product.reviewCount} reviews)</span>
             </div>
-            <p className="text-3xl font-bold">${calculateTotalPrice().toFixed(2)}</p>
+            <p className="text-3xl font-bold">GH₵{calculateTotalPrice().toFixed(2)}</p>
           </div>
 
           <p className="text-gray-600 leading-relaxed">{product.description}</p>
@@ -169,7 +169,7 @@ export default function ProductDetailPage() {
                         disabled={!option.inStock}
                       >
                         {option.label}
-                        {option.priceAdjustment > 0 && ` (+$${option.priceAdjustment.toFixed(2)})`}
+                        {option.priceAdjustment > 0 && ` (+GH₵${option.priceAdjustment.toFixed(2)})`}
                         {!option.inStock && ' (Out of Stock)'}
                       </SelectItem>
                     ))}
@@ -258,7 +258,7 @@ export default function ProductDetailPage() {
                     </div>
                     <div className="p-4 space-y-2">
                       <h3 className="font-semibold line-clamp-1">{relatedProduct.title}</h3>
-                      <p className="font-semibold text-lg">${relatedProduct.price.toFixed(2)}</p>
+                      <p className="font-semibold text-lg">GH₵{relatedProduct.price.toFixed(2)}</p>
                     </div>
                   </CardContent>
                 </Card>
