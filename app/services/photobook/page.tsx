@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -39,6 +40,7 @@ interface PhotobookType {
   title: string;
   description: string;
   icon: React.ElementType;
+  image: string;
   features: string[];
   basePrice: string;
   popular?: boolean;
@@ -51,6 +53,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Wedding Photobook',
     description: 'Capture every magical moment from your special day in a stunning wedding album.',
     icon: Heart,
+    image: '/images/blog-wedding.jpg',
     features: ['Premium leather cover', '50+ pages(depends)', 'Full-page photos', 'Chapter dividers', 'Gift box included'],
     basePrice: 'GH₵ 600',
     popular: true,
@@ -61,6 +64,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Engagement Album',
     description: 'Celebrate your love story from the moment it began.',
     icon: HeartHandshake,
+    image: '/images/portfolio2.jpg',
     features: ['Elegant softcover', '30-80 pages(depends)', 'Story layout design', 'Custom captions', 'Engraved cover'],
     basePrice: 'GH₵ 350',
   },
@@ -69,6 +73,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Graduation Album',
     description: 'Honor your academic achievement with a beautiful graduation memory book.',
     icon: Trophy,
+    image: '/images/portfolio6.jpg',
     features: ['Academic-themed cover', '40-100 pages(depends)', 'Achievement highlights', 'Certificate copy', 'Family photos section'],
     basePrice: 'GH₵ 500',
   },
@@ -77,6 +82,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Birthday Celebration',
     description: 'Preserve the joy and fun of birthday celebrations for years to come.',
     icon: Gift,
+    image: '/images/portfolio5.jpg',
     features: ['Colorful designs', '20-60 pages(depends)', 'Theme customization', 'Guest messages section', 'Quick turnaround'],
     basePrice: 'GH₵ 300',
   },
@@ -85,6 +91,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Family Heritage Book',
     description: 'Document your family history and create a legacy for generations.',
     icon: Users,
+    image: '/images/portfolio8.jpg',
     features: ['A4 hardcover', '50+ pages(depends)', 'Timeline layout', 'Genealogy pages', 'Archive quality paper'],
     basePrice: 'GH₵ 550',
   },
@@ -93,6 +100,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Travel & Vacation',
     description: 'Relive your adventures with a stunning travel photobook.',
     icon: MapPin,
+    image: '/images/portfolio7.jpg',
     features: ['Lightweight design', '30-100 pages(depends)', 'Map integrations', 'Location highlights', 'Souvenir collection pages'],
     basePrice: 'GH₵ 250',
   },
@@ -101,6 +109,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Baby & Maternity',
     description: 'Cherish every precious moment from pregnancy to first steps.',
     icon: Sparkles,
+    image: '/images/portfolio3.jpg',
     features: ['Soft pastel themes', '40-80 pages(depends)', 'Monthly milestones', 'Ultrasound keepsake', 'Personalized cover'],
     basePrice: 'GH₵ 300',
     badge: 'New',
@@ -110,6 +119,7 @@ const photobookTypes: PhotobookType[] = [
     title: 'Memorial Tribute',
     description: 'A beautiful way to honor and remember loved ones.',
     icon: Award,
+    image: '/images/portfolio4.jpg',
     features: ['Elegant memorial design', 'Custom tribute pages', 'Premium paper', 'Conservation quality', 'Professional design included'],
     basePrice: 'GH₵ 400',
   },
@@ -453,45 +463,20 @@ export default function PhotobookPage() {
             {photobookTypes.map((type) => (
               <div key={type.id} className="group relative">
                 <Card
-                  className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full"
+                  className="flex h-full flex-col overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2"
                 >
-                  <div className="relative">
-                    <CardContent className="p-4 md:p-6 flex flex-col h-full">
-                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-gradient-to-br from-yellow-500/20 to-amber-500/20 flex items-center justify-center mb-4 md:mb-5 group-hover:from-yellow-500/30 group-hover:to-amber-500/30 transition-colors">
-                        <type.icon className="h-6 w-6 md:h-7 md:w-7 text-yellow-600" />
-                      </div>
-                      
-                      <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-yellow-700 transition-colors">
-                        {type.title}
-                      </h3>
-                      <p className="text-gray-500 text-xs md:text-sm mb-3 md:mb-4 line-clamp-2">
-                        {type.description}
-                      </p>
-
-                      <ul className="space-y-1.5 md:space-y-2 mb-4 md:mb-5 flex-1">
-                        {type.features.slice(0, 3).map((feature, i) => (
-                          <li key={i} className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
-                            <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 shrink-0" />
-                            <span className="truncate">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-
-                      <div className="pt-3 md:pt-4 border-t space-y-3">
-                        <div>
-                          <span className="text-xs md:text-sm text-gray-400">From</span>
-                          <p className="text-lg md:text-2xl font-bold text-gray-900">{type.basePrice}</p>
-                        </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white text-xs md:text-sm"
-                          onClick={() => handleBookPhotobook(type)}
-                        >
-                          Book Now
-                          <ArrowRight className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" />
-                        </Button>
-                      </div>
-                    </CardContent>
+                  <div className="relative h-44 overflow-hidden bg-gray-900">
+                    <Image
+                      src={type.image}
+                      alt={type.title}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/25 to-transparent" />
+                    <div className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-black/45 text-yellow-300 backdrop-blur-sm ring-1 ring-white/15">
+                      <type.icon className="h-5 w-5 md:h-6 md:w-6" />
+                    </div>
                     <a
                       href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(type.title)} photobook`}
                       target="_blank"
@@ -511,6 +496,50 @@ export default function PhotobookPage() {
                       </div>
                     )}
                   </div>
+
+                  <CardContent className="flex flex-1 flex-col p-4 md:p-6">
+                    <h3 className="mb-1 md:mb-2 text-base font-bold transition-colors group-hover:text-yellow-700 md:text-lg">
+                      {type.title}
+                    </h3>
+                    <p className="mb-3 md:mb-4 text-xs text-gray-500 line-clamp-2 md:text-sm">
+                      {type.description}
+                    </p>
+
+                    <ul className="mb-4 flex-1 space-y-1.5 md:mb-5 md:space-y-2">
+                      {type.features.slice(0, 3).map((feature, i) => (
+                        <li key={i} className="flex items-center gap-2 text-xs text-gray-600 md:text-sm">
+                          <Check className="h-3 w-3 shrink-0 text-green-500 md:h-4 md:w-4" />
+                          <span className="truncate">{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div className="space-y-3 border-t pt-3 md:pt-4">
+                      <div>
+                        <span className="text-xs text-gray-400 md:text-sm">From</span>
+                        <p className="text-lg font-bold text-gray-900 md:text-2xl">{type.basePrice}</p>
+                      </div>
+                      <div className="flex flex-col gap-2">
+                        <Button
+                          size="sm"
+                          className="w-full bg-gradient-to-r from-gray-900 to-black text-xs text-white hover:from-black hover:to-gray-900 md:text-sm"
+                          onClick={() => handleBookPhotobook(type)}
+                        >
+                          Book Now
+                          <ArrowRight className="ml-1 h-3 w-3 md:ml-2 md:h-4 md:w-4" />
+                        </Button>
+                        <a
+                          href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(type.title)} photobook`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex w-full items-center justify-center gap-2 rounded-lg bg-green-500 px-4 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-green-600 md:text-sm"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                          Chat on WhatsApp
+                        </a>
+                      </div>
+                    </div>
+                  </CardContent>
                 </Card>
               </div>
             ))}

@@ -43,7 +43,7 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Location",
-    value: "Accra and capecoast, Ghana",
+    value: "Accra, Ghana",
     href: "https://maps.google.com/?q=East+Legon,+Accra,+Ghana",
     color: "from-yellow-500 to-yellow-600",
   },
@@ -315,7 +315,7 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="MkayGraphix Location"
+                  title="MkayGraphix Accra Location"
                 />
               </div>
 
@@ -349,7 +349,7 @@ export default function ContactPage() {
                   <div>
                     <h3 className="font-bold text-base md:text-lg mb-2">Our Location</h3>
                     <p className="text-xs md:text-sm text-gray-600">
-                      Capecoast-UCC and  Accra, Ghana
+                      East Legon, Accra, Ghana
                       <br />
                       Nationwide delivery.
                     </p>

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -55,7 +56,7 @@ const printServices: PrintService[] = [
     title: 'Wedding Cards & Invitations',
     description: 'Elegant wedding invitations, save-the-dates, and ceremony programs crafted with premium materials.',
     icon: Heart,
-    image: '/images/wedding-card.jpg',
+    image: '/images/blog-wedding.jpg',
     features: ['Premium cardstock', 'Custom designs', 'Full color printing', 'Matching envelopes', 'RSVP cards included'],
     basePrice: 'GH₵ 100',
     category: 'Wedding',
@@ -76,7 +77,7 @@ const printServices: PrintService[] = [
     title: 'Roll-Up Banners',
     description: 'Professional retractable banners for events, trade shows, and promotional displays.',
     icon: ImageIcon,
-    image: '/images/edit.jpg',
+    image: '/images/banner.img1.jpg',
     features: ['Weather-resistant vinyl', 'Chrome stand included', 'High-resolution print', 'Multiple sizes', 'Easy setup'],
     basePrice: 'GH₵ 250',
     category: 'Signage',
@@ -87,7 +88,7 @@ const printServices: PrintService[] = [
     title: 'Business Cards',
     description: 'Premium business cards that make a lasting impression.',
     icon: Briefcase,
-    image: '/images/business-card.jpg',
+    image: '/images/blog-branding.jpg',
     features: ['Premium cardstock', 'Matte or glossy finish', 'Full color', 'Standard or custom size', 'Rounded corners option'],
     basePrice: 'GH₵ 50',
     category: 'Business',
@@ -97,7 +98,7 @@ const printServices: PrintService[] = [
     title: 'Flyers & Brochures',
     description: 'Eye-catching promotional flyers and informative brochures.',
     icon: Palette,
-    image: '/images/flyer.jpg',
+    image: '/images/FLYER.jpg',
     features: ['Various paper weights', 'Single or double-sided', 'Full color', 'Bulk pricing', 'Custom sizes available'],
     basePrice: 'GH₵ 50',
     category: 'Marketing',
@@ -107,7 +108,7 @@ const printServices: PrintService[] = [
     title: 'Event Signage & Posters',
     description: 'Large format posters and event signage for maximum visibility.',
     icon: PartyPopper,
-    image: '/images/event-poster.jpg',
+    image: '/images/portfolioposter.jpg',
     features: ['Large format printing', 'Weatherproof options', 'Custom sizing', 'High quality resolution', 'Quick turnaround'],
     basePrice: 'GH₵ 120',
     category: 'Events',
@@ -117,7 +118,7 @@ const printServices: PrintService[] = [
     title: 'Custom Gift Items',
     description: 'Personalized mugs, keychains, and other gift items with your designs.',
     icon: Gift,
-    image: '/images/custom-gift.jpg',
+    image: '/images/blog.png',
     features: ['Photo printing', 'Custom text', 'Premium quality', 'Gift packaging', 'Bulk orders welcome'],
     basePrice: 'GH₵ 60',
     category: 'Gifts',
@@ -127,7 +128,7 @@ const printServices: PrintService[] = [
     title: 'Certificates & Awards',
     description: 'Professional certificates, awards, and commemorative documents.',
     icon: Award,
-    image: '/images/certificate.jpg',
+    image: '/images/citation.jpg',
     features: ['Premium parchment', 'Gold/silver foil options', 'Custom design', 'Various sizes', 'Elegant presentation'],
     basePrice: 'GH₵ 70',
     category: 'Professional',
@@ -137,7 +138,7 @@ const printServices: PrintService[] = [
     title: 'Photo Prints & Canvas',
     description: 'High-quality photo prints and gallery-wrapped canvas prints.',
     icon: ImageIcon,
-    image: '/images/photo-print.jpg',
+    image: '/images/portfolio1.jpg',
     features: ['Lab-quality printing', 'Multiple sizes', 'Matte or glossy', 'Canvas stretching', 'Framing options'],
     basePrice: 'GH₵ 25',
     category: 'Photography',
@@ -334,9 +335,18 @@ export default function PrintingPage() {
                   className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full"
                 >
                   <div className=" -mt-6 relative">
-                    <div className="h-36 md:h-48 bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/20 to-amber-500/20 group-hover:opacity-100 opacity-0 transition-opacity duration-300" />
-                      <service.icon className="h-14 w-14 md:h-20 md:w-20 text-yellow-400/50 group-hover:scale-110 group-hover:text-yellow-400 transition-all duration-300" />
+                    <div className="relative h-36 md:h-48 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
+                      <Image
+                        src={service.image}
+                        alt={service.title}
+                        fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                        className="object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/10" />
+                      <div className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-black/45 text-yellow-300 backdrop-blur-sm ring-1 ring-white/15 transition-all duration-300 group-hover:scale-105 group-hover:bg-black/55">
+                        <service.icon className="h-5 w-5 md:h-6 md:w-6" />
+                      </div>
                       <a
                         href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(service.title)} printing service`}
                         target="_blank"
@@ -354,7 +364,7 @@ export default function PrintingPage() {
                       </div>
                     </div>
                     {service.popular && (
-                      <div className="absolute top-2 left-2 sm:top-3 sm:left-3 z-10">
+                      <div className="absolute top-2 left-16 sm:top-3 sm:left-16 z-10">
                         <Badge className="bg-yellow-500 text-black text-xs">
                           <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5" />
                           Popular
