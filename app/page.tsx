@@ -829,7 +829,7 @@ export default function HomePage() {
                   required
                   className="h-10 md:h-12 text-xs md:text-sm"
                 />
-                <p className="text-[10px] md:text-xs text-gray-500">Accepted: +233592515464, 233592515464, or 0592515464</p>
+                <p className="text-[10px] md:text-xs text-gray-500">Accepted: +233xxxxxxxxx, 233xxxxxxxxx, or 059xxxxxxx</p>
               </div>
               <div className="space-y-1.5 md:space-y-2">
                 <Label htmlFor="contact-service" className="text-xs md:text-sm">Service Type</Label>

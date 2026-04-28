@@ -115,12 +115,12 @@ function CheckoutContent() {
             return;
           }
 
-          const savedOrderData = sessionStorage.getItem("pendingOrder");
+          const savedOrderData = sessionStorage.getItem("mkaygraphix_shop_pending_order");
           if (savedOrderData) {
             const data = JSON.parse(savedOrderData) as OrderData;
             setOrderData(data);
             await sendOrderEmail(data, ref);
-            sessionStorage.removeItem("pendingOrder");
+            sessionStorage.removeItem("mkaygraphix_shop_pending_order");
           }
 
           setStep(3);
@@ -196,7 +196,7 @@ function CheckoutContent() {
       shippingInfo,
     };
 
-    sessionStorage.setItem("pendingOrder", JSON.stringify(orderDataToSave));
+    sessionStorage.setItem("mkaygraphix_shop_pending_order", JSON.stringify(orderDataToSave));
 
     try {
       const response = await fetch("/api/paystack", {
@@ -215,7 +215,7 @@ function CheckoutContent() {
 
       if (!response.ok) {
         toast.error(data.error || "Failed to initialize payment");
-        sessionStorage.removeItem("pendingOrder");
+        sessionStorage.removeItem("mkaygraphix_shop_pending_order");
         setIsProcessing(false);
         return;
       }
@@ -224,7 +224,7 @@ function CheckoutContent() {
     } catch (error) {
       console.error("Paystack error:", error);
       toast.error("Payment initialization failed");
-      sessionStorage.removeItem("pendingOrder");
+      sessionStorage.removeItem("mkaygraphix_shop_pending_order");
       setIsProcessing(false);
     }
   };

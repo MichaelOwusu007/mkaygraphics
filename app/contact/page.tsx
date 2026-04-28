@@ -228,7 +228,7 @@ export default function ContactPage() {
                       placeholder="Enter your phone number"
                       className="w-full px-3 md:px-4 py-3 rounded-lg border border-gray-200 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 outline-none transition-all"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Accepted: +233592515464, 233592515464, or 0592515464</p>
+                    <p className="text-xs text-gray-500 mt-1">Accepted: +233xxxxxxxxx, 233xxxxxxxxx, or 059xxxxxxx</p>
                   </div>
                   <div>
                     <label htmlFor="service" className="block text-sm font-medium mb-2">

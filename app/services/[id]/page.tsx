@@ -53,7 +53,7 @@ export default function ServiceDetailPage() {
     };
 
     try {
-      sessionStorage.setItem("serviceCheckoutDraft", JSON.stringify(draft));
+      sessionStorage.setItem("mkaygraphix_service_checkout_draft", JSON.stringify(draft));
       router.push("/service-checkout");
     } catch (err) {
       console.error("Failed to save draft:", err);

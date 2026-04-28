@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle2, CreditCard, FileText, Zap, Loader2, MessageCircle } from "lucide-react";
+import { CheckCircle2, FileText, Zap, Loader2, MessageCircle, Send, Clock } from "lucide-react";
 import { toast } from "sonner";
 
 type DraftService = {
@@ -45,7 +45,7 @@ function ServiceCheckoutContent() {
 
   const [draft, setDraft] = useState<DraftService | null>(null);
   const [step, setStep] = useState<number>(1);
-  const [isProcessing, setIsProcessing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
   const [orderData, setOrderData] = useState<ServiceOrderData | null>(null);
 
@@ -62,67 +62,20 @@ function ServiceCheckoutContent() {
   });
 
   useEffect(() => {
-    const paymentStatus = searchParams.get("payment");
-    const ref = searchParams.get("ref");
-
-    if (paymentStatus === "success" && ref) {
-      const savedOrderData = sessionStorage.getItem("pendingServiceOrder");
-      if (savedOrderData) {
-        const data = JSON.parse(savedOrderData) as ServiceOrderData;
-        setOrderData(data);
-        sendOrderEmail(data, ref);
-        sessionStorage.removeItem("pendingServiceOrder");
-        sessionStorage.removeItem("serviceCheckoutDraft");
-      }
-      setStep(3);
-      toast.success("Payment successful! Your order has been placed.");
-    }
-    setIsInitializing(false);
-  }, [searchParams]);
-
-  const sendOrderEmail = async (data: ServiceOrderData, paymentRef?: string) => {
     try {
-      await fetch("/api/order", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          customerName: data.customerName,
-          customerEmail: data.customerEmail,
-          customerPhone: data.customerPhone,
-          items: [],
-          serviceItems: [{
-            serviceTitle: `${data.serviceTitle} - ${data.photoCount} photos`,
-            photoCount: data.photoCount,
-            totalPrice: data.totalPrice,
-          }],
-          total: data.total,
-          shippingInfo: data.projectInfo,
-          paymentMethod: "Paystack",
-          paymentReference: paymentRef,
-          orderType: "Editing Service",
-        }),
-      });
-    } catch (error) {
-      console.error("Error sending order email:", error);
-    }
-  };
-
-  useEffect(() => {
-    try {
-      const raw = sessionStorage.getItem("serviceCheckoutDraft");
-      if (!raw && step !== 3) {
+      const raw = sessionStorage.getItem("mkaygraphix_service_checkout_draft");
+      if (!raw) {
         router.push("/services/editing");
         return;
       }
-      if (raw) {
-        const d: DraftService = JSON.parse(raw);
-        setDraft(d);
-      }
+      const d: DraftService = JSON.parse(raw);
+      setDraft(d);
+      setIsInitializing(false);
     } catch (err) {
       console.error("Failed to load checkout draft:", err);
       router.push("/services/editing");
     }
-  }, [router, step]);
+  }, [router]);
 
   if (isInitializing) {
     return (
@@ -132,7 +85,7 @@ function ServiceCheckoutContent() {
     );
   }
 
-  if (!draft && step !== 3) {
+  if (!draft) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <Loader2 className="w-8 h-8 animate-spin mx-auto" />
@@ -140,7 +93,7 @@ function ServiceCheckoutContent() {
     );
   }
 
-  const total = draft ? draft.price * draft.photoCount : orderData?.total || 0;
+  const total = draft.price * draft.photoCount;
 
   const handleSubmitProjectInfo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -155,14 +108,9 @@ function ServiceCheckoutContent() {
     setStep(2);
   };
 
-  const handleSubmitPayment = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await initiatePaystackPayment();
-  };
-
-  const initiatePaystackPayment = async () => {
+  const submitOrder = async () => {
     if (!draft) return;
-    setIsProcessing(true);
+    setIsSubmitting(true);
 
     const orderDataToSave: ServiceOrderData = {
       customerName: projectInfo.name,
@@ -182,42 +130,47 @@ function ServiceCheckoutContent() {
       },
     };
 
-    sessionStorage.setItem("pendingServiceOrder", JSON.stringify(orderDataToSave));
-
     try {
-      const response = await fetch("/api/paystack", {
+      // Use service-order API which is designed for editing services
+      const response = await fetch("/api/service-order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          amount: total,
-          email: projectInfo.email,
-          name: projectInfo.name,
-          phone: projectInfo.phone,
-          orderId: `SVC-${Date.now()}`,
+          customerName: orderDataToSave.customerName,
+          customerEmail: orderDataToSave.customerEmail,
+          customerPhone: orderDataToSave.customerPhone,
+          serviceTitle: orderDataToSave.serviceTitle,
+          photoCount: orderDataToSave.photoCount,
+          totalPrice: orderDataToSave.totalPrice,
+          total: orderDataToSave.total,
+          projectInfo: orderDataToSave.projectInfo,
+          paymentMethod: "WhatsApp",
         }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        toast.error(data.error || "Failed to initialize payment");
-        sessionStorage.removeItem("pendingServiceOrder");
-        setIsProcessing(false);
+        toast.error("Failed to submit order. Please try again.");
+        setIsSubmitting(false);
         return;
       }
 
-      window.location.href = data.authorizationUrl;
+      setOrderData(orderDataToSave);
+      sessionStorage.removeItem("mkaygraphix_service_checkout_draft");
+      setStep(3);
+      toast.success("Order submitted successfully!");
     } catch (error) {
-      console.error("Paystack error:", error);
-      toast.error("Payment initialization failed");
-      sessionStorage.removeItem("pendingServiceOrder");
-      setIsProcessing(false);
+      console.error("Order submission error:", error);
+      toast.error("Failed to submit order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  const whatsappMessage = `Hi MkayGraphix! I've just submitted my ${draft.title} order for ${draft.photoCount} photos (GH₵${total.toFixed(2)}). I'd like to proceed with payment and share my images.`;
+
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className=" text-4xl font-bold mb-8">Service Checkout</h1>
+      <h1 className="text-4xl font-bold mb-8">Service Order</h1>
 
       {/* Progress Indicator */}
       <div className="flex items-center justify-center mb-12 max-w-2xl mx-auto">
@@ -231,9 +184,9 @@ function ServiceCheckoutContent() {
           <div className={`flex-1 h-0.5 mx-4 ${step >= 2 ? 'bg-secondary' : 'bg-muted'}`} />
           <div className={`flex items-center ${step >= 2 ? 'text-secondary' : 'text-muted-foreground'}`}>
             <div className={`w-10 h-10 rounded-full flex items-center justify-center border-2 ${step >= 2 ? 'border-secondary bg-secondary/10' : 'border-muted'}`}>
-              {step > 2 ? <CheckCircle2 className="h-6 w-6" /> : <CreditCard className="h-5 w-5" />}
+              {step > 2 ? <CheckCircle2 className="h-6 w-6" /> : <FileText className="h-5 w-5" />}
             </div>
-            <span className="ml-2 font-semibold hidden sm:inline">Payment</span>
+            <span className="ml-2 font-semibold hidden sm:inline">Review</span>
           </div>
           <div className={`flex-1 h-0.5 mx-4 ${step >= 3 ? 'bg-secondary' : 'bg-muted'}`} />
           <div className={`flex items-center ${step >= 3 ? 'text-secondary' : 'text-muted-foreground'}`}>
@@ -247,11 +200,11 @@ function ServiceCheckoutContent() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2">
-          {/* Step 1 */}
+          {/* Step 1: Project Details */}
           {step === 1 && draft && (
             <Card>
               <CardHeader>
-                <CardTitle className=" flex items-center gap-2">
+                <CardTitle className="flex items-center gap-2">
                   <Zap className="h-5 w-5 text-secondary" />
                   Project Information
                 </CardTitle>
@@ -264,19 +217,19 @@ function ServiceCheckoutContent() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <Label htmlFor="name">Full Name *</Label>
-                        <Input id="name" value={projectInfo.name} onChange={(e) => setProjectInfo({ ...projectInfo, name: e.target.value })} required />
+                        <Input id="name" value={projectInfo.name} onChange={(e) => setProjectInfo({ ...projectInfo, name: e.target.value })} required placeholder="Your full name" />
                       </div>
                       <div>
                         <Label htmlFor="email">Email *</Label>
-                        <Input id="email" type="email" value={projectInfo.email} onChange={(e) => setProjectInfo({ ...projectInfo, email: e.target.value })} required />
+                        <Input id="email" type="email" value={projectInfo.email} onChange={(e) => setProjectInfo({ ...projectInfo, email: e.target.value })} required placeholder="your@email.com" />
                       </div>
                       <div>
                         <Label htmlFor="phone">Phone Number *</Label>
-                        <Input id="phone" type="tel" value={projectInfo.phone} onChange={(e) => setProjectInfo({ ...projectInfo, phone: e.target.value })} required />
+                        <Input id="phone" type="tel" value={projectInfo.phone} onChange={(e) => setProjectInfo({ ...projectInfo, phone: e.target.value })} required placeholder="+233592515464" />
                       </div>
                       <div>
                         <Label htmlFor="company">Company (Optional)</Label>
-                        <Input id="company" value={projectInfo.company} onChange={(e) => setProjectInfo({ ...projectInfo, company: e.target.value })} />
+                        <Input id="company" value={projectInfo.company} onChange={(e) => setProjectInfo({ ...projectInfo, company: e.target.value })} placeholder="Your company" />
                       </div>
                     </div>
                   </div>
@@ -329,99 +282,141 @@ function ServiceCheckoutContent() {
                     </div>
                   </div>
 
-                  <Button type="submit" size="lg" className="w-full">Continue to Payment</Button>
-                  
+                  <Button type="submit" size="lg" className="w-full">Continue to Review</Button>
+                   
                   <a
-                    href={`https://wa.me/233592515464?text=Hi, I need help with ${draft?.title || 'editing service'} (GH₵${total.toFixed(2)})`}
+                    href={`https://wa.me/233592515464?text=${encodeURIComponent(whatsappMessage)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
                   >
                     <MessageCircle className="h-5 w-5" />
-                    Chat on WhatsApp
+                    Chat on WhatsApp First
                   </a>
                 </form>
               </CardContent>
             </Card>
           )}
 
-          {/* Step 2 */}
+          {/* Step 2: Review & Submit */}
           {step === 2 && draft && (
             <Card>
               <CardHeader>
-                <CardTitle >Payment</CardTitle>
+                <CardTitle>Review Your Order</CardTitle>
               </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmitPayment} className="space-y-6">
-                  <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 p-6 rounded-lg">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="h-12 w-20 bg-gradient-to-r from-green-500 to-emerald-500 rounded flex items-center justify-center text-white font-bold text-sm">
-                        Paystack
-                      </div>
-                      <div>
-                        <p className="font-semibold">Pay securely with Paystack</p>
-                        <p className="text-sm text-muted-foreground">Card, USSD, or Bank Transfer</p>
-                      </div>
-                    </div>
-                    <p className="text-sm text-green-800 dark:text-green-200">
-                      You will be redirected to Paystack to complete your payment securely.
-                    </p>
+              <CardContent className="space-y-6">
+                <div className="bg-muted/30 p-4 rounded-lg space-y-3">
+                  <h3 className="font-semibold">Contact Information</h3>
+                  <div className="grid grid-cols-2 gap-2 text-sm">
+                    <div><span className="text-muted-foreground">Name:</span> {projectInfo.name}</div>
+                    <div><span className="text-muted-foreground">Email:</span> {projectInfo.email}</div>
+                    <div><span className="text-muted-foreground">Phone:</span> {projectInfo.phone}</div>
+                    {projectInfo.company && <div><span className="text-muted-foreground">Company:</span> {projectInfo.company}</div>}
                   </div>
+                </div>
 
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="w-full bg-gradient-to-r from-yellow-500 cursor-pointer to-orange-500 hover:from-green-600 hover:to-emerald-600"
-                    disabled={isProcessing}
-                  >
-                    {isProcessing ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Processing...
-                      </>
-                    ) : (
-                      `Pay GH₵${total.toFixed(2)} with Paystack`
-                    )}
-                  </Button>
+                <div className="bg-muted/30 p-4 rounded-lg space-y-3">
+                  <h3 className="font-semibold">Project Information</h3>
+                  <div className="space-y-2 text-sm">
+                    <div><span className="text-muted-foreground">Project Title:</span> {projectInfo.projectTitle}</div>
+                    <div><span className="text-muted-foreground">Description:</span></div>
+                    <div className="text-muted-foreground whitespace-pre-wrap">{projectInfo.projectDescription}</div>
+                    {projectInfo.deadline && <div><span className="text-muted-foreground">Deadline:</span> {projectInfo.deadline}</div>}
+                    {projectInfo.referenceLinks && <div><span className="text-muted-foreground">Reference Links:</span> {projectInfo.referenceLinks}</div>}
+                    {projectInfo.specialRequirements && <div><span className="text-muted-foreground">Special Requirements:</span> {projectInfo.specialRequirements}</div>}
+                  </div>
+                </div>
 
-                  <Button
-                    type="button"
-                    variant="outline"
-                    className="w-full cursor-pointer "
-                    onClick={() => setStep(1)}
-                  >
-                    Back
-                  </Button>
+                <Button
+                  type="button"
+                  size="lg"
+                  className="w-full"
+                  onClick={submitOrder}
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" />
+                      Submit Order
+                    </>
+                  )}
+                </Button>
 
-                  <a
-                    href="https://wa.me/233592515464?text=Hi, I need help with my order"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
-                  >
-                    <MessageCircle className="h-5 w-5" />
-                    Chat on WhatsApp
-                  </a>
-                </form>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setStep(1)}
+                >
+                  Back
+                </Button>
+
+                <a
+                  href={`https://wa.me/233592515464?text=${encodeURIComponent(whatsappMessage)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+                >
+                  <MessageCircle className="h-5 w-5" />
+                  Chat on WhatsApp
+                </a>
               </CardContent>
             </Card>
           )}
 
-          {/* Step 3 */}
-          {step === 3 && (
+          {/* Step 3: Confirmation */}
+          {step === 3 && orderData && (
             <Card className="text-center">
               <CardContent className="py-12 space-y-6">
                 <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-secondary/10 flex items-center justify-center">
                   <CheckCircle2 className="h-10 w-10 text-secondary" />
                 </div>
-                <h2 className=" text-3xl font-bold mb-4">Order Confirmed!</h2>
-                <p className="text-muted-foreground mb-6">
-                  Thank you for your order! A confirmation email has been sent to {orderData?.customerEmail}. We will contact you within 24 hours to discuss next steps.
+                <h2 className="text-3xl font-bold mb-4">Order Submitted!</h2>
+                <p className="text-muted-foreground">
+                  Thank you! We've received your order. A confirmation email has been sent to {orderData.customerEmail}.
                 </p>
+                
+                <div className="bg-muted/30 rounded-lg p-4 text-left max-w-md mx-auto">
+                  <h3 className="font-semibold mb-2">Order Summary</h3>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Service:</span>
+                      <span className="font-medium">{orderData.serviceTitle}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Photos:</span>
+                      <span className="font-medium">{orderData.photoCount}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">Customer:</span>
+                      <span className="font-medium">{orderData.customerName}</span>
+                    </div>
+                    <div className="flex justify-between border-t pt-2 mt-2">
+                      <span className="font-bold">Est. Total:</span>
+                      <span className="font-bold text-lg">GH₵{orderData.total.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+                  <h3 className="font-semibold text-yellow-800 dark:text-yellow-200 mb-2">Next Steps</h3>
+                  <ul className="text-sm text-yellow-700 dark:text-yellow-300 space-y-1 text-left">
+                    <li>1. We'll respond to your WhatsApp message</li>
+                    <li>2. Confirm the final price and details</li>
+                    <li>3. Share payment instructions</li>
+                    <li>4. Send you a link to upload your images</li>
+                  </ul>
+                </div>
+
                 <div className="flex flex-col sm:flex-row gap-3 justify-center">
                   <Button onClick={() => router.push('/')} size="lg">Return Home</Button>
                   <a
-                    href="https://wa.me/233592515464?text=Hi, I just placed an order and have a question"
+                    href={`https://wa.me/233592515464?text=${encodeURIComponent(whatsappMessage)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
@@ -435,54 +430,60 @@ function ServiceCheckoutContent() {
           )}
         </div>
 
-        {/* Order Summary */}
+        {/* Order Summary Sidebar */}
         <div className="lg:col-span-1">
           <Card className="sticky top-8">
             <CardHeader>
-              <CardTitle className="">Order Summary</CardTitle>
+              <CardTitle>Order Summary</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-3">
-                {(draft || orderData) && (
-                  <div className="flex gap-3 pb-3 border-b last:border-0">
-                    <div className="relative w-16 h-16 rounded overflow-hidden">
-                      <Image 
-                        src={draft?.image || "/images/service-placeholder.jpg"} 
-                        alt={draft?.title || orderData?.serviceTitle || "Service"} 
-                        fill 
-                        sizes="64px" 
-                        style={{ objectFit: 'cover' }} 
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-sm mb-1 truncate">{draft?.title || orderData?.serviceTitle}</h3>
-                      <p className="text-xs text-muted-foreground mb-1">
-                        {draft?.photoCount || orderData?.photoCount} {draft?.photoCount === 1 ? 'photo' : 'photos'}
-                      </p>
-                      <Badge variant="secondary" className="text-xs">
-                        {draft?.turnaroundTime || "Standard"}
-                      </Badge>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold">GH₵{total.toFixed(2)}</p>
-                    </div>
+              {draft && (
+                <div className="flex gap-3 pb-3 border-b">
+                  <div className="relative w-16 h-16 rounded overflow-hidden flex-shrink-0">
+                    <Image 
+                      src={draft.image || "/images/service-placeholder.jpg"} 
+                      alt={draft.title} 
+                      fill 
+                      sizes="64px" 
+                      className="object-cover"
+                    />
                   </div>
-                )}
-              </div>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-sm mb-1 truncate">{draft.title}</h3>
+                    <p className="text-xs text-muted-foreground mb-1">
+                      {draft.photoCount} photos
+                    </p>
+                    <Badge variant="secondary" className="text-xs">
+                      {draft.turnaroundTime || "Standard"}
+                    </Badge>
+                  </div>
+                  <div className="text-right">
+                    <p className="font-semibold">GH₵{total.toFixed(2)}</p>
+                  </div>
+                </div>
+              )}
 
               <div className="space-y-2 pt-4 border-t">
                 <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>GH₵{total.toFixed(2)}</span>
+                  <span>Rate per photo</span>
+                  <span>GH₵{draft?.price.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>Photo Count</span>
+                  <span>× {draft?.photoCount}</span>
                 </div>
                 <div className="flex justify-between text-lg font-bold pt-2 border-t">
-                  <span>Total</span>
+                  <span>Estimated Total</span>
                   <span>GH₵{total.toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="bg-accent/30 p-4 rounded-lg">
-                <p className="text-xs text-center">Digital services - No shipping required</p>
+              <div className="bg-blue-50 dark:bg-blue-950/20 p-4 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <Clock className="h-4 w-4 text-blue-500" />
+                  <span className="text-sm font-semibold">Turnaround Time</span>
+                </div>
+                <p className="text-xs text-muted-foreground">{draft?.turnaroundTime || "Standard delivery"}</p>
               </div>
             </CardContent>
           </Card>
