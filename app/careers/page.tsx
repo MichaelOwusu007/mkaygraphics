@@ -68,7 +68,7 @@ export default function CareersPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+      <section className="relative h-[70vh] md:h-[70vh] overflow-hidden">
         <Image
           src="/images/careersbanner.jpg"
           alt="Join Our Team"
@@ -244,6 +244,7 @@ export default function CareersPage() {
       </section>
 
       {/* Don't See a Role? */}
+      {/* Commented out - not hiring at the moment
       <section className="py-16 md:py-24 bg-gray-900 text-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -274,6 +275,7 @@ export default function CareersPage() {
           </div>
         </div>
       </section>
+      */}
 
       {/* Contact Info */}
       <section className="py-16 md:py-24">
