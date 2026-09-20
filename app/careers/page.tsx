@@ -14,7 +14,6 @@ import {
   Gift,
   Coffee,
   ArrowRight,
-  Check,
   MessageCircle,
   MapPin,
   Phone,
@@ -39,49 +38,6 @@ const benefits = [
     description: "Clear career paths and professional development programs.",
   },
  
-
-];
-
-const openPositions = [
-  {
-    title: "Graphic Designer",
-    department: "Creative",
-    location: "Remote",
-    type: "Part-time",
-    description: "Create stunning visual designs for clients across various industries.",
-    requirements: [
-      "Proficiency in Adobe Creative Suite",
-      "Strong portfolio showcasing design skills",
-      "Understanding of brand identity principles",
-      "Ability to work under tight deadlines",
-    ],
-  },
-  {
-    title: "Photo Editor",
-    department: "Creative",
-    location: "Remote",
-    type: "Part-time",
-    description: "Edit and enhance photos to create stunning visual content for our clients.",
-    requirements: [
-      "Expert knowledge in photo editing software",
-      "Experience with color correction and retouching",
-      "Attention to detail and quality",
-      "Fast turnaround for client deliverables",
-    ],
-  },
-  {
-    title: "Customer Service Representative",
-    department: "Operations",
-    location: "Remote",
-    type: "Part-time",
-    description: "Be the friendly face of MkayGraphix, helping customers with their needs.",
-    requirements: [
-      "Excellent communication skills",
-      "Problem-solving abilities",
-      "Patience and professionalism",
-      "Basic computer proficiency",
-    ],
-  },
 
 ];
 
@@ -234,64 +190,55 @@ export default function CareersPage() {
               Open Positions
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Join Our Growing Team
+              Current Openings
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We're always looking for talented, passionate individuals to join our creative family. Check out our current openings below.
+              Explore roles with our creative team below.
             </p>
           </div>
 
-          <div className="space-y-6">
-            {openPositions.map((position, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100 overflow-hidden"
-              >
-                <div className="p-6 md:p-8">
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
-                    <div>
-                      <div className="flex flex-wrap gap-2 mb-2">
-                        <span className="px-3 py-1 bg-yellow-500/10 text-yellow-600 rounded-full text-xs font-medium">
-                          {position.department}
-                        </span>
-                        <span className="px-3 py-1 bg-green-500/10 text-green-600 rounded-full text-xs font-medium">
-                          {position.type}
-                        </span>
-                      </div>
-                      <h3 className="text-xl font-bold mb-2">{position.title}</h3>
-                      <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-                        <span className="flex items-center gap-1">
-                          <MapPin className="h-4 w-4" />
-                          {position.location}
-                        </span>
-                        <span className="flex items-center gap-1">
-                          <Briefcase className="h-4 w-4" />
-                          {position.type}
-                        </span>
-                      </div>
-                    </div>
-                    <Button asChild className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 border-0">
-                      <Link href="/contact">
-                        Apply Now
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                  <p className="text-gray-600 mb-4">{position.description}</p>
-                  <div>
-                    <h4 className="font-semibold text-sm mb-2">Requirements:</h4>
-                    <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                      {position.requirements.map((req, i) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                          <Check className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                          {req}
-                        </li>
-                      ))}
-                    </ul>
+          {/* Empty State */}
+          <div className="max-w-2xl mx-auto">
+            <div className="bg-white rounded-2xl shadow-md border border-dashed border-gray-300 overflow-hidden">
+              <div className="p-10 md:p-14 text-center">
+                <div className="relative w-24 h-24 mx-auto mb-6">
+                  <div className="absolute inset-0 bg-yellow-100 rounded-3xl rotate-6" />
+                  <div className="absolute inset-0 bg-amber-100 rounded-3xl -rotate-6" />
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Briefcase className="h-10 w-10 text-yellow-500" />
                   </div>
                 </div>
+                <h3 className="text-2xl font-bold mb-3">
+                  No Open Positions Right Now
+                </h3>
+                <p className="text-gray-600 mb-8 max-w-md mx-auto">
+                  We're not hiring at the moment, but we're always excited to meet talented, passionate creatives. Drop us a message and introduce yourself.
+                </p>
+                <div className="flex flex-wrap justify-center gap-3">
+                  <Button
+                    asChild
+                    className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black border-0"
+                  >
+                    <Link href="/contact">
+                      Send Your CV
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                  <a
+                    href="https://wa.me/233592515464?text=Hi!%20I'm%20interested%20in%20career%20opportunities%20at%20MkayGraphix."
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"
+                  >
+                    <MessageCircle className="h-5 w-5" />
+                    WhatsApp Us
+                  </a>
+                </div>
+                <p className="text-xs text-gray-400 mt-8">
+                  We'll reach out when a suitable role opens up.
+                </p>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
