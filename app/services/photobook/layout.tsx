@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "custom photobooks",
   ],
   openGraph: {
-    title: "Photobooks | MkayGraphix",
+    title: "Photobooks | MkayGraphics & Photography",
     description:
       "Beautiful custom photobooks in Ghana. Wedding albums, graduation books, and more.",
     images: ["/images/photobook.jpg"],

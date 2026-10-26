@@ -44,7 +44,7 @@ export default function BrandBuildingPage() {
                 <Clock className="h-4 w-4" />
                 7 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -64,12 +64,12 @@ export default function BrandBuildingPage() {
         <div className="prose prose-lg max-w-none">
           <h2>Introduction</h2>
           <p>
-            In Ghana's competitive business landscape, strong branding isn't optional—it's essential. Your brand is the first impression you make, the promise you keep, and the story you tell. Here's how design can elevate your business.
+            In Ghana's competitive business landscape, strong branding isn't optional. It's essential. Your brand is the first impression you make, the promise you keep, and the story you tell. Here's how design can elevate your business.
           </p>
 
           <h2>Understanding Brand Identity</h2>
           <p>
-            Brand identity is more than just a logo—it's everything visual that represents your business:
+            Brand identity is more than just a logo. It's everything visual that represents your business:
           </p>
           <ul>
             <li><strong>Logo</strong> – Your visual signature</li>
@@ -180,7 +180,7 @@ export default function BrandBuildingPage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=Building%20a%20Memorable%20Brand%20for%20Ghanaian%20Businesses%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=Building%20a%20Memorable%20Brand%20for%20Ghanaian%20Businesses%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

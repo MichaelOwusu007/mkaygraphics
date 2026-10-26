@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "flyer design",
   ],
   openGraph: {
-    title: "Graphic Design Services | MkayGraphix",
+    title: "Graphic Design Services | MkayGraphics & Photography",
     description:
       "Professional graphic design services in Ghana. Logo design, brand identity, and more.",
     images: ["/images/design.jpg"],

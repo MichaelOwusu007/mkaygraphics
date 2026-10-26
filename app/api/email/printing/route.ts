@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
   })
 
   const mailOptions: Mail.Options = {
-    from: `"MkayGraphix Printing" <${process.env.NODEMAILER_EMAIL}>`,
+    from: `"MkayGraphics Printing" <${process.env.NODEMAILER_EMAIL}>`,
     to: process.env.NODEMAILER_RECEIVER,
     subject: `🖨️ Printing Service Booking - ${service}`,
     html: `
       <div style="font-family: 'Segoe UI', Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
         <div style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%); padding: 30px; border-radius: 16px 16px 0 0;">
           <h1 style="color: #fbbf24; margin: 0; font-size: 24px;">🖨️ New Printing Service Booking</h1>
-          <p style="color: #9ca3af; margin: 10px 0 0;">Received via MkayGraphix Website</p>
+          <p style="color: #9ca3af; margin: 10px 0 0;">Received via MkayGraphics Website</p>
         </div>
         
         <div style="background: #fff; padding: 30px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 16px 16px;">
@@ -111,7 +111,7 @@ export async function POST(request: NextRequest) {
         </div>
 
         <div style="text-align: center; padding: 20px; color: #6b7280; font-size: 12px;">
-          <p style="margin: 0;">MkayGraphix - Premium Printing Services</p>
+          <p style="margin: 0;">MkayGraphics - Premium Printing Services</p>
           <p style="margin: 5px 0 0;">Cape Coast, Ghana | +233 XX XXX XXXX</p>
         </div>
       </div>

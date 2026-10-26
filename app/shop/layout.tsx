@@ -15,7 +15,7 @@ export const metadata = {
     canonical: "https://www.mkaygraphix.site/shop",
   },
   openGraph: {
-    title: "Shop Frames | MkayGraphix",
+    title: "Shop Frames | MkayGraphics & Photography",
     description:
       "Shop custom frames online in Ghana. Premium handcrafted frames for photos and artwork.",
     images: ["/images/shop.jpg"],

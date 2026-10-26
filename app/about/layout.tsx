@@ -1,20 +1,21 @@
 export const metadata = {
-  title: "About Us | MkayGraphix - Our Story & Mission",
+  title: "About Our Photography & Creative Studio in Ghana",
   description:
-    "Learn about MkayGraphix - Ghana's premier destination for custom framing, photo editing, printing services, and graphic design. Our mission is to frame, edit, and design it best for you.",
+    "Learn about MkayGraphics, Ghana's photography and creative studio for custom framing, photo editing, printing, photobooks, and graphic design.",
   keywords: [
-    "about MkayGraphix",
-    "MkayGraphix story",
+    "about MkayGraphics",
+    "MkayGraphics story",
     "custom framing Ghana",
     "photo editing company Ghana",
+    "photography studio Ghana",
   ],
   alternates: {
     canonical: "https://www.mkaygraphix.site/about",
   },
   openGraph: {
-    title: "About Us | MkayGraphix",
+    title: "About MkayGraphics & Photography | Creative Studio Ghana",
     description:
-      "Learn about MkayGraphix - Ghana's premier destination for custom framing and design services.",
+      "Meet MkayGraphics, a Ghanaian photography and creative studio helping people shoot, edit, frame, print, and design meaningful stories.",
     images: ["/images/about.jpg"],
   },
 };

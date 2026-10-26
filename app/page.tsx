@@ -19,7 +19,7 @@ import {
   Scissors,
   Printer,
   PenTool,
-  Megaphone,
+  Camera,
   Zap,
   Gift,
   Percent,
@@ -123,28 +123,28 @@ export default function HomePage() {
       title: 'Photo Editing',
       description: 'Professional retouching from basic corrections to advanced manipulation',
       href: '/services/editing',
-      color: 'from-amber-500 to-orange-600',
+      color: 'from-red-600 to-rose-800',
     },
     {
       icon: Printer,
       title: 'Printing Services',
       description: 'T-shirts, banners, cards, wedding items - all premium quality prints',
       href: '/services/printing',
-      color: 'from-purple-500 to-pink-600',
+      color: 'from-yellow-500 to-amber-700',
     },
     {
       icon: BookOpen,
       title: 'Photobooks',
       description: 'Beautiful wedding, graduation & memory photobooks - Ghana style',
       href: '/services/photobook',
-      color: 'from-blue-500 to-cyan-600',
+      color: 'from-green-600 to-emerald-800',
     },
     {
       icon: PenTool,
       title: 'Graphic Design',
       description: 'Stunning visuals for branding, marketing, and digital media',
       href: '/services/design',
-      color: 'from-emerald-500 to-teal-600',
+      color: 'from-red-600 to-rose-800',
     },
     {
       icon: Frame,
@@ -154,11 +154,11 @@ export default function HomePage() {
       color: 'from-yellow-500 to-amber-600',
     },
     {
-      icon: Megaphone,
-      title: 'Digital Marketing',
-      description: 'Complete branding solutions including logos, palettes, and guidelines',
-      href: '/services/design',
-      color: 'from-rose-500 to-red-600',
+      icon: Camera,
+      title: 'Photography',
+      description: 'Portraits, events, products, and brand stories, captured with intention',
+      href: '/services/photography',
+      color: 'from-green-600 to-emerald-800',
     },
   ];
 
@@ -166,56 +166,74 @@ export default function HomePage() {
     <div className="min-h-screen bg-white text-gray-900">
       {/* Hero Section */}
       
-       <section
-      className="relative h-[600px] flex items-center justify-center text-center px-4 sm:px-8"
-      aria-label="Photo editing and custom framing hero section"
-    >
-      {/* ✅ Background Image */}
-      <Image
-        src="/images/hero_image.jpg"
-        alt="Beautiful photo frames and editing workspace"
-        fill
-        priority
-        className="object-cover object-center brightness-75 "
-        sizes="100vw"
-      />
+      <section
+        className="relative flex h-[640px] items-center justify-center overflow-hidden px-4 text-center sm:px-8 md:h-[700px]"
+        aria-label="Photography, photo editing, custom framing, and design hero section"
+      >
+        <Image
+          src="/images/hero_image.jpg"
+          alt="Beautiful photo frames and editing workspace"
+          fill
+          priority
+          className="object-cover object-center scale-[1.02]"
+          sizes="100vw"
+        />
 
-          {/* ✅ Enhanced Overlay for better readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+        <div className="absolute inset-0 bg-[linear-gradient(110deg,rgba(0,0,0,0.88)_0%,rgba(0,0,0,0.68)_52%,rgba(0,0,0,0.48)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/25" />
+        <div className="absolute left-1/2 top-[-9rem] h-80 w-80 -translate-x-1/2 rounded-full bg-yellow-400/20 blur-[120px]" />
 
-      {/* ✅ Content */}
-      <div className="relative z-10 max-w-4xl mx-auto text-white space-y-5">
-        <h1 className="text-3xl md:text-5xl font-bold leading-tight">
-          Edit Your Photos, Frame Your Memories &amp; Design Your Ideas.
-        </h1>
-
-        <p className="text-base md:text-lg text-gray-200 max-w-2xl mx-auto">
-          Premium handcrafted frames, photo editing, and design services all in one place. We frame, edit, and design it best for you.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-          <Button
-            size="lg"
-            className="bg-yellow-600 hover:bg-yellow-600 text-white flex items-center justify-center"
-            asChild
+        <div className="relative z-10 mx-auto max-w-5xl text-white">
+          <Link
+            href="/services/photography"
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white backdrop-blur-md transition-colors hover:bg-white/15 md:text-sm"
           >
-            <Link href="/shop">
-              Shop Now
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
+            <Camera className="h-4 w-4 text-yellow-400" />
+            Photography is coming soon
+            <ArrowRight className="h-4 w-4" />
+          </Link>
 
-          <Button
-            size="lg"
-            variant="outline"
-            className=" text-white bg-black"
-            asChild
-          >
-            <Link href="/services">Our Services</Link>
-          </Button>
+          <h1 className="text-4xl font-bold leading-[1.05] tracking-[-0.04em] sm:text-5xl md:text-7xl lg:text-[5.25rem]">
+            Shoot. Edit. Frame.
+            <span className="block bg-gradient-to-r from-yellow-300 via-yellow-400 to-amber-500 bg-clip-text text-transparent">
+              Design your story.
+            </span>
+          </h1>
+
+          <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-gray-200 sm:text-lg md:text-xl">
+            Shoot your pictures, edit every detail, frame the moments that matter,
+            and design ideas that stand out, all with one creative team.
+          </p>
+
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Button
+              size="lg"
+              className="h-12 rounded-full bg-yellow-500 px-7 font-bold text-black shadow-xl shadow-yellow-500/20 hover:bg-yellow-400"
+              asChild
+            >
+              <Link href="/services">
+                Explore Our Services
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
+
+            <Button
+              size="lg"
+              variant="outline"
+              className="h-12 rounded-full border-white/30 bg-white/10 px-7 font-semibold text-white backdrop-blur-md hover:bg-white hover:text-black"
+              asChild
+            >
+              <Link href="/shop">Shop Frames</Link>
+            </Button>
+          </div>
+
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-medium uppercase tracking-[0.16em] text-white/65">
+            <span>Accra &amp; Cape Coast</span>
+            <span className="hidden h-1 w-1 rounded-full bg-yellow-400 sm:block" />
+            <span>Creative work across Ghana</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
       {/* Special Offer Banner */}
       <section className="relative overflow-hidden bg-gradient-to-r from-black via-gray-900 to-black py-4">
@@ -579,7 +597,7 @@ export default function HomePage() {
               <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent"> Works</span>
             </h2>
             <p className="text-gray-400 text-sm md:text-lg max-w-2xl mx-auto px-4">
-              Whether you need photo editing, custom framing, printing, or a beautiful photobook — 
+              Whether you need photo editing, custom framing, printing, or a beautiful photobook,
               our process is seamless and stress-free.
             </p>
           </div>

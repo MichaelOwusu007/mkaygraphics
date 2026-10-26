@@ -44,7 +44,7 @@ export default function WeddingStationeryPage() {
                 <Clock className="h-4 w-4" />
                 6 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -69,7 +69,7 @@ export default function WeddingStationeryPage() {
 
           <h2>Wedding Invitation Cards</h2>
           <p>
-            Your invitation sets the tone for your entire celebration. Modern Ghanaian couples often blend traditional motifs with contemporary designs. At MkayGraphix, we offer customizable options that incorporate:
+            Your invitation sets the tone for your entire celebration. Modern Ghanaian couples often blend traditional motifs with contemporary designs. At MkayGraphics, we offer customizable options that incorporate:
           </p>
           <ul>
             <li>Kente-inspired patterns and borders</li>
@@ -141,7 +141,7 @@ export default function WeddingStationeryPage() {
 
           <h2>Our Wedding Stationery Services</h2>
           <p>
-            At MkayGraphix, we offer complete wedding stationery design and printing services:
+            At MkayGraphics, we offer complete wedding stationery design and printing services:
           </p>
           <ul>
             <li>Custom design with Ghanaian cultural elements</li>
@@ -161,7 +161,7 @@ export default function WeddingStationeryPage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=Essential%20Wedding%20Stationery%20for%20Ghanaian%20Couples%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=Essential%20Wedding%20Stationery%20for%20Ghanaian%20Couples%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

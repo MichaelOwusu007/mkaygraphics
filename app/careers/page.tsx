@@ -86,7 +86,7 @@ export default function CareersPage() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
               Build Your Creative Career at{" "}
               <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
-                MkayGraphix
+                MkayGraphics
               </span>
             </h1>
             <p className="text-lg text-gray-200 max-w-2xl mx-auto">
@@ -104,7 +104,7 @@ export default function CareersPage() {
               Why Join Us
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Why Choose MkayGraphix?
+              Why Choose MkayGraphics?
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               We're more than just a workplace. We're a creative family that values innovation, quality, and growth.
@@ -137,10 +137,10 @@ export default function CareersPage() {
                 Our Culture
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                The MkayGraphix <span className="text-yellow-500">Way</span>
+                The MkayGraphics <span className="text-yellow-500">Way</span>
               </h2>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                At MkayGraphix, we believe great work comes from happy, motivated team members. Our culture is built on collaboration, creativity, and a shared commitment to excellence.
+                At MkayGraphics, we believe great work comes from happy, motivated team members. Our culture is built on collaboration, creativity, and a shared commitment to excellence.
               </p>
               <div className="space-y-4">
                 {values.map((value, index) => (
@@ -225,7 +225,7 @@ export default function CareersPage() {
                     </Link>
                   </Button>
                   <a
-                    href="https://wa.me/233592515464?text=Hi!%20I'm%20interested%20in%20career%20opportunities%20at%20MkayGraphix."
+                    href="https://wa.me/233592515464?text=Hi!%20I'm%20interested%20in%20career%20opportunities%20at%20MkayGraphics."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"
@@ -251,7 +251,7 @@ export default function CareersPage() {
             Don't See the Perfect Role?
           </h2>
           <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-            We're always interested in meeting talented people. Send us your CV and tell us how you'd like to contribute to MkayGraphix.
+            We're always interested in meeting talented people. Send us your CV and tell us how you'd like to contribute to MkayGraphics.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button
@@ -264,7 +264,7 @@ export default function CareersPage() {
               </Link>
             </Button>
             <a
-              href="https://wa.me/233592515464?text=Hi!%20I'm%20interested%20in%20career%20opportunities%20at%20MkayGraphix."
+              href="https://wa.me/233592515464?text=Hi!%20I'm%20interested%20in%20career%20opportunities%20at%20MkayGraphics."
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"

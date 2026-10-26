@@ -15,12 +15,12 @@ export default function Footer() {
                       >
                         <Frame className="h-6  w-6 text-yellow-600" />
                         <span className="text-xl text-white font-semibold lg:font-bold">
-                          MkayGraphix
+                          MkayGraphics
                         </span>
                       </Link>
-          {/* <h2 className="text-2xl font-bold text-white mb-3">MkayGraphix</h2> */}
+          {/* <h2 className="text-2xl font-bold text-white mb-3">MkayGraphics</h2> */}
           <p className="text-sm text-gray-400 leading-relaxed">
-            Premium handcrafted frames, photo editing, and design services.We frame, edit, and design it best for you.
+            Photography, handcrafted frames, photo editing, and design services. We shoot, edit, frame, and design it best for you.
           </p>
           <div className="mt-4 flex items-center gap-3 text-sm">
             <Phone className="h-4 w-4 text-yellow-500" />
@@ -52,6 +52,7 @@ export default function Footer() {
           <h3 className="text-xl lg:bold font-semibold text-white mb-4">Services</h3>
           <ul className="space-y-2 text-gray-400">
             <li><Link href="/services/editing" className="hover:text-yellow-500 transition">Photo Editing</Link></li>
+            <li><Link href="/services/photography" className="hover:text-yellow-500 transition">Photography <span className="text-xs text-yellow-500">Soon</span></Link></li>
             <li><Link href="/services/design" className="hover:text-yellow-500 transition">Graphics Design</Link></li>
             <li><Link href="/shop" className="hover:text-yellow-500 transition">Shop Frame</Link></li>
             <li><Link href="/support" className="hover:text-yellow-500 transition">Help Center</Link></li>
@@ -86,7 +87,7 @@ export default function Footer() {
 
       {/* 🧭 Bottom Bar */}
       <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center mt-8 text-gray-500 text-sm gap-3">
-        <p>© {new Date().getFullYear()} Mkaygraphix. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} MkayGraphics. All rights reserved.</p>
         <div className="flex gap-5 text-gray-400">
           <Link href="https://facebook.com" target="_blank" className="hover:text-yellow-500">
             <Facebook className="h-5 w-5" />

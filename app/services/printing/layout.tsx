@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "photo printing",
   ],
   openGraph: {
-    title: "Printing Services | MkayGraphix",
+    title: "Printing Services | MkayGraphics & Photography",
     description:
       "Premium printing services in Ghana. Wedding cards, t-shirts, banners, and more.",
     images: ["/images/printing.jpg"],

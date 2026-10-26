@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     "photo enhancement",
   ],
   openGraph: {
-    title: "Photo Editing Services | MkayGraphix",
+    title: "Photo Editing Services | MkayGraphics & Photography",
     description:
       "Professional photo editing services in Ghana. Expert retouching, color correction, and more.",
     images: ["/images/photo-editing.jpg"],

@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
         <div style="background: linear-gradient(135deg, #1a1a1a, #333); color: white; padding: 30px; text-align: center;">
           <h1 style="margin: 0; color: #f59e0b;">🛒 New Order Received!</h1>
-          <p style="margin: 10px 0 0; opacity: 0.8;">FrameStation / MkayGraphix</p>
+          <p style="margin: 10px 0 0; opacity: 0.8;">FrameStation / MkayGraphics</p>
         </div>
         
         <div style="padding: 30px; background: #fff;">
@@ -154,7 +154,7 @@ export async function POST(request: NextRequest) {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; color: #333;">
         <div style="background: linear-gradient(135deg, #1a1a1a, #333); color: white; padding: 30px; text-align: center;">
           <h1 style="margin: 0; color: #f59e0b;">✨ Order Confirmed!</h1>
-          <p style="margin: 10px 0 0; opacity: 0.8;">Thank you for choosing MkayGraphix</p>
+          <p style="margin: 10px 0 0; opacity: 0.8;">Thank you for choosing MkayGraphics</p>
         </div>
         
         <div style="padding: 30px; background: #fff;">
@@ -199,26 +199,26 @@ export async function POST(request: NextRequest) {
             📧 <a href="mailto:mkaygraphix@gmail.com">mkaygraphix@gmail.com</a>
           </p>
 
-          <p style="margin-top: 30px;">Best regards,<br><strong>The MkayGraphix Team</strong></p>
+          <p style="margin-top: 30px;">Best regards,<br><strong>The MkayGraphics Team</strong></p>
         </div>
 
         <div style="background: #1a1a1a; color: #888; padding: 20px; text-align: center; font-size: 12px;">
-          <p style="margin: 0;">© ${new Date().getFullYear()} MkayGraphix. All rights reserved.</p>
+          <p style="margin: 0;">© ${new Date().getFullYear()} MkayGraphics. All rights reserved.</p>
         </div>
       </div>
     `
 
     const ownerMailOptions = {
-      from: `"MkayGraphix Orders" <${process.env.NODEMAILER_EMAIL}>`,
+      from: `"MkayGraphics Orders" <${process.env.NODEMAILER_EMAIL}>`,
       to: process.env.NODEMAILER_RECEIVER,
       subject: `🛒 New Order - ${customerName} - ${formatCurrency(total)}`,
       html: ownerEmailHtml,
     }
 
     const customerMailOptions = {
-      from: `"MkayGraphix" <${process.env.NODEMAILER_EMAIL}>`,
+      from: `"MkayGraphics" <${process.env.NODEMAILER_EMAIL}>`,
       to: customerEmail,
-      subject: `✨ Order Confirmed - MkayGraphix`,
+      subject: `✨ Order Confirmed - MkayGraphics`,
       html: customerEmailHtml,
     }
 

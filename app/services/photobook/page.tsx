@@ -134,7 +134,7 @@ const whyPhotobooks = [
   {
     icon: Camera,
     title: 'Tell Your Unique Story',
-    description: 'Every page is carefully designed to flow like a narrative, taking you on a journey through your special day or milestone. It\'s not just photos—it\'s your story beautifully told.',
+    description: 'Every page is carefully designed to flow like a narrative, taking you on a journey through your special day or milestone. It\'s not just photos; it\'s your story beautifully told.',
   },
   {
     icon: Gift,
@@ -144,7 +144,7 @@ const whyPhotobooks = [
   {
     icon: Trophy,
     title: 'Professional Quality',
-    description: 'We use premium materials—luxury covers, archival paper, and vibrant printing—that ensure your photos look stunning and last a lifetime without fading.',
+    description: 'We use premium materials, including luxury covers, archival paper, and vibrant printing, to ensure your photos look stunning and last a lifetime without fading.',
   },
 ];
 
@@ -339,7 +339,7 @@ export default function PhotobookPage() {
           <div className="text-center mb-8 md:mb-16 space-y-3 md:space-y-4">
             <Badge className="bg-black text-white px-3 md:px-4 py-1 text-xs md:text-sm">Why Choose Photobooks</Badge>
             <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold px-2">
-              More Than Just Photos—
+              More Than Just Photos:
               <span className="bg-gradient-to-r from-yellow-600 to-amber-500 bg-clip-text text-transparent"> A Legacy</span>
             </h2>
             <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-lg px-4">
@@ -558,7 +558,7 @@ export default function PhotobookPage() {
                 ))}
               </div>
               <p className="text-base md:text-xl lg:text-2xl text-gray-700 italic mb-6 md:mb-8 leading-relaxed px-2">
-                &quot;The wedding photobook MkayGraphix created for us was absolutely stunning. 
+                &quot;The wedding photobook MkayGraphics created for us was absolutely stunning.
                 Our guests couldn&apos;t stop admiring it at the reception. It perfectly captured 
                 every special moment of our traditional Ghanaian wedding.&quot;
               </p>

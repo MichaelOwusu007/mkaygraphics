@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
   })
 
   const mailOptions: Mail.Options = {
-    from: `"MkayGraphix" <${process.env.NODEMAILER_EMAIL}>`,
+    from: `"MkayGraphics" <${process.env.NODEMAILER_EMAIL}>`,
     to: process.env.NODEMAILER_RECEIVER,
     subject: `📩 Service Inquiry - ${service || "General"}`,
     html: `
@@ -36,7 +36,7 @@ export async function POST(request: NextRequest) {
         <div style="background-color: #f9f9f9; padding: 10px; border-left: 4px solid #4F46E5;">
           ${message?.replace(/\n/g, "<br>") || "No message"}
         </div>
-        <p style="margin-top: 30px;">Sent from the MkayGraphix Website ✨</p>
+        <p style="margin-top: 30px;">Sent from the MkayGraphics Website ✨</p>
       </div>
     `,
   }

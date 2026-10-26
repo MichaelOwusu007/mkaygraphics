@@ -44,7 +44,7 @@ export default function FramingGuidePage() {
                 <Clock className="h-4 w-4" />
                 5 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -77,7 +77,7 @@ export default function FramingGuidePage() {
 
           <h2>2. Match the Era and Style</h2>
           <p>
-            Traditional Ghanaian kente-inspired art, Adinkra symbol prints, and cultural pieces pair beautifully with wooden frames—particularly those in warm mahogany or rich walnut tones. These natural finishes honor the cultural heritage of the artwork.
+            Traditional Ghanaian kente-inspired art, Adinkra symbol prints, and cultural pieces pair beautifully with wooden frames, particularly those in warm mahogany or rich walnut tones. These natural finishes honor the cultural heritage of the artwork.
           </p>
           <p>
             Contemporary digital art, abstract pieces, and modern photography might look stunning in sleek metal frames. Silver, gold, or matte black metal frames add a contemporary edge.
@@ -114,7 +114,7 @@ export default function FramingGuidePage() {
 
           <h2>6. Think About Matting</h2>
           <p>
-            A proper mat does more than look nice—it creates breathing room between the artwork and frame, preventing direct contact that could cause damage over time. Mats also add visual depth and can be color-coordinated to enhance your artwork.
+            A proper mat does more than look nice. It creates breathing room between the artwork and frame, preventing direct contact that could cause damage over time. Mats also add visual depth and can be color-coordinated to enhance your artwork.
           </p>
 
           <h2>7. Size Matters</h2>
@@ -124,7 +124,7 @@ export default function FramingGuidePage() {
 
           <h2>Our Framing Services</h2>
           <p>
-            At MkayGraphix, we offer over 50 frame styles from classic wood to modern metal, ensuring every piece finds its perfect match. Our expert team can help you:
+            At MkayGraphics, we offer over 50 frame styles from classic wood to modern metal, ensuring every piece finds its perfect match. Our expert team can help you:
           </p>
           <ul>
             <li>Select the ideal frame for your artwork</li>
@@ -143,7 +143,7 @@ export default function FramingGuidePage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=The%20Ultimate%20Guide%20to%20Choosing%20the%20Perfect%20Frame%20for%20Your%20Art%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=The%20Ultimate%20Guide%20to%20Choosing%20the%20Perfect%20Frame%20for%20Your%20Art%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

@@ -44,7 +44,7 @@ export default function TshirtDesignIdeasPage() {
                 <Clock className="h-4 w-4" />
                 4 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function TshirtDesignIdeasPage() {
 
           <h2>Our T-Shirt Printing Services</h2>
           <p>
-            At MkayGraphix, we offer comprehensive t-shirt printing:
+            At MkayGraphics, we offer comprehensive t-shirt printing:
           </p>
           <ul>
             <li>Custom design consultation</li>
@@ -191,7 +191,7 @@ export default function TshirtDesignIdeasPage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=Custom%20T-Shirt%20Design%20Ideas%20for%20Ghanaian%20Events%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=Custom%20T-Shirt%20Design%20Ideas%20for%20Ghanaian%20Events%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

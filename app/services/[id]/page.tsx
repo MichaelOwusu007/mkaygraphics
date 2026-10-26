@@ -57,7 +57,7 @@ export default function ServiceDetailPage() {
       router.push("/service-checkout");
     } catch (err) {
       console.error("Failed to save draft:", err);
-      toast.error("Unable to start checkout — please try again");
+      toast.error("Unable to start checkout. Please try again.");
     }
   };
 

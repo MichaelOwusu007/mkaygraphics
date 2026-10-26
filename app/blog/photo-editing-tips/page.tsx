@@ -44,7 +44,7 @@ export default function PhotoEditingTipsPage() {
                 <Clock className="h-4 w-4" />
                 4 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -156,7 +156,7 @@ export default function PhotoEditingTipsPage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=5%20Photo%20Editing%20Tips%20That%20Will%20Transform%20Your%20Memories%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=5%20Photo%20Editing%20Tips%20That%20Will%20Transform%20Your%20Memories%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

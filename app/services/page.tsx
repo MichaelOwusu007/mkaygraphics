@@ -15,7 +15,7 @@ import {
   Star,
   Zap,
   Scissors,
-  Megaphone,
+  Camera,
   ChevronRight,
   MessageCircle,
   Heart,
@@ -30,28 +30,28 @@ import {
       title: 'Photo Editing',
       description: 'Professional retouching from basic corrections to advanced manipulation',
       href: '/services/editing',
-      color: 'from-amber-500 to-orange-600',
+      color: 'from-red-600 to-rose-800',
     },
     {
       icon: Printer,
       title: 'Printing Services',
       description: 'T-shirts, banners, cards, wedding items - all premium quality prints',
       href: '/services/printing',
-      color: 'from-purple-500 to-pink-600',
+      color: 'from-yellow-500 to-amber-700',
     },
     {
       icon: BookOpen,
       title: 'Photobooks',
       description: 'Beautiful wedding, graduation & memory photobooks - Ghana style',
       href: '/services/photobook',
-      color: 'from-blue-500 to-cyan-600',
+      color: 'from-green-600 to-emerald-800',
     },
     {
       icon: PenTool,
       title: 'Graphic Design',
       description: 'Stunning visuals for branding, marketing, and digital media',
       href: '/services/design',
-      color: 'from-emerald-500 to-teal-600',
+      color: 'from-red-600 to-rose-800',
     },
     {
       icon: Frame,
@@ -61,11 +61,11 @@ import {
       color: 'from-yellow-500 to-amber-600',
     },
     {
-      icon: Megaphone,
-      title: 'Digital Marketing',
-      description: 'Complete branding solutions including logos, palettes, and guidelines',
-      href: '/services/design',
-      color: 'from-rose-500 to-red-600',
+      icon: Camera,
+      title: 'Photography',
+      description: 'Portraits, events, products, and brand stories, captured with intention',
+      href: '/services/photography',
+      color: 'from-green-600 to-emerald-800',
     },
   ];
 
@@ -126,14 +126,14 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="mb-4 bg-yellow-500/10 text-yellow-600 border-yellow-500/20">
-                About MkayGraphix
+                About MkayGraphics
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
                 We Frame, Edit, and Design It{" "}
                 <span className="text-yellow-500">Best</span> for You
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                At MkayGraphix, we believe every photo tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra and Capecoast, Ghana, we've been helping individuals and businesses bring their creative visions to life for years.
+                At MkayGraphics, we believe every photo tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra and Capecoast, Ghana, we've been helping individuals and businesses bring their creative visions to life for years.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 From custom frames that showcase your precious artwork to stunning photobooks that preserve your most cherished moments, we combine craftsmanship with modern technology to deliver results that exceed expectations.
@@ -331,13 +331,13 @@ export default function ServicesPage() {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <Badge className="mb-4 bg-black/10 text-black border-0">
-              Why MkayGraphix
+              Why MkayGraphics
             </Badge>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Why Choose Us
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              We're not just service providers — we're your creative partners dedicated to bringing your vision to life.
+              We&apos;re not just service providers. We&apos;re your creative partners dedicated to bringing your vision to life.
             </p>
           </div>
 

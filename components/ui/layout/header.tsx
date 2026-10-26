@@ -99,7 +99,7 @@
 //             className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
 //           >
 //             <Frame className="h-8 w-8 text-primary" />
-//             <span className="text-xl font-bold">MkayGraphix</span>
+//             <span className="text-xl font-bold">MkayGraphics</span>
 //           </Link>
 
 //           {/* Desktop Nav */}

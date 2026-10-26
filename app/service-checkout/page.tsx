@@ -166,7 +166,7 @@ function ServiceCheckoutContent() {
     }
   };
 
-  const whatsappMessage = `Hi MkayGraphix! I've just submitted my ${draft.title} order for ${draft.photoCount} photos (GH₵${total.toFixed(2)}). I'd like to proceed with payment and share my images.`;
+  const whatsappMessage = `Hi MkayGraphics! I've just submitted my ${draft.title} order for ${draft.photoCount} photos (GH₵${total.toFixed(2)}). I'd like to proceed with payment and share my images.`;
 
   return (
     <div className="container mx-auto px-4 py-8">

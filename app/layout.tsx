@@ -30,14 +30,18 @@ const BASE_URL = "https://www.mkaygraphix.site";
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),
   title: {
-    default: "MkayGraphix | Premium Frames, Photo Editing, Printing & Design Services in Ghana",
-    template: "%s | MkayGraphix",
+    default: "MkayGraphics & Photography | Creative Studio in Ghana",
+    template: "%s | MkayGraphics & Photography",
   },
   description:
-    "Ghana's premier destination for custom framing, photo editing, printing services, photobooks, and graphic design. We frame, edit, and design it best for you. Shop frames online or book our professional services.",
+    "Ghana's creative destination for photography, custom framing, photo editing, printing, photobooks, and graphic design. We shoot, edit, frame, and design it best for you.",
   keywords: [
     "custom frames Ghana",
     "photo editing Ghana",
+    "photography services Ghana",
+    "MkayGraphics & Photography",
+    "photography studio Accra",
+    "photographer Ghana",
     "photobooks Ghana",
     "printing services Accra",
     "graphic design Ghana",
@@ -45,11 +49,11 @@ export const metadata: Metadata = {
     "custom t-shirt printing",
     "photo album Ghana",
     "framing services",
-    "MkayGraphix",
+    "MkayGraphics",
   ],
-  authors: [{ name: "MkayGraphix" }],
-  creator: "MkayGraphix",
-  publisher: "MkayGraphix",
+  authors: [{ name: "MkayGraphics" }],
+  creator: "MkayGraphics",
+  publisher: "MkayGraphics",
   formatDetection: {
     email: false,
     address: false,
@@ -59,24 +63,24 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_GH",
     url: BASE_URL,
-    siteName: "MkayGraphix",
-    title: "MkayGraphix | Premium Frames, Photo Editing & Design Services in Ghana",
+    siteName: "MkayGraphics",
+    title: "MkayGraphics & Photography | Creative Studio in Ghana",
     description:
-      "Ghana's premier destination for custom framing, photo editing, printing services, photobooks, and graphic design. Shop frames online or book professional services.",
+      "Photography, custom framing, photo editing, printing, photobooks, and graphic design from one creative studio in Ghana.",
     images: [
       {
         url: "/images/og-image.svg",
         width: 1200,
         height: 630,
-        alt: "MkayGraphix - Premium Frames, Photo Editing & Design Services",
+        alt: "MkayGraphics & Photography creative services in Ghana",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "MkayGraphix | Premium Frames, Photo Editing & Design Services in Ghana",
+    title: "MkayGraphics & Photography | Creative Studio in Ghana",
     description:
-      "Ghana's premier destination for custom framing, photo editing, printing services, photobooks, and graphic design.",
+      "Photography, custom framing, photo editing, printing, photobooks, and graphic design from one creative studio in Ghana.",
     images: ["/images/og-image.svg"],
     creator: "@MkayGraphix",
   },
@@ -114,7 +118,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="apple-touch-icon" href="/images/favicon.svg" />
 
         <link rel="manifest" href="/manifest.json" />
-        <link rel="alternate" type="application/rss+xml" title="MkayGraphix RSS Feed" href="/feed.xml" />
+        <link rel="alternate" type="application/rss+xml" title="MkayGraphics RSS Feed" href="/feed.xml" />
 
         {/* Organization Structured Data */}
         <script
@@ -123,9 +127,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              name: "MkayGraphix",
+              name: "MkayGraphics",
+              alternateName: "MkayGraphics & Photography",
               description:
-                "Ghana's premier destination for custom framing, photo editing, printing services, photobooks, and graphic design.",
+                "Ghana's creative destination for photography, custom framing, photo editing, printing services, photobooks, and graphic design.",
               url: BASE_URL,
               logo: `${BASE_URL}/images/logo2.jpg`,
               image: `${BASE_URL}/images/og-image.svg`,
@@ -158,8 +163,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
-              name: "MkayGraphix",
-              description: "Premium custom framing, photo editing, and design services in Ghana",
+              name: "MkayGraphics",
+              alternateName: "MkayGraphics & Photography",
+              description: "Professional photography, custom framing, photo editing, printing, photobooks, and graphic design services in Ghana",
               url: BASE_URL,
               telephone: "+233-592-515-464",
               address: {
@@ -180,6 +186,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                 "Printing Services",
                 "Photobooks",
                 "Graphic Design",
+                "Photography",
               ],
             }),
           }}
@@ -195,7 +202,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               serviceType: "Creative Services",
               provider: {
                 "@type": "Organization",
-                name: "MkayGraphix",
+                name: "MkayGraphics",
               },
               areaServed: {
                 "@type": "Country",
@@ -238,6 +245,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
                     itemOffered: {
                       "@type": "Service",
                       name: "Graphic Design",
+                    },
+                  },
+                  {
+                    "@type": "Offer",
+                    itemOffered: {
+                      "@type": "Service",
+                      name: "Photography",
                     },
                   },
                 ],

@@ -44,7 +44,7 @@ export default function PhotobookImportancePage() {
                 <Clock className="h-4 w-4" />
                 5 min read
               </span>
-              <span>By MkayGraphix Team</span>
+              <span>By MkayGraphics Team</span>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function PhotobookImportancePage() {
         <div className="prose prose-lg max-w-none">
           <h2>Introduction</h2>
           <p>
-            In Ghana, family is everything. Yet so many precious moments exist only on phones, at risk of being lost forever when devices fail or get upgraded. A photobook changes that—transforming digital files into tangible family treasures that can be passed down through generations.
+            In Ghana, family is everything. Yet so many precious moments exist only on phones, at risk of being lost forever when devices fail or get upgraded. A photobook changes that by transforming digital files into tangible family treasures that can be passed down through generations.
           </p>
 
           <h2>Preserving Cultural Heritage</h2>
@@ -165,7 +165,7 @@ export default function PhotobookImportancePage() {
               <p className="font-semibold mb-2">Share this article</p>
               <div className="flex gap-3">
                 <a
-                  href="https://wa.me/?text=Why%20Every%20Ghanaian%20Family%20Needs%20a%20Photobook%20-%20MkayGraphix%20Blog"
+                  href="https://wa.me/?text=Why%20Every%20Ghanaian%20Family%20Needs%20a%20Photobook%20-%20MkayGraphics%20Blog"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-10 h-10 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-white transition-colors"

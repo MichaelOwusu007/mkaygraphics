@@ -55,6 +55,7 @@ const services = [
   "Printing Services",
   "Photobooks",
   "Graphic Design",
+  "Photography (Coming Soon)",
   "Brand Identity",
   "Other",
 ];
@@ -324,7 +325,7 @@ export default function ContactPage() {
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
-                  title="MkayGraphix Accra Location"
+                  title="MkayGraphics Accra Location"
                 />
               </div>
 
@@ -367,7 +368,7 @@ export default function ContactPage() {
               </div>
 
               <a
-                href="https://wa.me/233592515464?text=Hi%20MkayGraphix!%20I'd%20like%20to%20inquire%20about%20your%20services."
+                href="https://wa.me/233592515464?text=Hi%20MkayGraphics!%20I'd%20like%20to%20inquire%20about%20your%20services."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center justify-center gap-2 md:gap-3 w-full py-3 md:py-4 rounded-xl bg-green-500 hover:bg-green-600 text-white font-bold transition-colors"

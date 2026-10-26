@@ -81,7 +81,7 @@ export default function AboutPage() {
       <section className="relative h-[70vh] md:h-[80vh] overflow-hidden">
         <Image
           src="/images/banner.img1.jpg"
-          alt="About MkayGraphix"
+          alt="About MkayGraphics"
           fill
           className="object-cover"
           priority
@@ -91,7 +91,7 @@ export default function AboutPage() {
         <div className="container mx-auto px-4 -mt-8  relative h-full flex items-center justify-center">
           <div className="max-w-4xl mx-auto text-center">
             <Badge className="mb-6 bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-4 py-1">
-              About MkayGraphix
+              About MkayGraphics
             </Badge>
             <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white mb-4">
               We Frame, Edit & Design{" "}
@@ -101,7 +101,7 @@ export default function AboutPage() {
               for You
             </h1>
             <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-              Your premier destination for custom framing, photo editing, photobooks, and graphic design services in Ghana.
+              Your photography and creative studio for custom framing, photo editing, photobooks, and graphic design services in Ghana.
             </p>
           </div>
         </div>
@@ -138,10 +138,10 @@ export default function AboutPage() {
                 <span className="text-yellow-500">Ghana's Creative Partner</span>
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                Founded with passion by <span className="font-bold text-gray-900">Michael Nana Yaw Owusu Wiafe</span>, MkayGraphix began as a small framing business with a big dream: to help Ghanaians preserve their precious memories in beautiful, lasting ways.
+                Founded with passion by <span className="font-bold text-gray-900">Michael Nana Yaw Owusu Wiafe</span>, MkayGraphics began as a small framing business with a big dream: to help Ghanaians preserve their precious memories in beautiful, lasting ways.
               </p>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                What started in 2020 as a one man operation has grown into a comprehensive creative studio. Today, we offer custom framing, professional photo editing, stunning photobooks, and graphic design services to individuals and businesses across Ghana.
+                What started in 2020 as a one man operation has grown into a comprehensive creative studio. Today, we offer custom framing, professional photo editing, stunning photobooks, and graphic design, with professional photography coming soon for individuals and businesses across Ghana.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Our team of skilled craftsmen and digital artists share a common goal: transforming your vision into reality. Whether it's a cherished family photo that needs framing, wedding photos awaiting enhancement, or a brand seeking its identity, we're here to make it happen.
@@ -157,7 +157,7 @@ export default function AboutPage() {
               <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-yellow-100 to-amber-50 flex items-center justify-center">
                 <div className="text-center p-8">
                   <Frame className="h-32 w-32 text-yellow-500 mx-auto mb-6" />
-                  <h3 className="text-2xl font-bold text-gray-900 mb-2">MkayGraphix</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-2">MkayGraphics</h3>
                   <p className="text-gray-600">Since 2019</p>
                 </div>
               </div>
@@ -189,7 +189,7 @@ export default function AboutPage() {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600 leading-relaxed">
-                To become Ghana's most trusted creative partner for framing, photo services, and design. We envision a future where every home has a MkayGraphix creation and every business has a brand that stands out.
+                To become Ghana's most trusted creative partner for framing, photo services, and design. We envision a future where every home has a MkayGraphics creation and every business has a brand that stands out.
               </p>
             </div>
           </div>

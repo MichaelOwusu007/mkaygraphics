@@ -1,24 +1,26 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Our Services | MkayGraphix - Frames, Photo Editing, Printing & Design",
+  title: "Photography & Creative Services in Ghana",
   description:
-    "Explore all MkayGraphix services: Custom Framing, Photo Editing, Printing Services (wedding cards, t-shirts, banners), Photobooks, and Graphic Design. Professional services for all of Ghana.",
+    "Explore photography and creative services from MkayGraphics & Photography, including custom framing, photo editing, printing, photobooks, and graphic design across Ghana.",
   keywords: [
-    "MkayGraphix services",
+    "MkayGraphics services",
     "custom framing services Ghana",
     "photo editing services",
     "printing services Ghana",
     "photobooks Ghana",
     "graphic design services",
+    "photography services Ghana",
+    "portrait photography Ghana",
   ],
   alternates: {
     canonical: "https://www.mkaygraphix.site/services",
   },
   openGraph: {
-    title: "Our Services | MkayGraphix",
+    title: "MkayGraphics & Photography | Creative Services Ghana",
     description:
-      "Explore all MkayGraphix services: Custom Framing, Photo Editing, Printing, Photobooks, and Graphic Design.",
+      "Explore photography and creative services from MkayGraphics & Photography, including framing, editing, printing, photobooks, and graphic design in Ghana.",
     images: ["/images/services.jpg"],
   },
 };

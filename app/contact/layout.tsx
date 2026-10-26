@@ -1,23 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us | MkayGraphix - Custom Frames, Photo Editing & Design Services",
+  title: "Contact Our Photography & Creative Studio in Ghana",
   description:
-    "Contact MkayGraphix for custom framing, photo editing, printing, and design services in Ghana. Reach us via phone (+233 592 515 464), WhatsApp, or email. We serve all of Ghana.",
+    "Contact MkayGraphics for photography, custom framing, photo editing, printing, photobooks, and graphic design services in Ghana. Reach us by phone, WhatsApp, or email.",
   keywords: [
-    "contact MkayGraphix",
-    "MkayGraphix phone number",
+    "contact MkayGraphics",
+    "MkayGraphics phone number",
     "custom framing Ghana",
     "photo editing contact",
     "printing services contact",
+    "photography services contact Ghana",
   ],
   alternates: {
     canonical: "https://www.mkaygraphix.site/contact",
   },
   openGraph: {
-    title: "Contact Us | MkayGraphix",
+    title: "Contact MkayGraphics & Photography",
     description:
-      "Contact MkayGraphix for custom framing, photo editing, printing, and design services in Ghana.",
+      "Contact MkayGraphics for photography, custom framing, photo editing, printing, photobooks, and graphic design in Ghana.",
     images: ["/images/contactbanner.jpg"],
   },
 };

@@ -29,13 +29,13 @@
   </g>
   
   <!-- Brand Name -->
-  <text x="600" y="400" font-family="Arial Black, sans-serif" font-size="72" font-weight="900" fill="#ffffff" text-anchor="middle">MkayGraphix</text>
+  <text x="600" y="400" font-family="Arial Black, sans-serif" font-size="60" font-weight="900" fill="#ffffff" text-anchor="middle">MkayGraphics &amp; Photography</text>
   
   <!-- Tagline -->
-  <text x="600" y="460" font-family="Arial, sans-serif" font-size="28" fill="#f59e0b" text-anchor="middle" letter-spacing="3">PREMIUM FRAMES &amp; DESIGN SERVICES</text>
+  <text x="600" y="460" font-family="Arial, sans-serif" font-size="28" fill="#f59e0b" text-anchor="middle" letter-spacing="3">PHOTOGRAPHY &amp; CREATIVE SERVICES</text>
   
   <!-- Services list -->
-  <text x="600" y="520" font-family="Arial, sans-serif" font-size="20" fill="#888888" text-anchor="middle">Custom Framing • Photo Editing • Printing • Photobooks • Graphic Design</text>
+  <text x="600" y="520" font-family="Arial, sans-serif" font-size="20" fill="#888888" text-anchor="middle">Photography • Framing • Photo Editing • Printing • Photobooks • Design</text>
   
   <!-- Location -->
   <text x="600" y="570" font-family="Arial, sans-serif" font-size="18" fill="#666666" text-anchor="middle">📍 Accra, Ghana</text>

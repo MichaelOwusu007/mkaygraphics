@@ -20,6 +20,7 @@ import {
   Printer,
   BookOpen,
   PenTool,
+  Camera,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -27,11 +28,11 @@ import { useCartStore } from "@/stores/cartStore";
 import { motion, AnimatePresence } from "framer-motion";
 
 const services = [
-  { href: "/services", label: "All Services", icon: Briefcase },
   { href: "/services/editing", label: "Photo Editing", icon: Palette },
   { href: "/services/printing", label: "Printing Services", icon: Printer },
   { href: "/services/photobook", label: "Photobooks", icon: BookOpen },
   { href: "/services/design", label: "Graphic Design", icon: PenTool },
+  { href: "/services/photography", label: "Photography", icon: Camera },
 ];
 
 const navLinks = [
@@ -50,6 +51,7 @@ export const Header = () => {
   const { toggleCart, getTotalItems } = useCartStore();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [isHydrated, setIsHydrated] = useState(false);
   const pathname = usePathname();
@@ -65,6 +67,7 @@ export const Header = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
     setServicesOpen(false);
+    setMobileServicesOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -110,10 +113,10 @@ export const Header = () => {
             </div>
             <div className="flex flex-col">
               <span className="text-lg md:text-xl font-bold text-gray-900 tracking-tight">
-                MkayGraphix
+                MkayGraphics
               </span>
               <span className="text-[10px] text-gray-500 hidden sm:block -mt-1">
-                Frame • Edit • Design
+                .shoot.edit.frame.design
               </span>
             </div>
           </Link>
@@ -291,7 +294,7 @@ export const Header = () => {
                         Explore
                       </p>
                       <p className="text-sm font-semibold text-gray-900">
-                        Browse MkayGraphix
+                        Browse MkayGraphics
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
@@ -329,6 +332,96 @@ export const Header = () => {
                     {navLinks.map((link, index) => {
                       const Icon = link.icon;
                       const active = isActive(link.href);
+
+                      if (link.href === "/services") {
+                        return (
+                          <motion.div
+                            key={link.href}
+                            initial={{ opacity: 0, y: 16 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: 10 }}
+                            transition={{ delay: 0.08 + index * 0.04, duration: 0.28 }}
+                            className={`overflow-hidden rounded-2xl border transition-all duration-300 ${
+                              active
+                                ? "border-yellow-200 bg-yellow-50/70 shadow-sm"
+                                : "border-transparent bg-gray-50/80"
+                            }`}
+                          >
+                            <button
+                              type="button"
+                              aria-expanded={mobileServicesOpen}
+                              aria-controls="mobile-services-menu"
+                              onClick={() => setMobileServicesOpen((open) => !open)}
+                              className={`group flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors ${
+                                active ? "text-yellow-700" : "text-gray-700 hover:bg-white"
+                              }`}
+                            >
+                              <div
+                                className={`flex h-11 w-11 items-center justify-center rounded-2xl transition-colors ${
+                                  active
+                                    ? "bg-yellow-500 text-white"
+                                    : "bg-white text-gray-700 group-hover:bg-black group-hover:text-white"
+                                }`}
+                              >
+                                <Icon className="h-5 w-5" />
+                              </div>
+                              <div className="flex-1">
+                                <p className="text-sm font-semibold">Services</p>
+                                <p className="text-xs text-gray-500">Explore everything we offer</p>
+                              </div>
+                              <ChevronDown
+                                className={`h-5 w-5 text-gray-400 transition-transform duration-300 ${
+                                  mobileServicesOpen ? "rotate-180" : ""
+                                }`}
+                              />
+                            </button>
+
+                            <AnimatePresence initial={false}>
+                              {mobileServicesOpen && (
+                                <motion.div
+                                  id="mobile-services-menu"
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: "auto", opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.25 }}
+                                  className="overflow-hidden"
+                                >
+                                  <div className="space-y-1 border-t border-black/5 px-3 pb-3 pt-2">
+                                    {services.map((service) => {
+                                      const ServiceIcon = service.icon;
+                                      const serviceActive = pathname.startsWith(service.href);
+
+                                      return (
+                                        <Link
+                                          key={service.href}
+                                          href={service.href}
+                                          className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm transition-colors ${
+                                            serviceActive
+                                              ? "bg-black text-white"
+                                              : "text-gray-600 hover:bg-white hover:text-gray-950"
+                                          }`}
+                                        >
+                                          <span
+                                            className={`flex h-8 w-8 items-center justify-center rounded-lg ${
+                                              serviceActive
+                                                ? "bg-white/15 text-yellow-300"
+                                                : "bg-white text-yellow-600 shadow-sm"
+                                            }`}
+                                          >
+                                            <ServiceIcon className="h-4 w-4" />
+                                          </span>
+                                          <span className="font-medium">{service.label}</span>
+                                          <span className="ml-auto text-base opacity-50">→</span>
+                                        </Link>
+                                      );
+                                    })}
+                                  </div>
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </motion.div>
+                        );
+                      }
 
                       return (
                         <motion.div

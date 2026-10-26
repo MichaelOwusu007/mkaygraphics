@@ -18,18 +18,18 @@ const Page: React.FC = () => {
   const sections = [
     {
       title: "Digital Advertisement",
-      text: `Elevate your brand presence with our digital advertisement services at MkayGraphix. Our team of experienced designers ensures attention-grabbing visuals that leave a lasting impression on your target audience. Take your marketing efforts to the next level with MkayGraphix.`,
+      text: `Elevate your brand presence with our digital advertisement services at MkayGraphics. Our team of experienced designers ensures attention-grabbing visuals that leave a lasting impression on your target audience. Take your marketing efforts to the next level with MkayGraphics.`,
       img: "/images/portfolio1.jpg",
     },
     {
       title: "Flyers & Posters",
-      text: `Transform your messaging into captivating visuals with our flyer and poster design services at MkayGraphix. We specialize in creating eye-catching promotional materials that effectively communicate your message. Our expert designers focus on delivering designs that stand out and leave a lasting impression.`,
+      text: `Transform your messaging into captivating visuals with our flyer and poster design services at MkayGraphics. We specialize in creating eye-catching promotional materials that effectively communicate your message. Our expert designers focus on delivering designs that stand out and leave a lasting impression.`,
       img: "/images/design1.jpg",
       reverse: true,
     },
     {
       title: "Logo Designs",
-      text: `We design a stunning Logo that actually designs, brands, and builds your business. We&apos;ve got you covered for all your logo design works and indeed we are only a few clicks away. Trust MkayGraphix to give your brand a distinctive and impactful visual representation.`,
+      text: `We design a stunning Logo that actually designs, brands, and builds your business. We&apos;ve got you covered for all your logo design works and indeed we are only a few clicks away. Trust MkayGraphics to give your brand a distinctive and impactful visual representation.`,
       img: "/images/logo2.jpg",
     },
     {
@@ -63,7 +63,7 @@ const Page: React.FC = () => {
         {/* Intro */}
         <div className="my-8 lg:px-20 text-lg leading-8">
           <p>
-            Embark on a visual journey with MkayGraphix, your go-to destination
+            Embark on a visual journey with MkayGraphics, your go-to destination
             for professional graphic design that seamlessly blends quality and
             cost-effectiveness. Since 2020, we&apos;ve upheld reasonable and
             steadfast pricing, ensuring you receive the best value for your

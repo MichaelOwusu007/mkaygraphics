@@ -2,24 +2,25 @@ import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
-  title: "Blog | MkayGraphix - Creative Tips, Framing Guides & Printing Insights",
+  title: "Photography & Creative Blog in Ghana",
   description:
-    "Read the MkayGraphix blog for framing guides, photo editing tips, printing ideas, photobook inspiration, and design insights for clients in Ghana.",
+    "Read the MkayGraphics blog for photography inspiration, framing guides, photo editing tips, printing ideas, photobooks, and design insights in Ghana.",
   keywords: [
-    "MkayGraphix blog",
+    "MkayGraphics blog",
     "framing tips Ghana",
     "photo editing blog",
     "printing ideas Ghana",
     "photobook inspiration",
     "graphic design insights Ghana",
+    "photography blog Ghana",
   ],
   alternates: {
     canonical: "https://www.mkaygraphix.site/blog",
   },
   openGraph: {
-    title: "MkayGraphix Blog",
+    title: "MkayGraphics & Photography | Creative Blog Ghana",
     description:
-      "Creative tips, framing guides, printing ideas, photobook inspiration, and design insights from MkayGraphix.",
+      "Photography inspiration, creative tips, framing guides, printing ideas, photobooks, and design insights from MkayGraphics.",
     images: ["/images/blog.png"],
   },
 };

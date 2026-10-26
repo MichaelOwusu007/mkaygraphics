@@ -35,8 +35,8 @@ const faqCategories = [
     icon: HelpCircle,
     questions: [
       {
-        q: "What services does MkayGraphix offer?",
-        a: "We offer a wide range of creative services including custom framing, photo editing, printing services (wedding cards, t-shirts, banners), photobooks, and graphic design. All services are available to customers across Ghana.",
+        q: "What services does MkayGraphics offer?",
+        a: "We offer photography, custom framing, photo editing, printing services (wedding cards, t-shirts, banners), photobooks, and graphic design. Photography bookings are coming soon, while our other services are available to customers across Ghana.",
       },
       {
         q: "Where are you located?",
@@ -47,7 +47,7 @@ const faqCategories = [
         a: "We operate Monday to Friday from 9:00 AM to 6:00 PM, and Saturday from 10:00 AM to 4:00 PM. Sundays are by appointment only.",
       },
       {
-        q: "How can I contact MkayGraphix?",
+        q: "How can I contact MkayGraphics?",
         a: "You can reach us via WhatsApp at +233 592 515 464, email at mkaygraphix@gmail.com, or by filling out the contact form on our website.",
       },
     ],
@@ -451,7 +451,7 @@ export default function SupportPage() {
 
             <div className="mt-10">
               <a
-                href="https://wa.me/233592515464?text=Hi!%20I%20need%20help%20with%20my%20MkayGraphix%20project."
+                href="https://wa.me/233592515464?text=Hi!%20I%20need%20help%20with%20my%20MkayGraphics%20project."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-green-500 hover:bg-green-600 text-white font-bold text-lg transition-colors"
