@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Printing Services Ghana | Wedding Cards, T-Shirts, Banners & More",
+  title: "Professional Printing Services in Ghana",
   description:
-    "Premium printing services in Ghana. Wedding cards, custom t-shirts, banners, business cards, flyers, and more. High quality prints with fast turnaround. Same-day delivery available.",
+    "Professional printing services in Ghana for wedding stationery, custom apparel, banners, business materials, flyers, posters, labels, gifts, certificates, books, and photo prints.",
   keywords: [
     "printing services Ghana",
     "wedding cards printing Ghana",
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Printing Services | MkayGraphics & Photography",
     description:
-      "Premium printing services in Ghana. Wedding cards, t-shirts, banners, and more.",
-    images: ["/images/printing.jpg"],
+      "Explore professional printing for events, businesses, brands, gifts, apparel, publications, and photography.",
+    images: ["/images/printing-studio-hero.png"],
   },
 };
 

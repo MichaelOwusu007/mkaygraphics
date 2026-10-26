@@ -670,7 +670,7 @@ export const editingServices: EditingService[] = [
     title: 'Premium Creative Editing',
     description: 'Complete artistic transformation for commercial and creative projects',
     price: 80,
-    image: '/images/iedit.jpg',
+    image: '/images/shop2.jpg',
     category: 'premium',
     turnaroundTime: '2 days',
     features: [

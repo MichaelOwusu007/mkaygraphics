@@ -1,638 +1,449 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import { useState } from 'react';
 import Image from 'next/image';
+import { toast } from 'sonner';
+import type { LucideIcon } from 'lucide-react';
+import {
+  ArrowRight,
+  BookOpen,
+  BriefcaseBusiness,
+  Check,
+  Clock3,
+  FileText,
+  Gift,
+  Heart,
+  Image as ImageIcon,
+  Layers3,
+  Mail,
+  MapPin,
+  MessageCircle,
+  PackageCheck,
+  Palette,
+  PanelTop,
+  Phone,
+  Printer,
+  Send,
+  Shirt,
+  Sparkles,
+  Sticker,
+  Truck,
+} from 'lucide-react';
+
+import Footer from '@/components/headers/Footer';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
 } from '@/components/ui/sheet';
-import {
-  ArrowRight,
-  Check,
-  Clock,
-  MapPin,
-  Phone,
-  Mail,
-  Send,
-  Star,
-  Printer,
-  Shirt,
-  Image as ImageIcon,
-  Gift,
-  Award,
-  Heart,
-  Palette,
-  Briefcase,
-  PartyPopper,
-  MessageCircle,
-} from 'lucide-react';
-import { toast } from 'sonner';
-import Footer from '@/components/headers/Footer';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
 
 interface PrintService {
   id: string;
   title: string;
-  description: string;
-  icon: React.ElementType;
-  image: string;
-  features: string[];
-  basePrice: string;
   category: string;
-  popular?: boolean;
+  description: string;
+  image: string;
+  icon: LucideIcon;
+  highlights: string[];
 }
 
 const printServices: PrintService[] = [
   {
-    id: 'wedding-cards',
-    title: 'Wedding Cards & Invitations',
-    description: 'Elegant wedding invitations, save-the-dates, and ceremony programs crafted with premium materials.',
-    icon: Heart,
-    image: '/images/blog-wedding.jpg',
-    features: ['Premium cardstock', 'Custom designs', 'Full color printing', 'Matching envelopes', 'RSVP cards included'],
-    basePrice: 'GH₵ 100',
-    category: 'Wedding',
-    popular: true,
-  },
-  {
-    id: 'branded-shirts',
-    title: 'Custom Branded T-Shirts',
-    description: 'High quality printed T-shirts for events, corporate branding, or personal use.',
-    icon: Shirt,
-    image: '/images/artwork.jpg',
-    features: ['Quality cotton fabric', 'Screen printing', 'Full color options', 'Custom sizes', 'Bulk discounts available'],
-    basePrice: 'GH₵ 80',
-    category: 'Apparel',
-  },
-  {
-    id: 'rollup-banners',
-    title: 'Roll-Up Banners',
-    description: 'Professional retractable banners for events, trade shows, and promotional displays.',
-    icon: ImageIcon,
-    image: '/images/banner.img1.jpg',
-    features: ['Weather-resistant vinyl', 'Chrome stand included', 'High-resolution print', 'Multiple sizes', 'Easy setup'],
-    basePrice: 'GH₵ 250',
-    category: 'Signage',
-    popular: true,
-  },
-  {
-    id: 'business-cards',
-    title: 'Business Cards',
-    description: 'Premium business cards that make a lasting impression.',
-    icon: Briefcase,
-    image: '/images/blog-branding.jpg',
-    features: ['Premium cardstock', 'Matte or glossy finish', 'Full color', 'Standard or custom size', 'Rounded corners option'],
-    basePrice: 'GH₵ 50',
-    category: 'Business',
-  },
-  {
-    id: 'flyers',
-    title: 'Flyers & Brochures',
-    description: 'Eye-catching promotional flyers and informative brochures.',
-    icon: Palette,
-    image: '/images/FLYER.jpg',
-    features: ['Various paper weights', 'Single or double-sided', 'Full color', 'Bulk pricing', 'Custom sizes available'],
-    basePrice: 'GH₵ 50',
-    category: 'Marketing',
-  },
-  {
-    id: 'event-signage',
-    title: 'Event Signage & Posters',
-    description: 'Large format posters and event signage for maximum visibility.',
-    icon: PartyPopper,
-    image: '/images/portfolioposter.jpg',
-    features: ['Large format printing', 'Weatherproof options', 'Custom sizing', 'High quality resolution', 'Quick turnaround'],
-    basePrice: 'GH₵ 120',
+    id: 'wedding-event-stationery',
+    title: 'Wedding & Event Stationery',
     category: 'Events',
+    description: 'Thoughtfully printed stationery that gives weddings, celebrations, and special gatherings a polished identity.',
+    image: '/images/printing-wedding-stationery.png',
+    icon: Heart,
+    highlights: ['Invitations and save-the-dates', 'Programs and menus', 'Thank-you cards and tags'],
   },
   {
-    id: 'gift-items',
-    title: 'Custom Gift Items',
-    description: 'Personalized mugs, keychains, and other gift items with your designs.',
-    icon: Gift,
-    image: '/images/blog.png',
-    features: ['Photo printing', 'Custom text', 'Premium quality', 'Gift packaging', 'Bulk orders welcome'],
-    basePrice: 'GH₵ 60',
-    category: 'Gifts',
+    id: 'tshirt-apparel-printing',
+    title: 'T-Shirt & Apparel Printing',
+    category: 'Apparel',
+    description: 'Custom apparel for teams, brands, schools, campaigns, celebrations, and everyday personal expression.',
+    image: '/images/tshirt-printing-studio.png',
+    icon: Shirt,
+    highlights: ['T-shirts and branded apparel', 'Single or multicolor artwork', 'Personal and bulk quantities'],
   },
   {
-    id: 'certificates',
-    title: 'Certificates & Awards',
-    description: 'Professional certificates, awards, and commemorative documents.',
-    icon: Award,
-    image: '/images/citation.jpg',
-    features: ['Premium parchment', 'Gold/silver foil options', 'Custom design', 'Various sizes', 'Elegant presentation'],
-    basePrice: 'GH₵ 70',
-    category: 'Professional',
+    id: 'banners-large-format',
+    title: 'Banners & Large Format',
+    category: 'Display',
+    description: 'High-impact display printing for promotions, launches, conferences, shops, and outdoor events.',
+    image: '/images/printing-banners-large-format.png',
+    icon: PanelTop,
+    highlights: ['Roll-up and event banners', 'Indoor and outdoor formats', 'Custom dimensions available'],
   },
   {
-    id: 'photo-prints',
-    title: 'Photo Prints & Canvas',
-    description: 'High-quality photo prints and gallery-wrapped canvas prints.',
+    id: 'business-stationery',
+    title: 'Business & Office Stationery',
+    category: 'Business',
+    description: 'Professional printed materials that keep your business consistent, organized, and ready to make an impression.',
+    image: '/images/printing-business-stationery.png',
+    icon: BriefcaseBusiness,
+    highlights: ['Business and appointment cards', 'Letterheads and envelopes', 'Invoices, receipts, and forms'],
+  },
+  {
+    id: 'flyers-brochures',
+    title: 'Flyers, Brochures & Menus',
+    category: 'Marketing',
+    description: 'Clear, vibrant marketing materials designed to communicate offers, information, and ideas beautifully.',
+    image: '/images/printing-flyers-brochures.png',
+    icon: FileText,
+    highlights: ['Single and folded formats', 'Multiple paper and finish options', 'Short-run and bulk printing'],
+  },
+  {
+    id: 'posters-event-signage',
+    title: 'Posters & Event Signage',
+    category: 'Display',
+    description: 'Bold visual pieces for announcements, directions, campaigns, stage areas, and branded environments.',
+    image: '/images/printing-posters-signage.png',
     icon: ImageIcon,
-    image: '/images/portfolio1.jpg',
-    features: ['Lab-quality printing', 'Multiple sizes', 'Matte or glossy', 'Canvas stretching', 'Framing options'],
-    basePrice: 'GH₵ 25',
+    highlights: ['Promotional posters', 'Directional and welcome signs', 'Mounted display options'],
+  },
+  {
+    id: 'stickers-labels-packaging',
+    title: 'Stickers, Labels & Packaging',
+    category: 'Branding',
+    description: 'Practical branded details that help products, gifts, parcels, and customer orders feel complete.',
+    image: '/images/printing-stickers-packaging.png',
+    icon: Sticker,
+    highlights: ['Product and packaging labels', 'Custom stickers and seals', 'Tags and branded inserts'],
+  },
+  {
+    id: 'books-booklets-programs',
+    title: 'Books, Booklets & Programs',
+    category: 'Publications',
+    description: 'Neatly produced multi-page materials for events, schools, organizations, portfolios, and presentations.',
+    image: '/images/printing-books-booklets.png',
+    icon: BookOpen,
+    highlights: ['Event and funeral programs', 'Catalogues and company profiles', 'Booklets and manuals'],
+  },
+  {
+    id: 'personalized-gifts',
+    title: 'Personalized Gifts & Souvenirs',
+    category: 'Gifts',
+    description: 'Meaningful custom pieces created for birthdays, appreciation gifts, milestones, and branded giveaways.',
+    image: '/images/printing-personalized-gifts.png',
+    icon: Gift,
+    highlights: ['Mugs and keepsakes', 'Event and corporate souvenirs', 'Photo and name personalization'],
+  },
+  {
+    id: 'certificates-awards',
+    title: 'Certificates & Awards',
+    category: 'Professional',
+    description: 'Clean, formal documents for recognition, participation, achievement, training, and institutional use.',
+    image: '/images/printing-certificates-awards.png',
+    icon: Sparkles,
+    highlights: ['Certificates and citations', 'Special paper and finish options', 'Custom layouts and sizing'],
+  },
+  {
+    id: 'photo-canvas-prints',
+    title: 'Photo & Canvas Prints',
     category: 'Photography',
+    description: 'Turn portraits, artwork, and meaningful photographs into display-ready prints for homes and workspaces.',
+    image: '/images/printing-photo-canvas.png',
+    icon: ImageIcon,
+    highlights: ['Photo print sizes', 'Canvas print options', 'Framing available separately'],
   },
 ];
 
-const categories = ['All', 'Wedding', 'Apparel', 'Signage', 'Business', 'Marketing', 'Events', 'Gifts', 'Professional', 'Photography'];
+const serviceBenefits = [
+  { icon: Layers3, title: 'Materials that fit the job', description: 'Paper, fabric, vinyl, card, and finish options are matched to how your print will be used.' },
+  { icon: Palette, title: 'Design support available', description: 'Bring finished artwork or let our creative team help prepare a print-ready design.' },
+  { icon: PackageCheck, title: 'Careful finishing', description: 'Trimming, folding, mounting, binding, and packaging are considered as part of the final result.' },
+  { icon: Truck, title: 'Pickup or delivery', description: 'Choose the fulfilment option that works for your location, schedule, and order size.' },
+];
+
+const emptyForm = {
+  name: '',
+  email: '',
+  phone: '',
+  service: '',
+  quantity: '',
+  description: '',
+  deliveryDate: '',
+  address: '',
+  message: '',
+};
 
 export default function PrintingPage() {
-  const [selectedService, setSelectedService] = useState<PrintService | null>(null);
-  const [showForm, setShowForm] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('All');
+  const [quoteOpen, setQuoteOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState(emptyForm);
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    service: '',
-    quantity: '',
-    description: '',
-    deliveryDate: '',
-    address: '',
-    message: '',
-  });
-
-  useEffect(() => {
-    if (selectedService) {
-      setFormData((prev) => ({
-        ...prev,
-        service: selectedService.title,
-      }));
-    }
-  }, [selectedService]);
-
-  const filteredServices = selectedCategory === 'All'
-    ? printServices
-    : printServices.filter((s) => s.category === selectedCategory);
-
-  const handleBookService = (service: PrintService) => {
-    setSelectedService(service);
-    setShowForm(true);
+  const openQuoteForm = (service = '') => {
+    setFormData((current) => ({ ...current, service }));
+    setQuoteOpen(true);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const res = await fetch('/api/email/printing', {
+      const response = await fetch('/api/email/printing', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          serviceType: 'Printing Services',
-        }),
+        body: JSON.stringify({ ...formData, serviceType: 'Printing Services' }),
       });
 
-      if (res.ok) {
-        toast.success('Booking submitted! We\'ll contact you shortly.');
-        setShowForm(false);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          service: '',
-          quantity: '',
-          description: '',
-          deliveryDate: '',
-          address: '',
-          message: '',
-        });
-      } else {
-        toast.error('Failed to submit. Please try again.');
-      }
+      if (!response.ok) throw new Error('Unable to submit quote request');
+
+      toast.success('Quote request sent. We will contact you shortly.');
+      setQuoteOpen(false);
+      setFormData(emptyForm);
     } catch {
-      toast.error('Something went wrong. Please try again.');
+      toast.error('Your request could not be sent. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <header
-        className="relative min-h-[450px] md:min-h-[500px] lg:min-h-[600px] flex items-center justify-center text-center overflow-hidden"
-        style={{
-          backgroundImage: "linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('/images/banner.img3.jpg')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundColor: '#1a1a1a',
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/10 via-transparent to-amber-500/10 animate-pulse" />
-        
-        <div className="relative z-10 px-4 max-w-5xl mx-auto">
-          <Badge className="mb-4 md:mb-6 bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-3 md:px-4 py-1 text-xs md:text-sm">
-            <Printer className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-            Premium Printing Services
-          </Badge>
-          <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white mb-4 md:mb-6 leading-tight">
-            Print Your
-            <span className="block bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-              Dreams Into Reality
-            </span>
-          </h1>
-          <p className="text-gray-300 text-sm md:text-lg lg:text-xl max-w-2xl mx-auto mb-6 md:mb-8 px-4">
-            From stunning wedding cards to custom apparel, banners, and more. 
-            High quality prints tailored for Ghanaian celebrations and businesses.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center px-4">
-            <Button
-              size="sm"
-              className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold px-6 md:px-8 h-11 md:h-14 text-sm md:text-lg shadow-lg shadow-yellow-500/30"
-              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              Explore Services
-              <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
-            </Button>
-            <Button
-              size="sm"
-              variant="outline"
-              className="border-2 border-white/30 text-black hover:bg-white hover:text-black px-6 md:px-8 h-11 md:h-14 text-sm md:text-lg"
-              asChild
-            >
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+    <div className="min-h-screen bg-white text-zinc-950">
+      <header className="relative isolate flex min-h-[700px] h-[86svh] max-h-[900px] items-center overflow-hidden bg-zinc-950">
+        <Image
+          src="/images/printing-studio-hero.png"
+          alt="Professional printing studio with large-format printers and finished print materials"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[68%_center]"
+        />
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/5" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/20" />
+
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.26em] text-yellow-300 sm:text-sm">Professional Printing Services</p>
+            <h1 className="text-5xl font-bold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-8xl">
+              Print it.
+              <span className="block bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">Make it real.</span>
+            </h1>
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-zinc-200 sm:text-lg lg:text-xl">
+              From everyday business materials to statement event pieces, we turn your ideas into print with the right format, finish, and attention to detail.
+            </p>
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+              <Button type="button" size="lg" onClick={() => openQuoteForm()} className="h-12 rounded-full bg-yellow-400 px-7 font-bold text-black hover:bg-yellow-300">
+                Request a Quote <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button size="lg" variant="outline" className="h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-black" asChild>
+                <a href="#printing-services">Explore Printing</a>
+              </Button>
+            </div>
+            <p className="mt-5 max-w-xl text-sm leading-relaxed text-zinc-400">Pricing is prepared for your exact quantity, size, material, finish, and timeline.</p>
           </div>
         </div>
-
-        {/* <div className="absolute bottom-0 left-0 right-0 h-20 md:h-32 bg-gradient-to-t from-white to-transparent" /> */}
       </header>
 
-      {/* Stats Section */}
-      <section className="bg-gray-900 py-8 md:py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 text-center">
-            {[
-              { number: '150+', label: 'Projects' },
-              { number: '100%', label: 'Satisfaction' },
-              { number: '24hr', label: 'Fast Turnaround' },
-              { number: '100+', label: 'Happy Clients' },
-            ].map((stat, i) => (
-              <div key={i} className="space-y-1 md:space-y-2">
-                <p className="text-2xl md:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
-                  {stat.number}
-                </p>
-                <p className="text-gray-400 text-xs md:text-sm">{stat.label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services Grid */}
-      <section id="services" className="py-12 md:py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-8 md:mb-12">
-            <Badge className="mb-3 md:mb-4 bg-black text-white px-3 md:px-4 py-1 text-xs md:text-sm">Our Services</Badge>
-            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold mb-3 md:mb-4 px-2">
-              Everything You Need,
-              <span className="bg-gradient-to-r from-yellow-600 to-amber-500 bg-clip-text text-transparent"> Printed Perfectly</span>
-            </h2>
-            <p className="text-gray-500 max-w-2xl mx-auto text-sm md:text-base px-4">
-              Browse our comprehensive range of printing services designed for Ghanaian events, 
-              businesses, and personal celebrations.
-            </p>
-          </div>
-
-          {/* Category Filter */}
-          <div className="flex flex-wrap justify-center gap-1.5 md:gap-2 mb-8 md:mb-12 px-2">
-            {categories.map((cat) => (
-              <Button
-                key={cat}
-                variant={selectedCategory === cat ? 'default' : 'outline'}
-                onClick={() => setSelectedCategory(cat)}
-                className={`rounded-full px-2 md:px-4 text-xs md:text-sm ${
-                  selectedCategory === cat
-                    ? 'bg-black text-white'
-                    : 'border-gray-300 hover:border-black'
-                }`}
-              >
-                {cat}
-              </Button>
-            ))}
-          </div>
-
-          {/* Services Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
-            {filteredServices.map((service) => (
-              <div key={service.id} className="group relative">
-                <Card
-                  className="overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-1 md:hover:-translate-y-2 h-full"
-                >
-                  <div className=" -mt-6 relative">
-                    <div className="relative h-36 md:h-48 overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800">
-                      <Image
-                        src={service.image}
-                        alt={service.title}
-                        fill
-                        sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/10" />
-                      <div className="absolute left-3 top-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-black/45 text-yellow-300 backdrop-blur-sm ring-1 ring-white/15 transition-all duration-300 group-hover:scale-105 group-hover:bg-black/55">
-                        <service.icon className="h-5 w-5 md:h-6 md:w-6" />
-                      </div>
-                      <a
-                        href={`https://wa.me/233592515464?text=Hi, I'm interested in ${encodeURIComponent(service.title)} printing service`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="absolute top-2 right-2 sm:top-3 sm:right-3 bg-green-500 hover:bg-green-600 text-white p-1.5 sm:p-2 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-10"
-                        title="Chat on WhatsApp"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        <MessageCircle className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
-                      </a>
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 md:p-4">
-                        <Badge variant="outline" className="border-yellow-400/50 text-yellow-400 text-xs">
-                          {service.category}
-                        </Badge>
-                      </div>
-                    </div>
-                    {service.popular && (
-                      <div className="absolute top-2 left-16 sm:top-3 sm:left-16 z-10">
-                        <Badge className="bg-yellow-500 text-black text-xs">
-                          <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 mr-0.5" />
-                          Popular
-                        </Badge>
-                      </div>
-                    )}
-                  </div>
-
-                  <CardContent className="p-4 md:p-6 space-y-3 md:space-y-4 flex-1 flex flex-col">
-                    <h3 className="text-base md:text-xl font-bold group-hover:text-yellow-600 transition-colors">
-                      {service.title}
-                    </h3>
-                    <p className="text-gray-500 text-xs md:text-sm line-clamp-2">{service.description}</p>
-
-                    <ul className="space-y-1.5 md:space-y-2 flex-1">
-                      {service.features.slice(0, 3).map((feature, i) => (
-                        <li key={i} className="flex items-center gap-2 text-xs md:text-sm text-gray-600">
-                          <Check className="w-3 h-3 md:w-4 md:h-4 text-green-500 flex-shrink-0" />
-                          <span className="truncate">{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
-
-                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 pt-3 md:pt-4 border-t">
-                      <div>
-                        <span className="text-xs md:text-sm text-gray-400">From</span>
-                        <p className="text-lg md:text-2xl font-bold text-gray-900">{service.basePrice}</p>
-                      </div>
-                      <Button
-                        size="sm"
-                        onClick={() => handleBookService(service)}
-                        className="bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 text-white w-full sm:w-auto text-xs md:text-sm"
-                      >
-                        Book Now
-                        <ArrowRight className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" />
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="py-12 md:py-20 bg-white">
-        <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-8 md:gap-16 items-start lg:items-center">
-            <div className="space-y-6 md:space-y-8">
-              <div className="space-y-3 md:space-y-4">
-                <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/30 text-xs md:text-sm">Why Choose Us</Badge>
-                <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold">
-                  Quality Prints,
-                  <span className="block text-gray-400">Delivered Right</span>
-                </h2>
-              </div>
-              <div className="space-y-4 md:space-y-6">
-                {[
-                  { title: 'Premium Materials', desc: 'High quality papers, inks, and materials that ensure your prints last.', icon: Award },
-                  { title: 'Quick Turnaround', desc: 'Same-day and next-day printing for urgent orders.', icon: Clock },
-                  { title: 'Custom Designs', desc: 'Our team can help design your prints or work with your artwork.', icon: Palette },
-                  { title: 'Nationwide Delivery', desc: 'We deliver to all regions in Ghana, safely packaged and on time.', icon: MapPin },
-                ].map((item, i) => (
-                  <div key={i} className="flex gap-3 md:gap-4 group">
-                    <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl bg-yellow-500/10 flex items-center justify-center shrink-0 group-hover:bg-yellow-500 transition-colors">
-                      <item.icon className="h-5 w-5 md:h-7 md:w-7 text-yellow-600 group-hover:text-white transition-colors" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-base md:text-lg mb-1">{item.title}</h3>
-                      <p className="text-gray-500 text-sm md:text-base">{item.desc}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+      <section className="border-b border-zinc-200 bg-white">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 divide-x divide-y divide-zinc-200 px-4 sm:px-6 md:grid-cols-4 md:divide-y-0 lg:px-8">
+          {[
+            { icon: Palette, label: 'Custom designs' },
+            { icon: Layers3, label: 'Multiple finishes' },
+            { icon: Clock3, label: 'Flexible timelines' },
+            { icon: Truck, label: 'Pickup or delivery' },
+          ].map((item) => (
+            <div key={item.label} className="flex items-center justify-center gap-3 px-3 py-5 text-center sm:py-6">
+              <item.icon className="h-5 w-5 shrink-0 text-yellow-600" />
+              <span className="text-xs font-semibold text-zinc-700 sm:text-sm">{item.label}</span>
             </div>
+          ))}
+        </div>
+      </section>
 
-            <div className="relative mt-8 lg:mt-0">
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-2xl md:rounded-3xl p-5 md:p-8 text-white space-y-4 md:space-y-6">
-                <h3 className="text-xl md:text-2xl font-bold">Contact Us Today</h3>
-                <p className="text-gray-300 text-sm md:text-base">
-                  Ready to start your print project? Get in touch and let&apos;s make something amazing together.
-                </p>
-                <div className="space-y-3 md:space-y-4">
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base">0592515464</span>
+      <section id="printing-services" className="scroll-mt-20 bg-zinc-50 py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="grid gap-8 lg:grid-cols-[1fr_0.72fr] lg:items-end">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.22em] text-yellow-600">What we print</p>
+              <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">Print solutions for every kind of idea.</h2>
+            </div>
+            <div className="rounded-2xl border border-yellow-200 bg-yellow-50 p-5 text-sm leading-relaxed text-zinc-700 sm:p-6">
+              <p className="font-semibold text-zinc-950">Every project is quoted individually.</p>
+              <p className="mt-2">Tell us what you need and we will recommend the right material, production method, finish, and quantity for it.</p>
+            </div>
+          </div>
+
+          <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {printServices.map((service) => (
+              <article key={service.id} className="group flex h-full flex-col overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm transition duration-500 hover:-translate-y-1 hover:border-zinc-300 hover:shadow-xl">
+                <div className="relative aspect-[4/3] overflow-hidden bg-zinc-900">
+                  <Image src={service.image} alt={service.title} fill sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw" className="object-cover transition duration-700 group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/5 to-transparent" />
+                  <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-2xl border border-white/15 bg-black/45 text-yellow-300 backdrop-blur-md">
+                    <service.icon className="h-5 w-5" />
                   </div>
-                  <div className="flex items-center gap-3">
-                    <Mail className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base break-all">mkaygraphix@gmail.com</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <MapPin className="w-4 h-4 md:w-5 md:h-5 text-yellow-400" />
-                    <span className="text-sm md:text-base">Accra and Cape Coast, Ghana</span>
-                  </div>
+                  <span className="absolute bottom-4 left-4 rounded-full border border-white/15 bg-black/45 px-3 py-1 text-xs font-semibold text-white backdrop-blur-md">{service.category}</span>
                 </div>
-                 <Link href="/contact">
-                <Button
-                  size="sm"
-                  className="w-full bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold h-11 md:h-12 cursor-pointer ">
-                  Get a Free Quote
-                  <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
-                </Button>
-                </Link>
-              </div>
-            </div>
+
+                <div className="flex flex-1 flex-col p-6">
+                  <h3 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl">{service.title}</h3>
+                  <p className="mt-3 text-sm leading-relaxed text-zinc-600">{service.description}</p>
+                  <ul className="mt-5 space-y-2.5">
+                    {service.highlights.map((highlight) => (
+                      <li key={highlight} className="flex items-start gap-2.5 text-sm text-zinc-700">
+                        <Check className="mt-0.5 h-4 w-4 shrink-0 text-green-600" />
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                  <Button type="button" onClick={() => openQuoteForm(service.title)} className="mt-7 w-full rounded-full bg-zinc-950 text-white hover:bg-yellow-400 hover:text-black">
+                    Ask About This Service <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Booking Form Sidebar */}
-      <Sheet open={showForm} onOpenChange={setShowForm}>
-        <SheetContent side="left" className="w-full sm:max-w-lg overflow-y-auto p-4 md:p-6">
-          <SheetHeader className="space-y-3 md:space-y-4 mb-4 md:mb-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-yellow-500/20 flex items-center justify-center">
-                <Printer className="h-5 w-5 md:h-6 md:w-6 text-yellow-600" />
+      <section className="bg-white py-20 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-yellow-600">Built around your brief</p>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">The right print starts with the right questions.</h2>
+            <p className="mt-5 text-base leading-relaxed text-zinc-600 sm:text-lg">Size, quantity, material, finish, artwork, and deadline all shape a printing project. We review the details first, then recommend a practical way forward.</p>
+          </div>
+          <div className="mt-12 grid gap-5 md:grid-cols-3">
+            {[
+              { number: '01', title: 'Share your idea', description: 'Choose a service and tell us the quantity, dimensions, timeline, and what the print needs to achieve.' },
+              { number: '02', title: 'Confirm the details', description: 'We help you settle the material, finish, artwork requirements, production approach, and final quote.' },
+              { number: '03', title: 'Approve and print', description: 'Once the specification and artwork are approved, your project moves into production and finishing.' },
+            ].map((step) => (
+              <div key={step.number} className="rounded-3xl border border-zinc-200 bg-zinc-50 p-7 sm:p-8">
+                <span className="text-sm font-bold text-yellow-600">{step.number}</span>
+                <h3 className="mt-8 text-xl font-bold text-zinc-950">{step.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-zinc-600">{step.description}</p>
               </div>
-              <div>
-                <SheetTitle className="text-base md:text-lg">Book Service</SheetTitle>
-                <SheetDescription className="text-xs md:text-sm">
-                  {selectedService?.title}
-                </SheetDescription>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-zinc-950 py-20 text-white sm:py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:items-center lg:px-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.22em] text-yellow-300">Why MkayGraphics</p>
+            <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">More than ink on a surface.</h2>
+            <p className="mt-5 max-w-xl leading-relaxed text-zinc-400">We consider how your print should look, feel, travel, and perform so the finished piece makes sense for its real purpose.</p>
+            <Button type="button" size="lg" onClick={() => openQuoteForm()} className="mt-8 rounded-full bg-yellow-400 px-7 font-bold text-black hover:bg-yellow-300">
+              Tell Us What You Need <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {serviceBenefits.map((benefit) => (
+              <div key={benefit.title} className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-7">
+                <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black"><benefit.icon className="h-5 w-5" /></div>
+                <h3 className="mt-5 text-lg font-bold">{benefit.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-400">{benefit.description}</p>
               </div>
-            </div>
-          </SheetHeader>
+            ))}
+          </div>
+        </div>
+      </section>
 
-          <form onSubmit={handleSubmit} className="space-y-4 md:space-y-5">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="text-sm">Full Name *</Label>
-                <Input
-                  id="name"
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  required
-                  className="h-10 md:h-11 text-sm"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="phone" className="text-sm">Phone *</Label>
-                <Input
-                  id="phone"
-                  type="tel"
-                  placeholder="+233 XX XXX XXXX"
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  required
-                  className="h-10 md:h-11 text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm">Email *</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="your@email.com"
-                value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                required
-                className="h-10 md:h-11 text-sm"
-              />
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 md:gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="service" className="text-sm">Service</Label>
-                <Input
-                  id="service"
-                  value={formData.service}
-                  readOnly
-                  className="h-10 md:h-11 text-sm bg-gray-50"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="quantity" className="text-sm">Quantity *</Label>
-                <Input
-                  id="quantity"
-                  type="number"
-                  placeholder="e.g., 100"
-                  value={formData.quantity}
-                  onChange={(e) => setFormData({ ...formData, quantity: e.target.value })}
-                  required
-                  min="1"
-                  className="h-10 md:h-11 text-sm"
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="delivery" className="text-sm">Delivery Date</Label>
-              <Input
-                id="delivery"
-                type="date"
-                value={formData.deliveryDate}
-                onChange={(e) => setFormData({ ...formData, deliveryDate: e.target.value })}
-                className="h-10 md:h-11 text-sm"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="description" className="text-sm">Design Description *</Label>
-              <textarea
-                id="description"
-                placeholder="Describe your design requirements..."
-                rows={3}
-                value={formData.description}
-                onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                required
-                className="w-full px-3 md:px-4 py-2 md:py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none text-sm"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="address" className="text-sm">Delivery Address</Label>
-              <Input
-                id="address"
-                placeholder="Full delivery address"
-                value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="h-10 md:h-11 text-sm"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="message" className="text-sm">Additional Notes</Label>
-              <textarea
-                id="message"
-                placeholder="Any special instructions..."
-                rows={2}
-                value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-3 md:px-4 py-2 md:py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-yellow-500 resize-none text-sm"
-              />
-            </div>
-
-            <div className="pt-2 md:pt-4 space-y-2 md:space-y-3">
-              <Button
-                type="submit"
-                size="sm"
-                className="w-full bg-gradient-to-r from-gray-900 to-black hover:from-black hover:to-gray-900 h-10 md:h-12 text-sm"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  'Submitting...'
-                ) : (
-                  <>
-                    Submit Booking
-                    <Send className="ml-1 md:ml-2 h-3 w-3 md:h-4 md:w-4" />
-                  </>
-                )}
-              </Button>
-              <a
-                href={`https://wa.me/233592515464?text=Hi, I'm interested in ${selectedService?.title || 'printing services'}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 md:py-3 px-4 rounded-xl transition-colors text-sm"
-              >
-                <MessageCircle className="h-4 w-4 md:h-5 md:w-5" />
-                Chat on WhatsApp
+      <section className="bg-yellow-400 py-16 sm:py-20">
+        <div className="mx-auto flex max-w-7xl flex-col gap-8 px-4 sm:px-6 lg:flex-row lg:items-center lg:justify-between lg:px-8">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-zinc-700">Ready when you are</p>
+            <h2 className="mt-3 max-w-3xl text-3xl font-bold tracking-tight sm:text-5xl">Have a print project in mind?</h2>
+            <p className="mt-3 max-w-2xl text-zinc-700">Send the details and we will help you turn them into a clear print specification and quote.</p>
+          </div>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button type="button" size="lg" onClick={() => openQuoteForm()} className="rounded-full bg-zinc-950 px-7 font-bold text-white hover:bg-zinc-800">
+              Request a Quote <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+            <Button size="lg" variant="outline" className="rounded-full border-zinc-950 bg-transparent px-7 font-bold text-zinc-950 hover:bg-white" asChild>
+              <a href="https://wa.me/233592515464?text=Hello%20MkayGraphics%2C%20I%20would%20like%20to%20discuss%20a%20printing%20project." target="_blank" rel="noopener noreferrer">
+                <MessageCircle className="mr-2 h-4 w-4" /> WhatsApp
               </a>
-              <p className="text-xs text-center text-gray-500">
-                We&apos;ll contact you within 24 hours to confirm your order.
-              </p>
+            </Button>
+          </div>
+        </div>
+      </section>
+
+      <Sheet open={quoteOpen} onOpenChange={setQuoteOpen}>
+        <SheetContent side="left" className="w-full overflow-y-auto border-r-0 p-0 sm:max-w-2xl">
+          <div className="bg-zinc-950 px-6 py-7 text-white sm:px-8">
+            <SheetHeader className="p-0">
+              <div className="mb-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-yellow-400 text-black"><Printer className="h-5 w-5" /></div>
+              <SheetTitle className="text-2xl font-bold text-white sm:text-3xl">Request a printing quote</SheetTitle>
+              <SheetDescription className="max-w-xl text-zinc-400">Share the project details below. We will review the specification and contact you with the next steps.</SheetDescription>
+            </SheetHeader>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-5 px-6 pb-7 sm:px-8 sm:pb-8">
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="printing-name">Full name *</Label>
+                <Input id="printing-name" value={formData.name} onChange={(event) => setFormData({ ...formData, name: event.target.value })} placeholder="Your name" required />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="printing-phone">Phone number *</Label>
+                <Input id="printing-phone" type="tel" value={formData.phone} onChange={(event) => setFormData({ ...formData, phone: event.target.value })} placeholder="+233 XX XXX XXXX" required />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="printing-email">Email address *</Label>
+              <Input id="printing-email" type="email" value={formData.email} onChange={(event) => setFormData({ ...formData, email: event.target.value })} placeholder="you@example.com" required />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="printing-service">Printing service *</Label>
+                <select id="printing-service" value={formData.service} onChange={(event) => setFormData({ ...formData, service: event.target.value })} className="border-input h-10 w-full rounded-md border bg-transparent px-3 text-sm shadow-xs outline-none focus:border-zinc-950 focus:ring-2 focus:ring-zinc-950/10" required>
+                  <option value="">Choose a service</option>
+                  {printServices.map((service) => <option key={service.id} value={service.title}>{service.title}</option>)}
+                  <option value="Other printing request">Other printing request</option>
+                </select>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="printing-quantity">Estimated quantity *</Label>
+                <Input id="printing-quantity" value={formData.quantity} onChange={(event) => setFormData({ ...formData, quantity: event.target.value })} placeholder="Example: 100 copies" required />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="printing-description">Project details *</Label>
+              <Textarea id="printing-description" value={formData.description} onChange={(event) => setFormData({ ...formData, description: event.target.value })} placeholder="Tell us the size, material, colors, finishing, artwork status, and how the print will be used." className="min-h-28 resize-none" required />
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="space-y-2">
+                <Label htmlFor="printing-date">Preferred completion date</Label>
+                <Input id="printing-date" type="date" value={formData.deliveryDate} onChange={(event) => setFormData({ ...formData, deliveryDate: event.target.value })} />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="printing-location">Pickup or delivery location</Label>
+                <Input id="printing-location" value={formData.address} onChange={(event) => setFormData({ ...formData, address: event.target.value })} placeholder="Town or delivery address" />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="printing-notes">Additional notes</Label>
+              <Textarea id="printing-notes" value={formData.message} onChange={(event) => setFormData({ ...formData, message: event.target.value })} placeholder="Anything else we should know?" className="min-h-20 resize-none" />
+            </div>
+
+            <Button type="submit" size="lg" disabled={isSubmitting} className="w-full rounded-full bg-zinc-950 font-bold text-white hover:bg-yellow-400 hover:text-black">
+              {isSubmitting ? 'Sending request...' : 'Send Quote Request'}
+              {!isSubmitting && <Send className="ml-2 h-4 w-4" />}
+            </Button>
+
+            <div className="grid gap-2 border-t border-zinc-200 pt-5 text-xs text-zinc-500 sm:grid-cols-3">
+              <span className="flex items-center gap-2"><Phone className="h-3.5 w-3.5" /> 059 251 5464</span>
+              <span className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" /> mkaygraphix@gmail.com</span>
+              <span className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" /> Accra &amp; Cape Coast</span>
             </div>
           </form>
         </SheetContent>

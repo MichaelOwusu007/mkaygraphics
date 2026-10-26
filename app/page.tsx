@@ -486,12 +486,6 @@ export default function HomePage() {
       {/* Editing Services */}
       <section className="container mx-auto px-4 py-16">
         <div className="text-center space-y-4 mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-black rounded-full mb-4">
-            <Sparkles className="h-5 w-5 text-yellow-600" />
-            <span className="text-sm font-semibold text-white">
-              Professional Photo Editing
-            </span>
-          </div>
           <h2 className=" text-4xl md:text-5xl font-bold">
             Transform Your Photos
           </h2>

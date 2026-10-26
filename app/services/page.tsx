@@ -11,7 +11,6 @@ import {
   BookOpen,
   PenTool,
   ArrowRight,
-  Check,
   Star,
   Zap,
   Scissors,
@@ -20,8 +19,6 @@ import {
   MessageCircle,
   Heart,
   Sparkles,
-  Users,
-  Award,
 } from "lucide-react";
 
   const services = [
@@ -92,30 +89,65 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative h-[50vh] md:h-[60vh] overflow-hidden">
+      <section className="relative isolate flex min-h-[680px] h-[82svh] max-h-[860px] items-center overflow-hidden bg-zinc-950">
         <Image
-          src="/images/servicesbanner.jpg"
-          alt="Our Services"
+          src="/images/services-hero-studio.png"
+          alt="A modern photography and design studio with a camera, framed portraits, prints, and a photobook"
           fill
-          className="object-cover"
+          className="object-cover object-[66%_center] sm:object-[68%_center]"
+          sizes="100vw"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
+        <div className="absolute inset-0 bg-black/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-black/25" />
+        <div className="absolute left-[-8rem] top-1/3 h-72 w-72 rounded-full bg-yellow-500/10 blur-3xl" />
 
-        <div className="container mx-auto px-4 relative h-full flex items-center justify-center">
-          <div className="max-w-4xl mx-auto text-center">
-            <Badge className="mb-6 bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-4 py-1">
-              Our Services
-            </Badge>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
-              Premium Creative Services for{" "}
-              <span className="bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">
-                Ghana
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <h1 className="max-w-3xl text-4xl font-bold leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+              Everything creative.
+              <span className="block bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
+                One studio.
               </span>
             </h1>
-            <p className="text-lg text-gray-200 max-w-2xl mx-auto">
-              From custom frames to stunning photobooks, we offer comprehensive creative services to preserve your precious moments and elevate your brand.
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-200 sm:text-lg md:text-xl">
+              From professional photography and photo editing to custom framing,
+              premium printing, photobooks, and graphic design, we bring every
+              part of your story to life.
             </p>
+
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Button
+                size="lg"
+                className="h-12 rounded-full bg-yellow-400 px-7 font-bold text-black hover:bg-yellow-300"
+                asChild
+              >
+                <Link href="#services">
+                  Explore Our Services
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+              <Button
+                size="lg"
+                variant="outline"
+                className="h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-black"
+                asChild
+              >
+                <Link href="/contact">Start a Project</Link>
+              </Button>
+            </div>
+
+            <div className="mt-9 flex max-w-2xl flex-wrap gap-2">
+              {["Photography", "Editing", "Framing", "Printing", "Photobooks", "Design"].map((service) => (
+                <span
+                  key={service}
+                  className="rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-xs font-medium text-zinc-200 backdrop-blur-sm"
+                >
+                  {service}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -129,14 +161,14 @@ export default function ServicesPage() {
                 About MkayGraphics
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                We Frame, Edit, and Design It{" "}
-                <span className="text-yellow-500">Best</span> for You
+                We Shoot, Edit, Frame, Print &amp;{" "}
+                <span className="text-yellow-500">Design</span>
               </h2>
               <p className="text-gray-600 mb-4 leading-relaxed">
-                At MkayGraphics, we believe every photo tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra and Capecoast, Ghana, we've been helping individuals and businesses bring their creative visions to life for years.
+                At MkayGraphics, we believe every image tells a story, every frame preserves a memory, and every design carries meaning. Based in Accra and Cape Coast, Ghana, we help individuals and businesses bring their ideas to life with thoughtful photography and creative craft.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed">
-                From custom frames that showcase your precious artwork to stunning photobooks that preserve your most cherished moments, we combine craftsmanship with modern technology to deliver results that exceed expectations.
+                From capturing portraits, events, products, and brand stories to refining images, creating prints, and building beautiful photobooks, we deliver a complete creative experience from one trusted team.
               </p>
               <div className="flex flex-wrap gap-3">
                 <div className="flex items-center gap-2 text-sm text-gray-600">
@@ -148,8 +180,8 @@ export default function ServicesPage() {
                   <span>Premium Quality</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Users className="h-4 w-4 text-blue-500" />
-                  <span>100+ Happy Clients</span>
+                  <Camera className="h-4 w-4 text-green-600" />
+                  <span>Photography Services</span>
                 </div>
               </div>
             </div>
@@ -161,7 +193,7 @@ export default function ServicesPage() {
                     <p className="text-sm text-gray-600">Years Experience</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">50+</div>
+                    <div className="text-4xl md:text-5xl font-bold text-yellow-500 mb-2">10+</div>
                     <p className="text-sm text-gray-600">Frame Styles</p>
                   </div>
                   <div className="text-center">
@@ -190,7 +222,7 @@ export default function ServicesPage() {
               Comprehensive Creative Solutions
             </h2>
             <p className="text-gray-600">
-              Whether you're looking to frame a masterpiece, edit your wedding photos, create custom prints, or build a memorable brand, we have the expertise and passion to make it happen. Our services are designed to meet the diverse needs of Ghanaians across all walks of life.
+              Whether you&apos;re looking to frame a masterpiece, edit your wedding photos, create custom prints, or build a memorable brand, we have the expertise and passion to make it happen. Our services are designed to meet the diverse needs of Ghanaians across all walks of life.
             </p>
           </div>
 
@@ -222,9 +254,9 @@ export default function ServicesPage() {
                 description: "Creative design solutions that help businesses stand out and connect with their audience.",
               },
               {
-                icon: Award,
-                title: "Excellence Delivered",
-                description: "Every project receives our full attention and commitment to quality, no matter the size.",
+                icon: Camera,
+                title: "Moments Captured",
+                description: "Professional portraits, events, products, and brand stories captured with care and finished beautifully.",
               },
             ].map((item, index) => (
               <div
@@ -243,7 +275,7 @@ export default function ServicesPage() {
       </section>
 
   {/* Services Overview */}
-       <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
+       <section id="services" className="scroll-mt-20 py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
          {/* Background decoration */}
          <div className="absolute top-0 left-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-br from-yellow-400/10 to-transparent rounded-full -translate-x-1/2 -translate-y-1/2" />
          <div className="absolute bottom-0 right-0 w-64 md:w-96 h-64 md:h-96 bg-gradient-to-br from-amber-400/10 to-transparent rounded-full translate-x-1/2 translate-y-1/2" />
@@ -425,7 +457,7 @@ export default function ServicesPage() {
             Ready to Get Started?
           </h2>
           <p className="text-gray-300 mb-8 max-w-xl mx-auto">
-            Contact us today for a free consultation and quote. We're here to help bring your vision to life.
+            Contact us today for a free consultation and quote. We&apos;re here to help bring your vision to life.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Button
