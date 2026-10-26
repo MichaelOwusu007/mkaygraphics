@@ -26,7 +26,6 @@ import {
   ChevronRight,
   Frame,
   BookOpen,
-  Phone,
   Mail,
   MapPin,
   Send,
@@ -784,10 +783,6 @@ export default function HomePage() {
       <ContainerScroll
         titleComponent={
           <div className="text-center -mt-16 space-y-3 md:space-y-4">
-            <div className="inline-flex items-center gap-2 px-3 md:px-4 py-1.5 md:py-2 bg-yellow-500/20 rounded-full">
-              <Phone className="h-3 w-3 md:h-4 md:w-4 text-yellow-400" />
-              <span className="text-xs md:text-sm font-semibold text-yellow-400">Get In Touch</span>
-            </div>
             <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-black leading-tight px-2">
               Let&apos;s Create
               <span className="block bg-gradient-to-r from-yellow-400 to-amber-400 bg-clip-text text-transparent">

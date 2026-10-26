@@ -13,6 +13,8 @@ import {
   Truck,
   Loader2,
   MessageCircle,
+  MapPin,
+  UserRound,
 } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
@@ -40,8 +42,7 @@ type OrderData = {
     address: string;
     city: string;
     state: string;
-    zip: string;
-    country: string;
+    referralSource: string;
   };
 };
 
@@ -62,8 +63,7 @@ function CheckoutContent() {
     address: "",
     city: "",
     state: "",
-    zip: "",
-    country: "Ghana",
+    referralSource: "",
   });
 
   const subtotal = getTotalPrice();
@@ -157,8 +157,8 @@ function CheckoutContent() {
 
   const handleSubmitShipping = (e: React.FormEvent) => {
     e.preventDefault();
-    const { name, email, phone, address, city } = shippingInfo;
-    if (!name || !email || !phone || !address || !city) {
+    const { name, email, phone, address, city, referralSource } = shippingInfo;
+    if (!name || !email || !phone || !address || !city || !referralSource) {
       toast.error("Please fill in all required fields");
       return;
     }
@@ -304,88 +304,131 @@ function CheckoutContent() {
                 <CardTitle className="font-serif">Your Details</CardTitle>
               </CardHeader>
               <CardContent>
-                <form onSubmit={handleSubmitShipping} className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="name">Full Name *</Label>
-                      <Input
-                        id="name"
-                        value={shippingInfo.name}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, name: e.target.value })
-                        }
-                        required
-                      />
+                <form onSubmit={handleSubmitShipping} className="space-y-6">
+                  <div className="rounded-2xl border border-border bg-muted/20 p-5 sm:p-6">
+                    <div className="mb-5 flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+                        <UserRound className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">Contact Information</h3>
+                        <p className="text-sm text-muted-foreground">How we can reach you about your order</p>
+                      </div>
                     </div>
-                    <div>
-                      <Label htmlFor="email">Email *</Label>
-                      <Input
-                        id="email"
-                        type="email"
-                        value={shippingInfo.email}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, email: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Phone Number *</Label>
-                      <Input
-                        id="phone"
-                        type="tel"
-                        value={shippingInfo.phone}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, phone: e.target.value })
-                        }
-                        required
-                      />
+
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="space-y-2 sm:col-span-2">
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input
+                          id="name"
+                          value={shippingInfo.name}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, name: e.target.value })
+                          }
+                          placeholder="Your full name"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email">Email Address *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={shippingInfo.email}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, email: e.target.value })
+                          }
+                          placeholder="you@example.com"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={shippingInfo.phone}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, phone: e.target.value })
+                          }
+                          placeholder="+233 XX XXX XXXX"
+                          required
+                        />
+                      </div>
                     </div>
                   </div>
 
-                  <div>
-                    <Label htmlFor="address">Street Address *</Label>
-                    <Input
-                      id="address"
-                      value={shippingInfo.address}
-                      onChange={(e) =>
-                        setShippingInfo({ ...shippingInfo, address: e.target.value })
-                      }
-                      required
-                    />
-                  </div>
+                  <div className="rounded-2xl border border-border bg-muted/20 p-5 sm:p-6">
+                    <div className="mb-5 flex items-center gap-3">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary/10 text-secondary">
+                        <MapPin className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold">Delivery Details</h3>
+                        <p className="text-sm text-muted-foreground">Where your order should be delivered</p>
+                      </div>
+                    </div>
 
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    <div>
-                      <Label htmlFor="city">City *</Label>
-                      <Input
-                        id="city"
-                        value={shippingInfo.city}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, city: e.target.value })
-                        }
-                        required
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="state">Region</Label>
-                      <Input
-                        id="state"
-                        value={shippingInfo.state}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, state: e.target.value })
-                        }
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="zip">ZIP Code</Label>
-                      <Input
-                        id="zip"
-                        value={shippingInfo.zip}
-                        onChange={(e) =>
-                          setShippingInfo({ ...shippingInfo, zip: e.target.value })
-                        }
-                      />
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+                      <div className="space-y-2 sm:col-span-2">
+                        <Label htmlFor="address">Street Address *</Label>
+                        <Input
+                          id="address"
+                          value={shippingInfo.address}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, address: e.target.value })
+                          }
+                          placeholder="House number, street, or landmark"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="city">City or Town *</Label>
+                        <Input
+                          id="city"
+                          value={shippingInfo.city}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, city: e.target.value })
+                          }
+                          placeholder="Example: Accra"
+                          required
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="state">Region</Label>
+                        <Input
+                          id="state"
+                          value={shippingInfo.state}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, state: e.target.value })
+                          }
+                          placeholder="Example: Greater Accra"
+                        />
+                      </div>
+                      <div className="space-y-2 sm:col-span-2">
+                        <Label htmlFor="referralSource">How did you hear about us? *</Label>
+                        <select
+                          id="referralSource"
+                          value={shippingInfo.referralSource}
+                          onChange={(e) =>
+                            setShippingInfo({ ...shippingInfo, referralSource: e.target.value })
+                          }
+                          className="border-input h-9 w-full rounded-md border bg-transparent px-3 text-sm shadow-xs outline-none transition-[color,box-shadow] focus:border-ring focus:ring-3 focus:ring-ring/50"
+                          required
+                        >
+                          <option value="">Select an option</option>
+                          <option value="Google Search">Google Search</option>
+                          <option value="Instagram">Instagram</option>
+                          <option value="Facebook">Facebook</option>
+                          <option value="TikTok">TikTok</option>
+                          <option value="WhatsApp">WhatsApp</option>
+                          <option value="Friend or Family Referral">Friend or Family Referral</option>
+                          <option value="Returning Customer">Returning Customer</option>
+                          <option value="Event or Exhibition">Event or Exhibition</option>
+                          <option value="Printed Flyer or Signage">Printed Flyer or Signage</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </div>
                     </div>
                   </div>
 
@@ -428,6 +471,14 @@ function CheckoutContent() {
                     <p className="text-sm text-green-800 dark:text-green-200">
                       You will be redirected to Paystack to complete your payment securely. After payment, your order will be confirmed.
                     </p>
+                  </div>
+
+                  <div className="flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-950">
+                    <Truck className="mt-0.5 h-5 w-5 shrink-0 text-amber-700" />
+                    <div>
+                      <p className="font-semibold">Delivery fee is not included.</p>
+                      <p className="mt-1 text-amber-800">The delivery cost will be communicated when we contact you to confirm your order.</p>
+                    </div>
                   </div>
 
                   <Button
@@ -584,9 +635,17 @@ function CheckoutContent() {
                   <span className="text-muted-foreground">Subtotal</span>
                   <span className="font-semibold">GH₵{(orderData?.total || subtotal).toFixed(2)}</span>
                 </div>
+                <div className="flex justify-between gap-4 text-sm">
+                  <span className="text-muted-foreground">Delivery fee</span>
+                  <span className="text-right font-medium">To be communicated</span>
+                </div>
                 <div className="flex justify-between text-lg font-bold border-t pt-2">
                   <span>Total</span>
                   <span>GH₵{(orderData?.total || total).toFixed(2)}</span>
+                </div>
+                <div className="mt-3 flex gap-2 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs leading-relaxed text-amber-900">
+                  <Truck className="mt-0.5 h-4 w-4 shrink-0 text-amber-700" />
+                  <p>This total does not include delivery. The delivery fee will be communicated when we contact you.</p>
                 </div>
               </div>
             </CardContent>

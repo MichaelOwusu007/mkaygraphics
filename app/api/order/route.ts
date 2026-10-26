@@ -110,8 +110,8 @@ export async function POST(request: NextRequest) {
           <div style="background: #f9f9f9; border-radius: 8px; padding: 15px;">
             <p style="margin: 0;">${shippingInfo.name}</p>
             <p style="margin: 5px 0; color: #666;">${shippingInfo.address}</p>
-            <p style="margin: 0; color: #666;">${shippingInfo.city}, ${shippingInfo.state} ${shippingInfo.zip}</p>
-            <p style="margin: 5px 0 0; color: #666;">${shippingInfo.country}</p>
+            <p style="margin: 0; color: #666;">${shippingInfo.city}${shippingInfo.state ? `, ${shippingInfo.state}` : ""}, Ghana</p>
+            <p style="margin: 12px 0 0; color: #666;"><strong>How they heard about us:</strong> ${shippingInfo.referralSource || "Not provided"}</p>
           </div>
           ` : ""}
 

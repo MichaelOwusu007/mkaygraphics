@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "Photobooks | MkayGraphics & Photography",
     description:
       "Beautiful custom photobooks in Ghana. Wedding albums, graduation books, and more.",
-    images: ["/images/photobook.jpg"],
+    images: ["/images/photobook-hero-studio.png"],
   },
 };
 

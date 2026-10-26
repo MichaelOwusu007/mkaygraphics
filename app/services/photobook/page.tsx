@@ -233,81 +233,66 @@ export default function PhotobookPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <header
-        className="relative min-h-[500px] md:min-h-[600px] flex items-center justify-center overflow-hidden"
-      >
-        <div 
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: "linear-gradient(to bottom right, rgba(0,0,0,0.7), rgba(0,0,0,0.85)), url('/images/banner.img1.jpg')",
-          }}
+      <header className="relative isolate flex min-h-[700px] h-[86svh] max-h-[900px] items-center overflow-hidden bg-zinc-950">
+        <Image
+          src="/images/photobook-hero-studio.png"
+          alt="Premium photobooks displaying wedding, graduation, family, and travel memories"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[68%_center]"
         />
-        
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-48 md:w-64 h-48 md:h-64 bg-yellow-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-64 md:w-96 h-64 md:h-96 bg-amber-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
+        <div className="absolute inset-0 bg-black/20" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black via-black/85 to-black/5" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/20" />
 
-        <div className="relative z-10 container mx-auto px-4 py-16 md:py-20">
-          <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8">
-            <Badge className="bg-yellow-500/20 text-yellow-400 border-yellow-500/30 px-3 md:px-6 py-1.5 md:py-2 text-xs md:text-sm">
-              <BookOpen className="w-3 h-3 md:w-4 md:h-4 mr-1 md:mr-2" />
-              Premium Photobooks Made in Ghana
-            </Badge>
-            
-            <h1 className="text-3xl md:text-5xl lg:text-7xl font-bold text-white leading-tight px-2">
-              Turn Your Photos Into
-              <span className="block bg-gradient-to-r from-yellow-400 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
-                Timeless Treasures
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8">
+          <div className="max-w-3xl">
+            <p className="mb-5 text-xs font-semibold uppercase tracking-[0.26em] text-yellow-300 sm:text-sm">
+              Premium Photobooks
+            </p>
+            <h1 className="text-5xl font-bold leading-[0.98] tracking-tight text-white sm:text-6xl lg:text-8xl">
+              Your memories.
+              <span className="block bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent">
+                Beautifully bound.
               </span>
             </h1>
-            
-            <p className="text-gray-300 text-sm md:text-lg lg:text-xl max-w-2xl mx-auto px-4">
-              Beautiful, handcrafted photobooks for weddings, graduations, families, and all of life&apos;s 
-              most precious moments. Designed with love, delivered with care across Ghana.
+            <p className="mt-7 max-w-2xl text-base leading-relaxed text-zinc-200 sm:text-lg lg:text-xl">
+              Handcrafted albums for weddings, graduations, families, travels, and the moments you never want to leave on a screen.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 justify-center pt-2 md:pt-4 px-4">
+            <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button
-                size="sm"
-                className="bg-gradient-to-r from-yellow-500 to-amber-500 hover:from-yellow-600 hover:to-amber-600 text-black font-bold px-6 md:px-10 h-11 md:h-14 text-sm md:text-lg shadow-xl shadow-yellow-500/30"
+                size="lg"
+                className="h-12 rounded-full bg-yellow-400 px-7 font-bold text-black hover:bg-yellow-300"
                 onClick={() => document.getElementById('photobook-types')?.scrollIntoView({ behavior: 'smooth' })}
               >
-                Create Your Photobook
-                <ArrowRight className="ml-1 md:ml-2 h-4 w-4 md:h-5 md:w-5" />
+                Explore Photobooks
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
               <Button
-                size="sm"
+                size="lg"
                 variant="outline"
-                className="border-2 border-white/30 text-black hover:bg-white/10 hover:border-white/50 px-6 md:px-10 h-11 md:h-14 text-sm md:text-lg backdrop-blur-sm"
+                className="h-12 rounded-full border-white/30 bg-white/5 px-7 font-semibold text-white backdrop-blur-sm hover:bg-white hover:text-black"
                 asChild
               >
-                <Link href="/contact">Get Free Consultation</Link>
+                <Link href="/contact">Start Your Album</Link>
               </Button>
             </div>
 
-            <div className="flex flex-wrap justify-center gap-3 md:gap-6 pt-6 md:pt-8 text-gray-400 text-xs md:text-sm">
-              <div className="flex items-center gap-1.5 md:gap-2">
-                <Check className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                <span>Premium Quality</span>
-              </div>
-              <div className="flex items-center gap-1.5 md:gap-2">
-                <Check className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                <span>Ghana-Wide Delivery</span>
-              </div>
-              <div className="flex items-center gap-1.5 md:gap-2">
-                <Check className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                <span>Custom Designs</span>
-              </div>
-              <div className="flex items-center gap-1.5 md:gap-2">
-                <Check className="w-3 h-3 md:w-4 md:h-4 text-yellow-400" />
-                <span>Satisfaction Guaranteed</span>
-              </div>
+            <div className="mt-8 flex flex-wrap gap-2">
+              {['Custom layouts', 'Premium finishes', 'Delivery across Ghana'].map((feature) => (
+                <span
+                  key={feature}
+                  className="flex items-center gap-2 rounded-full border border-white/15 bg-black/25 px-3 py-1.5 text-xs font-medium text-zinc-200 backdrop-blur-sm"
+                >
+                  <Check className="h-3.5 w-3.5 text-yellow-300" />
+                  {feature}
+                </span>
+              ))}
             </div>
           </div>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-16 md:h-24 bg-gradient-to-t from-white to-transparent" />
       </header>
 
       {/* Stats Bar */}
