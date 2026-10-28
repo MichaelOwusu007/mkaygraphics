@@ -3,7 +3,7 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Photo Editing Services | Professional Photo Retouching in Ghana",
   description:
-    "Professional photo editing services in Ghana. Expert retouching, color correction, background removal, and more. Starting at GH₵5 per photo. Fast turnaround time.",
+    "Professional photo editing services in Ghana. Expert retouching, color correction, background removal, and creative editing starting at GH₵20 per photo.",
   keywords: [
     "photo editing Ghana",
     "photo retouching Ghana",
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     title: "Photo Editing Services | MkayGraphics & Photography",
     description:
       "Professional photo editing services in Ghana. Expert retouching, color correction, and more.",
-    images: ["/images/photo-editing.jpg"],
+    images: ["/images/banner.img3.jpg"],
   },
 };
 

@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Check, Clock, Shield, Star } from "lucide-react";
-import { editingServices } from "@/lib/mockData"; // your mock data
+import { editingServices } from "@/lib/editingServices";
 import { toast } from "sonner";
 
 export default function ServiceDetailPage() {
@@ -53,7 +53,10 @@ export default function ServiceDetailPage() {
     };
 
     try {
-      sessionStorage.setItem("mkaygraphix_service_checkout_draft", JSON.stringify(draft));
+      sessionStorage.setItem("mkaygraphics_editing_checkout_draft", JSON.stringify({
+        serviceId: draft.serviceId,
+        photoCount: draft.photoCount,
+      }));
       router.push("/service-checkout");
     } catch (err) {
       console.error("Failed to save draft:", err);
@@ -67,11 +70,11 @@ export default function ServiceDetailPage() {
         <div className="container mx-auto px-4 py-8">
           <Button
             variant="ghost"
-            onClick={() => router.push("/services")}
+            onClick={() => router.push("/services/editing")}
             className="mb-6"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back to Services
+            Back to Editing Services
           </Button>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -111,7 +114,7 @@ export default function ServiceDetailPage() {
                   </div>
                   <div className="flex items-center gap-2 text-muted-foreground">
                     <Shield className="h-4 w-4" />
-                    <span>Money-back guarantee</span>
+                    <span>Secure Paystack checkout</span>
                   </div>
                 </div>
 
@@ -139,7 +142,7 @@ export default function ServiceDetailPage() {
                         Price per photo
                       </span>
                       <span className=" text-3xl font-bold">
-                        GH{service.price}
+                        GH₵{service.price}
                       </span>
                     </div>
                   </div>
@@ -187,12 +190,12 @@ export default function ServiceDetailPage() {
                       <span className="text-muted-foreground">
                         Price per photo
                       </span>
-                      <span className="font-semibold">${service.price}</span>
+                      <span className="font-semibold">GH₵{service.price.toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between text-lg font-bold border-t pt-3">
                       <span>Total</span>
                       <span className="text-secondary">
-                        ${totalPrice.toFixed(2)}
+                        GH₵{totalPrice.toFixed(2)}
                       </span>
                     </div>
                   </div>
@@ -212,7 +215,7 @@ export default function ServiceDetailPage() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Clock className="h-4 w-4 text-secondary" />
-                      <span>Fast turnaround guaranteed</span>
+                      <span>Clear turnaround before payment</span>
                     </div>
                   </div>
                 </CardContent>
@@ -243,7 +246,7 @@ export default function ServiceDetailPage() {
                           <div className="flex-1">
                             <p className="font-semibold text-sm">{s.title}</p>
                             <p className="text-xs text-muted-foreground">
-                              GH{s.price} per photo
+                              GH₵{s.price} per photo
                             </p>
                           </div>
                         </CardContent>

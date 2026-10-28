@@ -18,6 +18,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Payment and email configuration
+
+Copy `.env.example` to `.env.local` and add the server credentials. Never commit `.env.local`, and do not rename any secret with a `NEXT_PUBLIC_` prefix.
+
+For production:
+
+1. Set `APP_URL` to the deployed HTTPS origin without a path.
+2. Add the same environment variables to the hosting provider.
+3. In the matching Paystack environment, set the webhook URL to:
+
+```text
+https://your-domain.com/api/paystack/webhook
+```
+
+Photo-editing prices and totals are calculated by the server. Order emails are sent only after a signed `charge.success` webhook is independently verified with Paystack.
+
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Learn More

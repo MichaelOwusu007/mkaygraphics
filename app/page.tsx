@@ -14,8 +14,6 @@ import {
   Star,
   Sparkles,
   Clock,
-  Shield,
-  Palette,
   Scissors,
   Printer,
   PenTool,
@@ -26,8 +24,6 @@ import {
   ChevronRight,
   Frame,
   BookOpen,
-  Mail,
-  MapPin,
   Send,
   MessageSquare,
   Upload,
@@ -55,15 +51,17 @@ export default function HomePage() {
     company: '',
     timeline: '',
     message: '',
+    website: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const phoneRegex = /^(\+233|233|0)5[89]\d{7}$/;
-    if (!phoneRegex.test(contactForm.phone)) {
-      toast.error('Please enter a valid Ghana phone number: +233592515464, 233592515464, or 0592515464');
+    const phoneRegex = /^\+?\d{8,15}$/;
+    const compactPhone = contactForm.phone.replace(/[\s().-]/g, '');
+    if (!phoneRegex.test(compactPhone)) {
+      toast.error('Please enter a valid phone number.');
       return;
     }
 
@@ -77,11 +75,12 @@ export default function HomePage() {
           service: 'General Inquiry',
         }),
       });
+      const payload = await res.json() as { error?: string };
       if (res.ok) {
         toast.success('Message sent! We\'ll get back to you soon.');
-        setContactForm({ name: '', email: '', phone: '', service: '', company: '', timeline: '', message: '' });
+        setContactForm({ name: '', email: '', phone: '', service: '', company: '', timeline: '', message: '', website: '' });
       } else {
-        toast.error('Failed to send message. Please try again.');
+        toast.error(payload.error || 'Failed to send message. Please try again.');
       }
     } catch {
       toast.error('Something went wrong. Please try again.');
@@ -799,6 +798,15 @@ export default function HomePage() {
         <div className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-2xl h-full overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
           <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6">Send us a Message</h3>
           <form onSubmit={handleContactSubmit} className="space-y-3 md:space-y-4">
+            <input
+              type="text"
+              value={contactForm.website}
+              onChange={(event) => setContactForm({ ...contactForm, website: event.target.value })}
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              className="hidden"
+            />
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4">
               <div className="space-y-1.5 md:space-y-2">
                 <Label htmlFor="contact-name" className="text-xs md:text-sm">Full Name</Label>

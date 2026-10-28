@@ -7,7 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import "./photoediting.css";
 import { ArrowRight, Star, Clock, Check, MessageCircle } from 'lucide-react';
-import { editingServices } from '@/lib/mockData';
+import { editingServices } from '@/lib/editingServices';
 import Footer from '@/components/headers/Footer';
 
 export default function Services() {
@@ -91,7 +91,7 @@ export default function Services() {
                     <div className="flex items-baseline justify-between">
                       <span className="text-sm text-muted-foreground">Starting at</span>
                       <div className="text-right">
-                        <span className=" text-3xl font-bold">GH{service.price}</span>
+                        <span className=" text-3xl font-bold">GH₵{service.price}</span>
                         <span className="text-sm text-muted-foreground ml-1">per photo</span>
                       </div>
                     </div>
@@ -125,7 +125,7 @@ export default function Services() {
                   {editingServices.map((service) => (
                     <th key={service.id} className="p-4 text-center">
                       <div className=" text-lg font-bold">{service.title}</div>
-                      <div className="text-2xl text-black font-bold mt-2">GH{service.price}</div>
+                      <div className="text-2xl text-black font-bold mt-2">GH₵{service.price}</div>
                     </th>
                   ))}
                 </tr>

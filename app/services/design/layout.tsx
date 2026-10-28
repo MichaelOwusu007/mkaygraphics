@@ -1,9 +1,9 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Graphic Design Services Ghana | Logo Design, Brand Identity & More",
+  title: "Graphic Design Services Ghana | MkayGraphics & Photography",
   description:
-    "Professional graphic design services in Ghana. Logo design, brand identity, social media graphics, and more. Creative designs that make your business stand out.",
+    "Professional graphic design in Ghana for brand identity, logo design, social media, packaging, campaigns, publications, and more from MkayGraphics & Photography.",
   keywords: [
     "graphic design Ghana",
     "logo design Ghana",
@@ -13,10 +13,10 @@ export const metadata: Metadata = {
     "flyer design",
   ],
   openGraph: {
-    title: "Graphic Design Services | MkayGraphics & Photography",
+    title: "Graphic Design Services Ghana | MkayGraphics & Photography",
     description:
-      "Professional graphic design services in Ghana. Logo design, brand identity, and more.",
-    images: ["/images/design.jpg"],
+      "Purposeful graphic design for brands, campaigns, social media, packaging, publications, and print.",
+    images: ["/images/graphic-design-studio-hero.png"],
   },
 };
 

@@ -86,6 +86,7 @@ export default function ContactPage() {
     phone: "",
     service: "",
     message: "",
+    website: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -99,9 +100,10 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    const phoneRegex = /^(\+233|233|0)5[89]\d{7}$/;
-    if (!formData.phone || !phoneRegex.test(formData.phone)) {
-      toast.error("Please enter a valid Ghana phone number: +233592515464, 233592515464, or 0592515464");
+    const phoneRegex = /^\+?\d{8,15}$/;
+    const compactPhone = formData.phone.replace(/[\s().-]/g, "");
+    if (!formData.phone || !phoneRegex.test(compactPhone)) {
+      toast.error("Please enter a valid phone number.");
       return;
     }
 
@@ -114,11 +116,12 @@ export default function ContactPage() {
         body: JSON.stringify(formData),
       });
 
+      const payload = await response.json() as { error?: string };
       if (response.ok) {
         toast.success("Message sent successfully! We'll get back to you soon.");
-        setFormData({ name: "", email: "", phone: "", service: "", message: "" });
+        setFormData({ name: "", email: "", phone: "", service: "", message: "", website: "" });
       } else {
-        toast.error("Failed to send message. Please try again.");
+        toast.error(payload.error || "Failed to send message. Please try again.");
       }
     } catch {
       toast.error("Failed to send message. Please try again.");
@@ -181,6 +184,16 @@ export default function ContactPage() {
               </p>
 
               <form onSubmit={handleSubmit} className="space-y-4 md:space-y-6">
+                <input
+                  type="text"
+                  name="website"
+                  value={formData.website}
+                  onChange={handleChange}
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="hidden"
+                />
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">

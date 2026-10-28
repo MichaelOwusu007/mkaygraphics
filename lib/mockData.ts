@@ -1,4 +1,6 @@
-import { Product, EditingService, Testimonial } from '../types';
+import { Product, Testimonial } from '../types';
+
+export { editingServices } from './editingServices';
 
 export const mockProducts: Product[] = [
   {
@@ -628,61 +630,6 @@ export const categories = [
   { id: 'all', name: 'All Products', count: mockProducts.length },
   { id: 'frames', name: 'Frames for you', count: mockProducts.filter(p => p.category === 'frames').length },
   { id: 'custom', name: 'Custom/already made frame', count: mockProducts.filter(p => p.category === 'custom').length },
-];
-
-export const editingServices: EditingService[] = [
-  {
-    id: 'basic-retouch',
-    title: 'Basic Retouching',
-    description: 'Perfect for everyday photos that need a quick polish',
-    price: 20,
-    image: '/images/iedit.jpg',
-    category: 'basic',
-    turnaroundTime: '24-48 hours',
-    features: [
-      'Color correction & brightness adjustment',
-      'Basic blemish removal',
-      'Cropping & straightening',
-      'Light & shadow enhancement',
-      'Red-eye removal',
-    ],
-  },
-  {
-    id: 'advanced-retouch',
-    title: 'Advanced Retouching',
-    description: 'Professional-grade editing for portraits and special occasions',
-    price: 50,
-    image: '/images/edit.jpg',
-    category: 'advanced',
-    popular: true,
-    turnaroundTime: '2-3 days',
-    features: [
-      'Everything in Basic Retouching',
-      'Advanced skin smoothing & texture refinement',
-      'Teeth whitening & eye enhancement',
-      'Body contouring & reshaping',
-      'Background cleanup & object removal',
-      'Professional color grading',
-    ],
-  },
-  {
-    id: 'premium-editing',
-    title: 'Premium Creative Editing',
-    description: 'Complete artistic transformation for commercial and creative projects',
-    price: 80,
-    image: '/images/shop2.jpg',
-    category: 'premium',
-    turnaroundTime: '2 days',
-    features: [
-      'Everything in Advanced Retouching',
-      'Complex background replacement',
-      'Advanced compositing & photo manipulation',
-      'Custom artistic effects & filters',
-      'HDR processing & frequency separation',
-      'Magazine-quality final output',
-      'Unlimited revision rounds',
-    ],
-  },
 ];
 
 export const testimonials: Testimonial[] = [

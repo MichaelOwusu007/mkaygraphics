@@ -1,51 +1,80 @@
-import { NextResponse, type NextRequest } from "next/server"
-import nodemailer from "nodemailer"
-import Mail from "nodemailer/lib/mailer"
+import type { ContactMessage } from '@/lib/server/emailTemplates';
+import {
+  assertSameOrigin,
+  getClientAddress,
+  jsonResponse,
+  publicErrorResponse,
+  readJsonBody,
+  RequestError,
+} from '@/lib/server/http';
+import { sendContactEmails } from '@/lib/server/mailer';
+import { checkRateLimit } from '@/lib/server/rateLimit';
+import {
+  readEmail,
+  readPhone,
+  readString,
+  requireRecord,
+} from '@/lib/server/validation';
 
-export async function POST(request: NextRequest) {
-  const body = await request.json()
-  const { email, name, phone, message, service, company, timeline } = body
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
 
-  const phoneRegex = /^(\+233|233|0)5[89]\d{7}$/
-  if (!phone || !phoneRegex.test(phone)) {
-    return NextResponse.json({ message: "Invalid phone format. Use +233592515464, 233592515464, or 0592515464", status: 400 }, { status: 400 })
+const ALLOWED_SERVICES = new Set([
+  'Custom Framing',
+  'Photo Editing',
+  'Printing Services',
+  'Photobooks',
+  'Graphic Design',
+  'Photography (Coming Soon)',
+  'Brand Identity',
+  'General Inquiry',
+  'Other',
+]);
+
+function parseContactMessage(value: unknown): ContactMessage & { website: string } {
+  const body = requireRecord(value);
+  const service = readString(body, 'service', 'Service', { maximum: 80, optional: true });
+  if (service && !ALLOWED_SERVICES.has(service)) {
+    throw new RequestError('Selected service is invalid');
   }
 
-  const transport = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.NODEMAILER_EMAIL,
-      pass: process.env.NODEMAILER_PASSWORD,
-    },
-  })
+  return {
+    name: readString(body, 'name', 'Name', { minimum: 2, maximum: 100 }),
+    email: readEmail(body),
+    phone: readPhone(body),
+    service: service || 'General Inquiry',
+    company: readString(body, 'company', 'Company', { maximum: 120, optional: true }),
+    timeline: readString(body, 'timeline', 'Timeline', { maximum: 100, optional: true }),
+    message: readString(body, 'message', 'Message', {
+      minimum: 5,
+      maximum: 2_000,
+      multiline: true,
+    }),
+    website: readString(body, 'website', 'Website', { maximum: 200, optional: true }),
+  };
+}
 
-  const mailOptions: Mail.Options = {
-    from: `"MkayGraphics" <${process.env.NODEMAILER_EMAIL}>`,
-    to: process.env.NODEMAILER_RECEIVER,
-    subject: `📩 Service Inquiry - ${service || "General"}`,
-    html: `
-      <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-        <h2>📨 New Service Inquiry from ${name}</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Phone:</strong> ${phone}</p>
-        <p><strong>Service:</strong> ${service || "Not specified"}</p>
-        <p><strong>Company:</strong> ${company || "Not provided"}</p>
-        <p><strong>Timeline:</strong> ${timeline || "Not specified"}</p>
-        <p><strong>Message:</strong></p>
-        <div style="background-color: #f9f9f9; padding: 10px; border-left: 4px solid #4F46E5;">
-          ${message?.replace(/\n/g, "<br>") || "No message"}
-        </div>
-        <p style="margin-top: 30px;">Sent from the MkayGraphics Website ✨</p>
-      </div>
-    `,
-  }
-
+export async function POST(request: Request) {
   try {
-    await transport.sendMail(mailOptions)
-    return NextResponse.json({ message: "Success!", status: 200 })
+    assertSameOrigin(request);
+
+    const clientAddress = getClientAddress(request);
+    const limit = checkRateLimit(`contact:${clientAddress}`, 5, 15 * 60 * 1_000);
+    if (!limit.allowed) {
+      return jsonResponse(
+        { error: 'Too many messages. Please wait before trying again.' },
+        429,
+        { 'Retry-After': String(limit.retryAfterSeconds) },
+      );
+    }
+
+    const { website, ...message } = parseContactMessage(await readJsonBody(request));
+    // Hidden honeypot fields are completed by bots, not normal users.
+    if (website) return jsonResponse({ success: true });
+
+    await sendContactEmails(message);
+    return jsonResponse({ success: true });
   } catch (error) {
-    console.error("Email send failed:", error)
-    return NextResponse.json({ message: "Failed!", status: 500 })
+    return publicErrorResponse(error, 'Your message could not be sent. Please try again.');
   }
 }
