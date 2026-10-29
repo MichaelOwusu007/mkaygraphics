@@ -2,6 +2,7 @@ import "./globals.css";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
 import { Space_Grotesk, Archivo_Black, Poppins } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import ClientLayout from "./ClientLayout";
 
 const spaceGrotesk = Space_Grotesk({
@@ -300,6 +301,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
       <body className={`${poppins.className} text-lg text-black`}>
         <ClientLayout>{children}</ClientLayout>
+        <Analytics />
       </body>
     </html>
   );
