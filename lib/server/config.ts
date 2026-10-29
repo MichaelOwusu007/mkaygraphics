@@ -66,17 +66,25 @@ export function getPaystackConfig(): PaystackConfig {
 export function getMailConfig(): MailConfig {
   if (cachedMailConfig) return cachedMailConfig;
 
+  const host = requireEnvironmentValue('NODEMAILER_HOST');
   const port = Number(requireEnvironmentValue('NODEMAILER_PORT'));
   if (!Number.isInteger(port) || port < 1 || port > 65535) {
     throw new Error('NODEMAILER_PORT must be a valid TCP port');
   }
 
+  const rawPassword = requireEnvironmentValue('NODEMAILER_PASSWORD');
+  // Google displays app passwords in four groups. Those visual separator spaces
+  // are not part of the credential and cause SMTP authentication to fail.
+  const password = host.toLowerCase() === 'smtp.gmail.com'
+    ? rawPassword.replace(/\s+/g, '')
+    : rawPassword;
+
   cachedMailConfig = {
-    host: requireEnvironmentValue('NODEMAILER_HOST'),
+    host,
     port,
     secure: parseBoolean(requireEnvironmentValue('NODEMAILER_SECURE'), 'NODEMAILER_SECURE'),
     email: assertEmail(requireEnvironmentValue('NODEMAILER_EMAIL'), 'NODEMAILER_EMAIL'),
-    password: requireEnvironmentValue('NODEMAILER_PASSWORD'),
+    password,
     receiver: assertEmail(requireEnvironmentValue('NODEMAILER_RECEIVER'), 'NODEMAILER_RECEIVER'),
     fromName: requireEnvironmentValue('NODEMAILER_FROM_NAME').slice(0, 100),
   };

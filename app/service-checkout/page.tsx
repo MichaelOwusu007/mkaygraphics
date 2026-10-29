@@ -104,6 +104,7 @@ function ServiceCheckoutContent() {
   const [isVerifying, setIsVerifying] = useState(false);
   const [paymentError, setPaymentError] = useState('');
   const [confirmedOrder, setConfirmedOrder] = useState<ConfirmedOrder | null>(null);
+  const [emailDelivery, setEmailDelivery] = useState<'sent' | 'pending' | null>(null);
   const [projectInfo, setProjectInfo] = useState<ProjectInfo>(emptyProjectInfo);
 
   useEffect(() => {
@@ -142,11 +143,16 @@ function ServiceCheckoutContent() {
             `/api/paystack/editing/verify?reference=${encodeURIComponent(paymentReference)}`,
             { cache: 'no-store' },
           );
-          const payload = await response.json() as { error?: string; order?: ConfirmedOrder };
+          const payload = await response.json() as {
+            emailDelivery?: 'sent' | 'pending';
+            error?: string;
+            order?: ConfirmedOrder;
+          };
           if (!response.ok || !payload.order) throw new Error(payload.error || 'Payment verification failed');
 
           if (!disposed) {
             setConfirmedOrder(payload.order);
+            setEmailDelivery(payload.emailDelivery ?? 'pending');
             setPaymentError('');
             sessionStorage.removeItem(DRAFT_KEY);
             sessionStorage.removeItem(LEGACY_DRAFT_KEY);
@@ -398,7 +404,12 @@ function ServiceCheckoutContent() {
                       <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-emerald-100"><CheckCircle2 className="h-10 w-10 text-emerald-700" /></div>
                       <p className="mt-6 text-xs font-bold uppercase tracking-[0.2em] text-emerald-700">Payment confirmed</p>
                       <h2 className="mt-2 text-3xl font-bold sm:text-4xl">Your editing order is in.</h2>
-                      <p className="mt-4 leading-7 text-zinc-600">A confirmation email is being sent to {confirmedOrder.customerEmail}. Our team will contact you with a secure way to send your images.</p>
+                      <p className="mt-4 leading-7 text-zinc-600">
+                        {emailDelivery === 'sent'
+                          ? `A confirmation email was sent to ${confirmedOrder.customerEmail}.`
+                          : `Your payment is confirmed, but email delivery to ${confirmedOrder.customerEmail} is delayed. You can reload this page to retry it.`}
+                        {' '}Our team will contact you with a secure way to send your images.
+                      </p>
 
                       <div className="mt-8 rounded-2xl bg-stone-50 p-6 text-left">
                         <div className="grid gap-4 text-sm sm:grid-cols-2">

@@ -5,6 +5,7 @@ import {
   RequestError,
 } from '@/lib/server/http';
 import { resolveVerifiedEditingOrder } from '@/lib/server/editingOrder';
+import { dispatchEditingOrderEmails } from '@/lib/server/mailer';
 import { isEditingPaymentReference, verifyTransaction } from '@/lib/server/paystack';
 import { checkRateLimit } from '@/lib/server/rateLimit';
 
@@ -32,8 +33,23 @@ export async function GET(request: Request) {
     if (transaction.reference !== reference) throw new RequestError('Payment reference mismatch', 409);
     const order = resolveVerifiedEditingOrder(transaction);
 
+    // The signed webhook remains the primary production delivery path. Sending
+    // here as well covers local development and temporary webhook delays. The
+    // mailer coalesces simultaneous work for the same payment reference.
+    let emailDelivery: 'sent' | 'pending' = 'sent';
+    try {
+      await dispatchEditingOrderEmails(order);
+    } catch (error) {
+      emailDelivery = 'pending';
+      console.error(
+        'Payment verified but editing order email delivery is pending',
+        error instanceof Error ? error.message : 'Unknown email error',
+      );
+    }
+
     // Only the minimum confirmation data required by the UI is returned.
     return jsonResponse({
+      emailDelivery,
       order: {
         reference: order.reference,
         status: order.status,
